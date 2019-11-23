@@ -1,15 +1,20 @@
 ﻿using System;
 using System.IO.Ports;
+using System.Linq;
 using System.Threading;
 
-namespace Windows.Sandbox.Units
+namespace Core.Sandbox.Units
 {
 	public static class ComListenerUnit
 	{
+		private const Byte _portNumber = 8;
+		private const Int32 _portSpeed = 9600;
+
+
 		public static void Run()
 		{
-			var availablePorts = SerialPort.GetPortNames();
-			using(var port = new SerialPort(availablePorts[0], 9200))
+			var devicePort = SerialPort.GetPortNames().First(p => p.Equals($"COM{_portNumber}"));
+			using(var port = new SerialPort(devicePort, _portSpeed))
 			{
 				port.DataReceived += PortOnDataReceived;
 				while(true)
@@ -27,8 +32,8 @@ namespace Windows.Sandbox.Units
 		private static void PortOnDataReceived(Object sender, SerialDataReceivedEventArgs serialDataReceivedEventArgs)
 		{
 			var serialPort = (SerialPort)sender;
-			var message = serialPort.ReadLine();
-			Console.WriteLine($"{serialPort.PortName}: {message}");
+
+			Console.WriteLine(serialPort.ReadLine());
 		}
 
 

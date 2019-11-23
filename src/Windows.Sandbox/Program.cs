@@ -6,7 +6,7 @@ namespace Windows.Sandbox
 	{
 		static void Main(string[] args)
 		{
-			ComListenerUnit.Run();
+			SampleUnit.Run();
 		}
 	}
 }

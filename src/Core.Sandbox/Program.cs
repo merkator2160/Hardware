@@ -6,7 +6,7 @@ namespace Core.Sandbox
 	{
 		static void Main(string[] args)
 		{
-			MqttUnit.Run();
+			ComListenerUnit.Run();
 		}
 	}
 }
