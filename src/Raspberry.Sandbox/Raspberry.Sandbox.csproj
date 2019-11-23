@@ -150,7 +150,7 @@
     <None Include="Sandbox_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
+    <ProjectReference Include="..\Raspberry.Common\Raspberry.Common.csproj">
       <Project>{de086fa8-be7e-423e-9bb4-fdd4fc7180c7}</Project>
       <Name>Common</Name>
     </ProjectReference>
