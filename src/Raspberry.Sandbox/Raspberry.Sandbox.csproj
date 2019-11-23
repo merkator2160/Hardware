@@ -7,8 +7,8 @@
     <ProjectGuid>{E12C65CE-82F1-4051-B8F6-185CEC69119F}</ProjectGuid>
     <OutputType>winmdobj</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sandbox</RootNamespace>
-    <AssemblyName>Sandbox</AssemblyName>
+    <RootNamespace>Raspberry.Sandbox</RootNamespace>
+    <AssemblyName>Raspberry.Sandbox</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.17763.0</TargetPlatformVersion>
@@ -147,7 +147,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Sandbox_TemporaryKey.pfx" />
+    <None Include="Raspberry.Sandbox_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Raspberry.Common\Raspberry.Common.csproj">

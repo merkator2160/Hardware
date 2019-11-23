@@ -3,7 +3,7 @@ using System.Text;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
-namespace MqttSandbox.Units
+namespace Core.Sandbox.Units
 {
 	internal static class MqttUnit
 	{
@@ -26,11 +26,16 @@ namespace MqttSandbox.Units
 
 			client.Disconnect();
 		}
+
+
+		// HANDLERS ///////////////////////////////////////////////////////////////////////////////
 		private static void OnMqttMsgPublishReceived(Object sender, MqttMsgPublishEventArgs e)
 		{
 			Console.WriteLine(Encoding.UTF8.GetString(e.Message));
 		}
 
+
+		// SUPPORT FUNCTIONS //////////////////////////////////////////////////////////////////////
 		private static void Publish(MqttClient client, String value)
 		{
 			var strValue = Convert.ToString(value);

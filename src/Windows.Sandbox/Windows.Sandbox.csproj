@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{331B7D2B-F663-422C-AF93-1565305F4930}</ProjectGuid>
+    <ProjectGuid>{99836910-CD77-47D7-9D41-526B1C6BBC40}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ComListener</RootNamespace>
-    <AssemblyName>ComListener</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>Windows.Sandbox</RootNamespace>
+    <AssemblyName>Windows.Sandbox</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Units\ComListenerUnit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

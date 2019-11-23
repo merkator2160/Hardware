@@ -2,11 +2,11 @@
 using System.IO.Ports;
 using System.Threading;
 
-namespace ComListener
+namespace Windows.Sandbox.Units
 {
-	class Program
+	public static class ComListenerUnit
 	{
-		static void Main(String[] args)
+		public static void Run()
 		{
 			var availablePorts = SerialPort.GetPortNames();
 			using(var port = new SerialPort(availablePorts[0], 9200))
@@ -21,6 +21,9 @@ namespace ComListener
 				}
 			}
 		}
+
+
+		// HANDLERS ///////////////////////////////////////////////////////////////////////////////
 		private static void PortOnDataReceived(Object sender, SerialDataReceivedEventArgs serialDataReceivedEventArgs)
 		{
 			var serialPort = (SerialPort)sender;
