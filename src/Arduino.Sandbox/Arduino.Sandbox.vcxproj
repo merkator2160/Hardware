@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{447E62F8-ACF9-4199-B8CE-4642700880F6}</ProjectGuid>
     <RootNamespace>Arduino_Sandbox</RootNamespace>
-    <ProjectName>Sandbox</ProjectName>
+    <ProjectName>Arduino.Sandbox</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

@@ -8,8 +8,8 @@ namespace ComListener
 	{
 		static void Main(String[] args)
 		{
-			var avaliblePorts = SerialPort.GetPortNames();
-			using(var port = new SerialPort(avaliblePorts[0], 9200))
+			var availablePorts = SerialPort.GetPortNames();
+			using(var port = new SerialPort(availablePorts[0], 9200))
 			{
 				port.DataReceived += PortOnDataReceived;
 				while(true)
@@ -39,7 +39,7 @@ namespace ComListener
 			catch(Exception)
 			{
 				Console.Clear();
-				Console.WriteLine("Waiting for Arduino");
+				Console.WriteLine("Waiting for connection!");
 			}
 		}
 	}
