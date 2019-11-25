@@ -5,9 +5,9 @@ using System.Threading;
 using Windows.ApplicationModel.Background;
 using Windows.Devices.Pwm;
 
-namespace Sandbox.Units
+namespace Raspberry.Sandbox.Units
 {
-	public sealed class ServoUnit
+	internal sealed class ServoUnit
 	{
 		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
 		public void Run(IBackgroundTaskInstance taskInstance)

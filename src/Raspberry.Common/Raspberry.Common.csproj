@@ -123,6 +123,11 @@
     <Compile Include="Const\Hw354.cs" />
     <Compile Include="Const\LepinServo.cs" />
     <Compile Include="Const\Sg90.cs" />
+    <Compile Include="Drivers\Ssd1306\Display.cs" />
+    <Compile Include="Drivers\Ssd1306\DisplayFontClass.cs" />
+    <Compile Include="Drivers\Ssd1306\DisplayFontTable.cs" />
+    <Compile Include="Drivers\Ssd1306\DisplayImage.cs" />
+    <Compile Include="Drivers\Ssd1306\DisplayImages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ClassLibrary1.rd.xml" />
   </ItemGroup>
@@ -134,6 +139,7 @@
       <Version>6.2.9</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

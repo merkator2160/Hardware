@@ -3,7 +3,7 @@ using Windows.ApplicationModel.Background;
 using Windows.Devices.Gpio;
 using Windows.System.Threading;
 
-namespace Sandbox.Units
+namespace Raspberry.Sandbox.Units
 {
 	public sealed class BlinkyUnit
 	{
