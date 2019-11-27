@@ -129,6 +129,7 @@
     <Compile Include="Drivers\Ssd1306\DisplayImage.cs" />
     <Compile Include="Drivers\Ssd1306\DisplayImages.cs" />
     <Compile Include="Models\Exceptions\ControllerNotFoundException.cs" />
+    <Compile Include="Models\Exceptions\DeviceNotFoundException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ClassLibrary1.rd.xml" />
   </ItemGroup>

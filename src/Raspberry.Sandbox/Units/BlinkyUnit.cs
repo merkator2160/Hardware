@@ -15,6 +15,19 @@ namespace Raspberry.Sandbox.Units
 		private volatile Boolean _cancelRequested;
 
 
+		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
+		public void Run(IBackgroundTaskInstance taskInstance)
+		{
+			taskInstance.Canceled += OnCanceled;
+
+			deferral = taskInstance.GetDeferral();
+
+			_ledPin = GpioController.GetDefault().OpenPin(4);
+			_ledPin.Write(GpioPinValue.High);
+			_ledPin.SetDriveMode(GpioPinDriveMode.Output);
+
+			_timer = ThreadPoolTimer.CreatePeriodicTimer(OnTimerTick, TimeSpan.FromMilliseconds(500));
+		}
 
 
 		// HANDLERS ///////////////////////////////////////////////////////////////////////////////
@@ -34,25 +47,6 @@ namespace Raspberry.Sandbox.Units
 		private void OnCanceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason)
 		{
 			_cancelRequested = true;
-		}
-
-
-		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
-		public void Run(IBackgroundTaskInstance taskInstance)
-		{
-			taskInstance.Canceled += OnCanceled;
-
-			deferral = taskInstance.GetDeferral();
-
-			InitPins();
-
-			_timer = ThreadPoolTimer.CreatePeriodicTimer(OnTimerTick, TimeSpan.FromMilliseconds(500));
-		}
-		private void InitPins()
-		{
-			_ledPin = GpioController.GetDefault().OpenPin(4);
-			_ledPin.Write(GpioPinValue.High);
-			_ledPin.SetDriveMode(GpioPinDriveMode.Output);
 		}
 	}
 }

@@ -4,6 +4,7 @@ using Microsoft.IoT.Lightning.Providers;
 using System;
 using System.Threading;
 using Windows.ApplicationModel.Background;
+using Windows.Devices;
 using Windows.Devices.Pwm;
 
 namespace Raspberry.Sandbox.Units
@@ -13,6 +14,10 @@ namespace Raspberry.Sandbox.Units
 		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
 		public void Run(IBackgroundTaskInstance taskInstance)
 		{
+			// Direct memory mapped driver required
+			if(LightningProvider.IsLightningEnabled)
+				LowLevelDevicesController.DefaultProvider = LightningProvider.GetAggregateProvider();
+
 			var pwmControllers = PwmController.GetControllersAsync(LightningPwmProvider.GetPwmProvider()).GetAwaiter().GetResult();
 			if(pwmControllers == null)
 				throw new ControllerNotFoundException("There is no available controllers on the board!");
