@@ -2,19 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Background;
 using Windows.Devices.Enumeration;
 using Windows.Devices.I2c;
 
-namespace Raspberry.Sandbox.Units
+namespace Common.Helpers
 {
-	internal sealed class I2cScannerUnite
+	public static class I2cScanner
 	{
-		public void Run(IBackgroundTaskInstance taskInstance)
-		{
-			// Inbox driver required
-			var devices = FindDevicesAsync().GetAwaiter().GetResult();
-		}
 		public static async Task<Byte[]> FindDevicesAsync()
 		{
 			var returnValue = new List<Byte>();

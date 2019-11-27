@@ -8,7 +8,7 @@ using Windows.ApplicationModel.Background;
 
 namespace Raspberry.Sandbox.Units
 {
-	internal sealed class SoftServoUnite
+	internal sealed class SoftServoUnit
 	{
 		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
 		public void Run(IBackgroundTaskInstance taskInstance)

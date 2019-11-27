@@ -5,24 +5,28 @@ namespace Raspberry.Sandbox.Units
 {
 	internal sealed class Ssd1306Unit
 	{
-		private static Display display;
-
-
+		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
 		public void Run(IBackgroundTaskInstance taskInstance)
 		{
-			display = new Display();
-			display.Init(true);
+			using(var display = new Display())
+			{
+				display.Clear();
 
-			display.ClearDisplayBuf();
+				display.WriteImage(DisplayImages.Connected, 0, 0);
+				display.WriteLine("Hello", 1);
+				display.WriteLine("world", 2);
+				display.WriteLine("!", 3);
 
-			// Row 0, and image
-			display.WriteImageDisplayBuf(DisplayImages.Connected, 0, 0);
+				display.Refresh();
 
-			// Row 1 - 3
-			display.WriteLineDisplayBuf("Hello", 0, 1);
-			display.WriteLineDisplayBuf("World", 0, 2);
+				//Thread.Sleep(2000);
 
-			display.DisplayUpdate();
+				//display.TurnLightOff();
+
+				//Thread.Sleep(2000);
+
+				//display.TurnLightOn();
+			}
 		}
 	}
 }

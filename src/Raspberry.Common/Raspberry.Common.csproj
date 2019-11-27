@@ -123,12 +123,15 @@
     <Compile Include="Const\Hw354.cs" />
     <Compile Include="Const\LepinServo.cs" />
     <Compile Include="Const\Sg90.cs" />
+    <Compile Include="Drivers\Ssd1306\Command.cs" />
     <Compile Include="Drivers\Ssd1306\Display.cs" />
     <Compile Include="Drivers\Ssd1306\DisplayFontClass.cs" />
     <Compile Include="Drivers\Ssd1306\DisplayFontTable.cs" />
     <Compile Include="Drivers\Ssd1306\DisplayImage.cs" />
     <Compile Include="Drivers\Ssd1306\DisplayImages.cs" />
+    <Compile Include="Helpers\I2cScanner.cs" />
     <Compile Include="Models\Exceptions\ControllerNotFoundException.cs" />
+    <Compile Include="Models\Exceptions\DeviceException.cs" />
     <Compile Include="Models\Exceptions\DeviceNotFoundException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ClassLibrary1.rd.xml" />

@@ -11,13 +11,17 @@ namespace Raspberry.Sandbox.Units
 {
 	internal sealed class LightningServoUnit
 	{
+		public LightningServoUnit()
+		{
+			// Raspberry Pi direct memory mapped driver required
+			if(LightningProvider.IsLightningEnabled)
+				LowLevelDevicesController.DefaultProvider = LightningProvider.GetAggregateProvider();
+		}
+
+
 		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
 		public void Run(IBackgroundTaskInstance taskInstance)
 		{
-			// Direct memory mapped driver required
-			if(LightningProvider.IsLightningEnabled)
-				LowLevelDevicesController.DefaultProvider = LightningProvider.GetAggregateProvider();
-
 			var pwmControllers = PwmController.GetControllersAsync(LightningPwmProvider.GetPwmProvider()).GetAwaiter().GetResult();
 			if(pwmControllers == null)
 				throw new ControllerNotFoundException("There is no available controllers on the board!");

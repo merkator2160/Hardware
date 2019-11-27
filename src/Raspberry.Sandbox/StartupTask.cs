@@ -13,7 +13,7 @@ namespace Raspberry.Sandbox
 		{
 			deferral = taskInstance.GetDeferral();
 
-			new I2cScannerUnite().Run(taskInstance);
+			new Ssd1306Unit().Run(taskInstance);
 
 			deferral.Complete();
 		}
