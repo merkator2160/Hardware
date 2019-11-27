@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace Core.Sandbox.Units
 {
-	public static class ComListenerUnit
+	internal static class ComListenerUnit
 	{
 		private const Byte _portNumber = 8;
 		private const Int32 _portSpeed = 9600;
@@ -13,8 +13,8 @@ namespace Core.Sandbox.Units
 
 		public static void Run()
 		{
-			var devicePort = SerialPort.GetPortNames().First(p => p.Equals($"COM{_portNumber}"));
-			using(var port = new SerialPort(devicePort, _portSpeed))
+			var device = SerialPort.GetPortNames().First(p => p.Equals($"COM{_portNumber}"));
+			using(var port = new SerialPort(device, _portSpeed))
 			{
 				port.DataReceived += PortOnDataReceived;
 				while(true)

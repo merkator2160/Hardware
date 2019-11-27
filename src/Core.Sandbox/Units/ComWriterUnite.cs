@@ -3,20 +3,22 @@ using System.IO.Ports;
 using System.Linq;
 using System.Threading;
 
-namespace SerialPortWriter
+namespace Core.Sandbox.Units
 {
-	class Program
+	internal class ComWriterUnite
 	{
 		private static Int32 _led1 = 35;
 		private static Int32 _led2 = 11;
 
+		// Definitions for COM
+		private const Byte _portNumber = 8;
+		private const Int32 _portSpeed = 9600;
 
-		static void Main(String[] args)
+
+		public static void Run()
 		{
-			var availablePorts = SerialPort.GetPortNames();
-			var chosenPort = availablePorts.First(p => p.Contains("COM3"));
-
-			using(var port = new SerialPort(chosenPort, 9200)
+			var device = SerialPort.GetPortNames().First(p => p.Equals($"COM{_portNumber}"));
+			using(var port = new SerialPort(device, _portSpeed)
 			{
 				Handshake = Handshake.None
 			})
@@ -43,7 +45,7 @@ namespace SerialPortWriter
 		{
 			var serialPort = (SerialPort)sender;
 
-			var message = serialPort.ReadLine();
+			Console.WriteLine(serialPort.ReadLine());
 		}
 
 
