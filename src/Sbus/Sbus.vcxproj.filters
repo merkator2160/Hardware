@@ -18,15 +18,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Sbus.ino" />
-    <None Include="servo.ino" />
-    <None Include="config.ino" />
     <None Include="futabaSbusExample.ino">
       <Filter>Examples</Filter>
     </None>
     <None Include="streamingExample.ino">
       <Filter>Examples</Filter>
     </None>
+    <None Include="servo.ino">
+      <Filter>Examples</Filter>
+    </None>
+    <None Include="Sbus.ino">
+      <Filter>Examples</Filter>
+    </None>
+    <None Include="..\Arduino.Sandbox\Sbus.ino" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.Sbus.vsarduino.h">
@@ -38,7 +42,7 @@
     <ClInclude Include="FUTABA_SBUS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Streaming.h">
+    <ClInclude Include="__vm\.Arduino.Sandbox.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -46,8 +50,5 @@
     <ClCompile Include="FUTABA_SBUS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="keywords.txt" />
   </ItemGroup>
 </Project>

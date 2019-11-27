@@ -98,6 +98,7 @@
     <Compile Include="StartupTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Units\BlinkyUnit.cs" />
+    <Compile Include="Units\I2cListenerUnite.cs" />
     <Compile Include="Units\I2cScannerUnit.cs" />
     <Compile Include="Units\LepinServoUnit.cs" />
     <Compile Include="Units\MotorUnit.cs" />

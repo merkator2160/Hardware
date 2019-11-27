@@ -96,11 +96,6 @@
     <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Sandbox.ino">
-      <FileType>CppCode</FileType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\Sbus\FUTABA_SBUS.h" />
     <ClInclude Include="C:\Users\MERKATOR\AppData\Local\Temp\Rar$DRa11024.45275\Streaming\Streaming.h" />
     <ClInclude Include="__vm\.Arduino.Sandbox.vsarduino.h" />

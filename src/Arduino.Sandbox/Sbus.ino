@@ -1,3 +1,5 @@
+#include <EEPROM.h>
+#include "fdhs.h"
 #include "Streaming.h"
 #include "FUTABA_SBUS.h"
 

@@ -36,8 +36,7 @@ namespace Common.Helpers
 
 					try
 					{
-						var writeBuffer = new Byte[1] { 0 };
-						device.Write(writeBuffer);
+						device.Write(new Byte[1] { 0 });
 						returnValue.Add(address);
 					}
 					catch { }   // If the address is invalid, an exception will be thrown

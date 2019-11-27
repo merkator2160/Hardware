@@ -1,3 +1,4 @@
+#include <Streaming.h>
 #include <config.h>
 #include <FUTABA_SBUS.h>
 

@@ -29,9 +29,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Sandbox.ino" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\Sbus\FUTABA_SBUS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

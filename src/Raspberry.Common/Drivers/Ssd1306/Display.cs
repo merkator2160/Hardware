@@ -26,17 +26,20 @@ namespace Common.Drivers.Ssd1306
 		private readonly Byte[,] _displayBuffer = new Byte[_screenWidthPx, _screenHeightPixels];                     // A local buffer we use to store graphics data for the screen
 
 		// Definitions for I2C
+		private const Byte _defaultAddress = 0x3C;
 		private const String _i2cControllerName = "I2C1";
+		private readonly Byte _address;
 		private I2cDevice _displayI2c;
-		private const Byte _address = 0x3C;
 
 
-		public Display() : this(false)
+		public Display() : this(_defaultAddress, false)
 		{
 
 		}
-		public Display(Boolean proceedOnFail)
+		public Display(Byte address, Boolean proceedOnFail)
 		{
+			_address = address;
+
 			InitI2cDevice(proceedOnFail);
 			InitDisplay(proceedOnFail);
 		}
