@@ -1,16 +1,20 @@
-﻿using SbusListener.Helpers;
-using SbusListener.Sbus;
-using SbusListener.Sbus.Models;
+﻿using Core.Sandbox.Units.SbusSoftwareDecoder.Helpers;
+using Core.Sandbox.Units.SbusSoftwareDecoder.Sbus;
+using Core.Sandbox.Units.SbusSoftwareDecoder.Sbus.Models;
 using System;
 using System.IO;
 using System.IO.Ports;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace SbusListener
+namespace Core.Sandbox.Units.SbusSoftwareDecoder
 {
-	class Program
+	internal static class SbusSoftwareDecoderUnite
 	{
+		private const Byte _portNumber = 8;
+		private const Int32 _portSpeed = 100000;
+
 		private static String _bufferLogFilePath;
 		private static String _channelValuesFilePath;
 		private static Int32 _messageCount;
@@ -18,7 +22,7 @@ namespace SbusListener
 		private static SbusConverter _converter;
 
 
-		static void Main(String[] args)
+		public static void Run()
 		{
 			_bufferLogFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "SbusStream.txt");
 			if(File.Exists(_bufferLogFilePath))
@@ -65,12 +69,12 @@ namespace SbusListener
 			}
 		}
 
-		// 115200
+
 		// SUPPORT FUNCTIONS //////////////////////////////////////////////////////////////////////
 		private static void OpenPort()
 		{
-			var availablePorts = SerialPort.GetPortNames();
-			using(var port = new SerialPort(availablePorts[2], 100000, Parity.None, 8, StopBits.One)
+			var device = SerialPort.GetPortNames().First(p => p.Equals($"COM{_portNumber}"));
+			using(var port = new SerialPort(device, _portSpeed, Parity.None, 8, StopBits.One)
 			{
 				Handshake = Handshake.None
 			})

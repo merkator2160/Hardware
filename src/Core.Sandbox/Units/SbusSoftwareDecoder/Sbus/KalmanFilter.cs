@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SbusListener.Sbus
+namespace Core.Sandbox.Units.SbusSoftwareDecoder.Sbus
 {
 	public class KalmanFilter
 	{

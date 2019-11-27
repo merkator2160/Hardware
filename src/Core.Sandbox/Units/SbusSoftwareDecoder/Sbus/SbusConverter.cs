@@ -1,10 +1,10 @@
-﻿using SbusListener.Sbus.Models;
+﻿using Core.Sandbox.Units.SbusSoftwareDecoder.Sbus.Models;
 using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 
-namespace SbusListener.Sbus
+namespace Core.Sandbox.Units.SbusSoftwareDecoder.Sbus
 {
 	/// <summary>
 	/// https://github.com/bolderflight/SBUS

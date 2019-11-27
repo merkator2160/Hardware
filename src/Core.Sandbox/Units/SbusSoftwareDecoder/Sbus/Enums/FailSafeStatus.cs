@@ -1,4 +1,4 @@
-﻿namespace SbusListener.Sbus.Enums
+﻿namespace Core.Sandbox.Units.SbusSoftwareDecoder.Sbus.Enums
 {
 	public enum FailSafeStatus
 	{

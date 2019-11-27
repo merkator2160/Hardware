@@ -1,17 +1,20 @@
-﻿using SbusHardwareDecoder.Models;
+﻿using Core.Sandbox.Units.SbusHardwareDecoder.Models;
 using System;
 using System.IO.Ports;
 using System.Linq;
 using System.Threading;
 
-namespace SbusHardwareDecoder
+namespace Core.Sandbox.Units.SbusHardwareDecoder
 {
-	class Program
+	internal static class SbusHardwareDecoderUnit
 	{
-		static void Main(String[] args)
+		private const Byte _portNumber = 8;
+		private const Int32 _portSpeed = 115200;
+
+		public static void Run()
 		{
-			var availablePorts = SerialPort.GetPortNames();
-			using(var port = new SerialPort(availablePorts[0], 115200)
+			var device = SerialPort.GetPortNames().First(p => p.Equals($"COM{_portNumber}"));
+			using(var port = new SerialPort(device, _portSpeed)
 			{
 				Handshake = Handshake.None
 			})

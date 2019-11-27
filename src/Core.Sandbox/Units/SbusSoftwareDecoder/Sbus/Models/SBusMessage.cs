@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SbusListener.Sbus.Models
+namespace Core.Sandbox.Units.SbusSoftwareDecoder.Sbus.Models
 {
 	public class SBusMessage
 	{

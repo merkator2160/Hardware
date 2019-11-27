@@ -1,10 +1,9 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SbusListener.Helpers
+namespace Core.Sandbox.Units.SbusSoftwareDecoder.Helpers
 {
 	public static class FileHelper
 	{
