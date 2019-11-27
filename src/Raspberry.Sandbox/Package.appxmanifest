@@ -7,7 +7,7 @@
   xmlns:iot="http://schemas.microsoft.com/appx/manifest/iot/windows10"
   IgnorableNamespaces="uap mp iot">
 
-  <Identity
+	<Identity
     Name="Raspberry.Sandbox-uwp"
     Publisher="CN=MERKATOR"
     Version="1.0.0.0" />
@@ -52,5 +52,7 @@
 
   <Capabilities>
     <Capability Name="internetClient" />
+    <iot:Capability Name="lowLevelDevices" />
+    <DeviceCapability Name="109b86ad-f53d-4b76-aa5f-821e2ddf2141"/>
   </Capabilities>
 </Package>

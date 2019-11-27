@@ -1,24 +1,30 @@
 ﻿using Common.Const;
-using Microsoft.IoT.Lightning.Providers;
+using Microsoft.IoT.DeviceCore.Pwm;
+using Microsoft.IoT.Devices.Pwm;
 using System;
+using System.Linq;
 using System.Threading;
 using Windows.ApplicationModel.Background;
-using Windows.Devices.Pwm;
 
 namespace Raspberry.Sandbox.Units
 {
-	internal sealed class ServoUnit
+	internal sealed class SoftServoUnite
 	{
 		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
 		public void Run(IBackgroundTaskInstance taskInstance)
 		{
-			var pwmControllers = PwmController.GetControllersAsync(LightningPwmProvider.GetPwmProvider()).GetAwaiter().GetResult();
-			if(pwmControllers != null)
+			using(var pwmManager = new PwmProviderManager())
 			{
-				var pwmController = pwmControllers[1];
-				pwmController.SetDesiredFrequency(50);
+				pwmManager.Providers.Add(new SoftPwm());
 
+				var pwmControllers = pwmManager.GetControllersAsync().GetAwaiter().GetResult();
+				if(pwmControllers == null)
+					return;
+
+				var pwmController = pwmControllers.First();
 				var servoGpioPin = pwmController.OpenPin(5);
+
+				pwmController.SetDesiredFrequency(50);
 
 				const Double _stepSize = 0.001;
 				const Int32 _stepDelay = 10;
