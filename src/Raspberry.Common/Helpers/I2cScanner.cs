@@ -23,20 +23,18 @@ namespace Common.Helpers
 
 			for(Byte address = minimumAddress; address <= maximumAddress; address++)
 			{
-				var settings = new I2cConnectionSettings(address)
+				using(var device = await I2cDevice.FromIdAsync(dis[0].Id, new I2cConnectionSettings(address)
 				{
 					BusSpeed = I2cBusSpeed.FastMode,
 					SharingMode = I2cSharingMode.Shared
-				};
-
-				using(var device = await I2cDevice.FromIdAsync(dis[0].Id, settings))
+				}))
 				{
 					if(device == null)
 						continue;
 
 					try
 					{
-						device.Write(new Byte[1] { 0 });
+						device.Write(new Byte[] { 0 });
 						returnValue.Add(address);
 					}
 					catch { }   // If the address is invalid, an exception will be thrown

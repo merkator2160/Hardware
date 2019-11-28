@@ -30,8 +30,6 @@ void loop()
 {
 	readChannels();
 	printToSerialAsJson();
-
-	Serial << "\n";
 }
 void readChannels()
 {
@@ -47,6 +45,8 @@ void readChannels()
 }
 void printToSerialAsJson()
 {
+	//Serial << sizeof(channels);
+
 	Serial
 		<< "["
 		<< channels[0] << ","
@@ -59,6 +59,8 @@ void printToSerialAsJson()
 		<< channels[7] << ","
 		<< channels[8]
 		<< "]";
+
+	Serial << "\n";
 }
 
 
@@ -71,6 +73,6 @@ void receiveEvent(int howMany)
 {
 	for (int i = 0; i < howMany; i++)
 	{
-		Serial << Wire.read();
-	}	
+		Serial << Wire.read() << "\n";
+	}
 }
