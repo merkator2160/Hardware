@@ -129,6 +129,7 @@
     <Compile Include="Drivers\Ssd1306\DisplayFontTable.cs" />
     <Compile Include="Drivers\Ssd1306\DisplayImage.cs" />
     <Compile Include="Drivers\Ssd1306\DisplayImages.cs" />
+    <Compile Include="Helpers\ArrayConverter.cs" />
     <Compile Include="Helpers\I2cScanner.cs" />
     <Compile Include="Models\Exceptions\ControllerNotFoundException.cs" />
     <Compile Include="Models\Exceptions\DeviceException.cs" />

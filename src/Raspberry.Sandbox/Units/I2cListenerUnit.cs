@@ -1,8 +1,8 @@
-﻿using Common.Models.Exceptions;
+﻿using Common.Helpers;
+using Common.Models.Exceptions;
 using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Windows.Devices.Enumeration;
@@ -57,20 +57,8 @@ namespace Raspberry.Sandbox.Units
 			var buffer = new Byte[18];
 
 			pwmDevice.Read(buffer);
-			return ConvertBufferInt16(buffer);
-		}
-		private static Int16[] ConvertBufferInt16(Byte[] buffer)
-		{
-			const Byte intSize = 2;
-			var values = new Int16[buffer.Length / intSize];
 
-			for(var i = 0; i < values.Length; i++)
-			{
-				var currentInt = buffer.Skip(i * intSize).Take(intSize).ToArray();
-				values[i] = BitConverter.ToInt16(currentInt, 0);
-			}
-
-			return values;
+			return buffer.ToInt16();
 		}
 	}
 }
