@@ -45,8 +45,6 @@ void readChannels()
 }
 void printToSerialAsJson()
 {
-	//Serial << sizeof(channels);
-
 	Serial
 		<< "["
 		<< channels[0] << ","
