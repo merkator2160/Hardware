@@ -29,7 +29,7 @@ void setup()
 void loop()
 {
 	readChannels();
-	printToSerialAsJson();
+	printChannelsToSerialAsJson();
 }
 void readChannels()
 {
@@ -43,7 +43,7 @@ void readChannels()
 	channels[7] = pulseIn(9, HIGH);
 	channels[8] = pulseIn(10, HIGH);
 }
-void printToSerialAsJson()
+void printChannelsToSerialAsJson()
 {
 	Serial
 		<< "["
