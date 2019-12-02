@@ -1,0 +1,182 @@
+{
+  "name": "",
+  "patches": {
+    "@/main": {
+      "links": {
+        "Bkoxbl88H": {
+          "id": "Bkoxbl88H",
+          "input": {
+            "nodeId": "S1SkWgUIH",
+            "pinKey": "HkXK-dGob"
+          },
+          "output": {
+            "nodeId": "B1eeZgLUr",
+            "pinKey": "BkvDEzR1Om"
+          }
+        },
+        "Bymebl88S": {
+          "id": "Bymebl88S",
+          "input": {
+            "nodeId": "Sy1Jge8Ir",
+            "pinKey": "H1bLN9F-b"
+          },
+          "output": {
+            "nodeId": "B1eeZgLUr",
+            "pinKey": "BkvDEzR1Om"
+          }
+        },
+        "H1UpgeUIS": {
+          "id": "H1UpgeUIS",
+          "input": {
+            "nodeId": "Skw3elUIH",
+            "pinKey": "Bk1C_4rPQ"
+          },
+          "output": {
+            "nodeId": "Byrpkg8Ir",
+            "pinKey": "HJU8CE2lW"
+          }
+        },
+        "HJ5IWe8IB": {
+          "id": "HJ5IWe8IB",
+          "input": {
+            "nodeId": "Sy1Jge8Ir",
+            "pinKey": "HkMi4t8xX"
+          },
+          "output": {
+            "nodeId": "Skw3elUIH",
+            "pinKey": "rkU6dErPQ"
+          }
+        },
+        "SJnRxlIIB": {
+          "id": "SJnRxlIIB",
+          "input": {
+            "nodeId": "ryq6lgLUS",
+            "pinKey": "HkXK-dGob"
+          },
+          "output": {
+            "nodeId": "H116JxL8H",
+            "pinKey": "BkvDEzR1Om"
+          }
+        },
+        "SkHg-gLIB": {
+          "id": "SkHg-gLIB",
+          "input": {
+            "nodeId": "B1eeZgLUr",
+            "pinKey": "Hy_D4G0JOX"
+          },
+          "output": {
+            "nodeId": "rJkR1x8UH",
+            "pinKey": "r1ZqKlXPX"
+          }
+        },
+        "SkJfgxU8B": {
+          "id": "SkJfgxU8B",
+          "input": {
+            "nodeId": "Sy1Jge8Ir",
+            "pinKey": "B1TSE9tZ-"
+          },
+          "output": {
+            "nodeId": "H116JxL8H",
+            "pinKey": "BkvDEzR1Om"
+          }
+        },
+        "SyW1-e8IS": {
+          "id": "SyW1-e8IS",
+          "input": {
+            "nodeId": "H116JxL8H",
+            "pinKey": "Hy_D4G0JOX"
+          },
+          "output": {
+            "nodeId": "Skw3elUIH",
+            "pinKey": "BklE_1edQ"
+          }
+        }
+      },
+      "nodes": {
+        "B1eeZgLUr": {
+          "id": "B1eeZgLUr",
+          "position": {
+            "x": 11,
+            "y": 4,
+            "units": "slots"
+          },
+          "type": "xod/datetime/format-timestamp"
+        },
+        "Byrpkg8Ir": {
+          "id": "Byrpkg8Ir",
+          "position": {
+            "x": 12,
+            "y": 1,
+            "units": "slots"
+          },
+          "type": "xod/core/clock"
+        },
+        "H116JxL8H": {
+          "id": "H116JxL8H",
+          "position": {
+            "x": 10,
+            "y": 4,
+            "units": "slots"
+          },
+          "type": "xod/datetime/format-timestamp"
+        },
+        "S1SkWgUIH": {
+          "id": "S1SkWgUIH",
+          "position": {
+            "x": 14,
+            "y": 5,
+            "units": "slots"
+          },
+          "size": {
+            "height": 1,
+            "width": 3,
+            "units": "slots"
+          },
+          "type": "xod/debug/watch"
+        },
+        "Skw3elUIH": {
+          "id": "Skw3elUIH",
+          "position": {
+            "x": 10,
+            "y": 2,
+            "units": "slots"
+          },
+          "type": "xod-dev/ds-rtc/rtc"
+        },
+        "Sy1Jge8Ir": {
+          "id": "Sy1Jge8Ir",
+          "position": {
+            "x": 8,
+            "y": 5,
+            "units": "slots"
+          },
+          "type": "xod/common-hardware/text-lcd-16x2-i2c"
+        },
+        "rJkR1x8UH": {
+          "id": "rJkR1x8UH",
+          "position": {
+            "x": 15,
+            "y": 3,
+            "units": "slots"
+          },
+          "type": "xod/datetime/datetime"
+        },
+        "ryq6lgLUS": {
+          "id": "ryq6lgLUS",
+          "position": {
+            "x": 4,
+            "y": 5,
+            "units": "slots"
+          },
+          "size": {
+            "height": 1,
+            "width": 3,
+            "units": "slots"
+          },
+          "type": "xod/debug/watch"
+        }
+      },
+      "path": "@/main"
+    }
+  }
+}

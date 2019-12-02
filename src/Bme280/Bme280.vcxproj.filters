@@ -13,11 +13,17 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>xml;json;txt;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Examples">
+      <UniqueIdentifier>{ad35e95d-3667-40a9-ac47-38f977d81ad4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Bme280.ino" />
     <None Include="src\arduino folders read me.txt">
       <Filter>Misc Files</Filter>
+    </None>
+    <None Include="..\..\..\..\Arduino\Bme280\Bme280 example.ino">
+      <Filter>Examples</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
