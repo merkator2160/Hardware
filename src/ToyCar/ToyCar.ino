@@ -10,7 +10,8 @@ const uint8_t _rightEnginePin2 = 6;
 const uint8_t _leftEnginePin1 = 9;
 const uint8_t _leftEnginePin2 = 10;
 
-const uint8_t _joystickActivityConstrain = 30;
+const uint8_t _joystickActivityConstrain = 50;
+const uint8_t _joystickPullUpThreshold = 100;
 
 const uint16_t _stickCentralValue = 1500;
 const uint16_t _stickMinValue = 1000;
@@ -34,8 +35,15 @@ void setup()
 // FUNCTIONS //////////////////////////////////////////////////////////////////////////////////////
 void loop() 
 {
-	int pitchChannel = pulseIn(_pitchChannelPin, HIGH);
-	int rollChannel = pulseIn(_rollChannelPin, HIGH);	
+	delay(100);
+
+	uint16_t pitchChannel = pulseIn(_pitchChannelPin, HIGH);
+	uint16_t rollChannel = pulseIn(_rollChannelPin, HIGH);
+
+	//Serial << pitchChannel << "," << rollChannel << "\n";		
+
+	pitchChannel = pullupChannel(pitchChannel);
+	rollChannel = pullupChannel(rollChannel);
 
 	//Serial << pitchChannel << "," << rollChannel << "\n";
 
@@ -70,14 +78,12 @@ void loop()
 
 	//Serial << "moveStright" << "\n";
 	
-	moveStright(pitchChannel);
-
-	delay(100);
+	moveStright(pitchChannel);	
 }
 
 
 // ACTIONS ////////////////////////////////////////////////////////////////////////////////////////
-void moveBoth(int pitchChannel, int rollChannel)
+void moveBoth(uint16_t pitchChannel, uint16_t rollChannel)
 {
 	auto xSpeed = calculateSpeed(pitchChannel, 127);
 	auto ySpeed = calculateSpeed(rollChannel, 127);
@@ -89,8 +95,8 @@ void moveBoth(int pitchChannel, int rollChannel)
 
 	if (isMovingForward && isMovingRight)
 	{
-		auto rightSpeed = xSpeed - ySpeed;
-		auto leftSpeed = xSpeed + ySpeed;
+		auto rightSpeed = xSpeed + ySpeed;
+		auto leftSpeed = xSpeed - ySpeed;
 
 		rightForward(rightSpeed);
 		leftForward(leftSpeed);
@@ -102,8 +108,8 @@ void moveBoth(int pitchChannel, int rollChannel)
 
 	if (isMovingForward && !isMovingRight)
 	{
-		auto rightSpeed = xSpeed + ySpeed;
-		auto leftSpeed = xSpeed - ySpeed;
+		auto rightSpeed = xSpeed - ySpeed;
+		auto leftSpeed = xSpeed + ySpeed;
 
 		rightForward(rightSpeed);
 		leftForward(leftSpeed);
@@ -137,7 +143,7 @@ void moveBoth(int pitchChannel, int rollChannel)
 		//Serial << rightSpeed << "," << leftSpeed << "\n";
 	}	
 }
-void moveStright(int pitchChannel)
+void moveStright(uint16_t pitchChannel)
 {
 	auto xSpeed = calculateSpeed(pitchChannel, 255);
 	auto isMovingForward = calculateDirection(pitchChannel);
@@ -152,7 +158,7 @@ void moveStright(int pitchChannel)
 		leftBackward(xSpeed);
 	}
 }
-void moveCircle(int rollChannel)
+void moveCircle(uint16_t rollChannel)
 {
 	auto ySpeed = calculateSpeed(rollChannel, 255);
 	auto isMovingRight = calculateRotation(rollChannel);
@@ -186,22 +192,22 @@ void stop()
 	analogWrite(_leftEnginePin1, HIGH);
 	analogWrite(_leftEnginePin2, HIGH);
 }
-void rightForward(int speed)
+void rightForward(uint16_t speed)
 {
 	analogWrite(_rightEnginePin1, speed);
 	analogWrite(_rightEnginePin2, LOW);
 }
-void rightBackward(int speed)
+void rightBackward(uint16_t speed)
 {
 	analogWrite(_rightEnginePin1, LOW);
 	analogWrite(_rightEnginePin2, speed);
 }
-void leftForward(int speed)
+void leftForward(uint16_t speed)
 {
 	analogWrite(_leftEnginePin1, speed);
 	analogWrite(_leftEnginePin2, LOW);
 }
-void leftBackward(int speed)
+void leftBackward(uint16_t speed)
 {
 	analogWrite(_leftEnginePin1, LOW);
 	analogWrite(_leftEnginePin2, speed);
@@ -209,7 +215,7 @@ void leftBackward(int speed)
 
 
 // SUPPORT FUNCTIONS //////////////////////////////////////////////////////////////////////////////
-boolean isStickInTheCenter(int speedChannelValue)
+boolean isStickInTheCenter(uint16_t speedChannelValue)
 {
 	if (speedChannelValue > _stickCentralValue - _joystickActivityConstrain &&
 		speedChannelValue < _stickCentralValue + _joystickActivityConstrain)
@@ -217,24 +223,34 @@ boolean isStickInTheCenter(int speedChannelValue)
 
 	return false;
 }
-uint8_t calculateSpeed(int speedChannelValue, int maxValue)
+uint8_t calculateSpeed(uint16_t speedChannelValue, uint16_t maxValue)
 {
 	if (speedChannelValue > _stickCentralValue)
 		return map(speedChannelValue, _stickCentralValue, _stickMaxValue, 0, maxValue);
 
 	return map(speedChannelValue, _stickCentralValue, _stickMinValue, 0, maxValue);
 }
-boolean calculateDirection(int channelValue)
+boolean calculateDirection(uint16_t channelValue)
 {
 	if (channelValue <= _stickCentralValue)
 		return 1;
 
 	return 0;
 }
-boolean calculateRotation(int channelValue)
+boolean calculateRotation(uint16_t channelValue)
 {
 	if (channelValue <= _stickCentralValue)
 		return 0;
 
 	return 1;
+}
+uint16_t pullupChannel(uint16_t channelValue)
+{
+	if (channelValue > _stickMaxValue - _joystickPullUpThreshold)
+		return _stickMaxValue;
+
+	if (channelValue < _stickMinValue + _joystickPullUpThreshold)
+		return _stickMinValue;
+
+	return channelValue;
 }
