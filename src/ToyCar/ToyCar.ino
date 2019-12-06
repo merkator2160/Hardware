@@ -35,10 +35,13 @@ void setup()
 // FUNCTIONS //////////////////////////////////////////////////////////////////////////////////////
 void loop() 
 {
-	delay(100);
+	//delay(100);
 
 	uint16_t pitchChannel = pulseIn(_pitchChannelPin, HIGH);
 	uint16_t rollChannel = pulseIn(_rollChannelPin, HIGH);
+
+	if (isNoSignal(pitchChannel, rollChannel))
+		return;
 
 	//Serial << pitchChannel << "," << rollChannel << "\n";		
 
@@ -254,3 +257,10 @@ uint16_t pullupChannel(uint16_t channelValue)
 
 	return channelValue;
 }
+boolean isNoSignal(uint16_t pitchChannel, uint16_t rollChannel)
+{
+	if (pitchChannel == 0 || rollChannel == 0)
+		return true;
+
+	return false;
+}	// When car is started before controller. This is not not fail safe case.
