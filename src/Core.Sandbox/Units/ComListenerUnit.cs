@@ -7,13 +7,14 @@ namespace Core.Sandbox.Units
 {
 	internal static class ComListenerUnit
 	{
-		private const Byte _portNumber = 8;
-		private const Int32 _portSpeed = 9600;
+		private const Byte _portNumber = 9;
+		private const Int32 _portSpeed = 115200;
 
 
 		public static void Run()
 		{
-			var device = SerialPort.GetPortNames().First(p => p.Equals($"COM{_portNumber}"));
+			var serialPorts = SerialPort.GetPortNames();
+			var device = serialPorts.First(p => p.Equals($"COM{_portNumber}"));
 			using(var port = new SerialPort(device, _portSpeed))
 			{
 				port.DataReceived += PortOnDataReceived;

@@ -73,7 +73,8 @@ namespace Core.Sandbox.Units.SbusSoftwareDecoder
 		// SUPPORT FUNCTIONS //////////////////////////////////////////////////////////////////////
 		private static void OpenPort()
 		{
-			var device = SerialPort.GetPortNames().First(p => p.Equals($"COM{_portNumber}"));
+			var serialPorts = SerialPort.GetPortNames();
+			var device = serialPorts.First(p => p.Equals($"COM{_portNumber}"));
 			using(var port = new SerialPort(device, _portSpeed, Parity.None, 8, StopBits.One)
 			{
 				Handshake = Handshake.None

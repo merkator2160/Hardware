@@ -1,12 +1,13 @@
-﻿using Core.Sandbox.Units;
+﻿using Core.Sandbox.Units.SbusHardwareDecoder;
+using System;
 
 namespace Core.Sandbox
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static void Main(String[] args)
 		{
-			ComListenerUnit.Run();
+			SbusHardwareDecoderUnit.Run();
 		}
 	}
 }

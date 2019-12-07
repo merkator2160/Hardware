@@ -17,7 +17,8 @@ namespace Core.Sandbox.Units
 
 		public static void Run()
 		{
-			var device = SerialPort.GetPortNames().First(p => p.Equals($"COM{_portNumber}"));
+			var serialPorts = SerialPort.GetPortNames();
+			var device = serialPorts.First(p => p.Equals($"COM{_portNumber}"));
 			using(var port = new SerialPort(device, _portSpeed)
 			{
 				Handshake = Handshake.None
