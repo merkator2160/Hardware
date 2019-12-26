@@ -1,0 +1,14 @@
+{
+	"version": "0.2.0",
+	"adapter": "C:\\Program Files\\PuTTY\\plink.exe",
+	"adapterArgs": "pi@192.168.1.25 -pw 4815162342 -batch -T ~/vsdbg/vsdbg --interpreter=vscode",
+	"configurations": [
+		{
+			"name": ".NET Core Launch",
+			"type": "coreclr",
+			"cwd": "~/Debug",
+			"program": "~/Debug/Raspbian.Test.dll",
+			"request": "launch"
+		}
+	]
+}

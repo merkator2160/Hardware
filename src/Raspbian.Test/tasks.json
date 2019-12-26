@@ -1,0 +1,25 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "publish",
+			"command": "dotnet",
+			"type": "process",
+			"args": [ "publish", "${workspaceFolder}/Raspbian.Test.csproj" ]
+		},
+		{
+			"label": "copy-to-device",
+			"dependsOn": "publish",
+			"command": "scp",
+			"type": "process",
+			"args": [ "-r", "-v", "${workspaceFolder}/bin/Debug/netcoreapp2.1/publish/.", "<target_user>@<target_ip>:~/DemoProject/" ]
+		},
+		{
+			"taskName": "List Outputs",
+			"appliesTo": "*",
+			"type": "default",
+			"command": "${env.COMSPEC}",
+			"args": [ "dir ${outDir}" ]
+		}
+	]
+}
