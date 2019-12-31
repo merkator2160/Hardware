@@ -101,6 +101,8 @@
     <Compile Include="Units\I2cListenerUnit.cs" />
     <Compile Include="Units\I2cScannerUnit.cs" />
     <Compile Include="Units\I2cEchoUnit.cs" />
+    <Compile Include="Units\Lcd1602Unit.cs" />
+    <Compile Include="Units\Lcd2004Unit.cs" />
     <Compile Include="Units\LepinServoUnit.cs" />
     <Compile Include="Units\MotorUnit.cs" />
     <Compile Include="Units\SoftServoUnit.cs" />

@@ -24,16 +24,11 @@ namespace Common.Drivers.Ssd1306
 		private const UInt32 _screenWidthPx = 128;                         // Number of horizontal pixels on the display
 		private const UInt32 _screenHeightPx = 64;                         // Number of vertical pixels on the display
 		private const UInt32 _screenHeightPixels = _screenHeightPx / 8;    // The vertical pixels on this display are arranged into 'pages' of 8 pixels each
-		private const Byte _defaultAddress = 60;
 
 		private readonly Byte[,] _displayBuffer = new Byte[_screenWidthPx, _screenHeightPixels];    // A local buffer we use to store graphics data for the screen
 		private readonly I2cDevice _displayI2c;
 
 
-		public Ssd1306DisplayDriver() : this(_defaultAddress)
-		{
-
-		}
 		public Ssd1306DisplayDriver(Byte address)
 		{
 			_displayI2c = I2cScanner.GetDeviceAsync(address).GetAwaiter().GetResult();

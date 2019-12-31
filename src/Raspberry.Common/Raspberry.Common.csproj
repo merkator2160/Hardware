@@ -123,6 +123,18 @@
     <Compile Include="Const\Hw354.cs" />
     <Compile Include="Const\LepinServo.cs" />
     <Compile Include="Const\Sg90.cs" />
+    <Compile Include="Drivers\Lcd\Flags\ControlByteFlags.cs" />
+    <Compile Include="Drivers\Lcd\Flags\DisplayControl.cs" />
+    <Compile Include="Drivers\Lcd\Flags\DisplayEntryMode.cs" />
+    <Compile Include="Drivers\Lcd\Flags\DisplayShift.cs" />
+    <Compile Include="Drivers\Lcd\Flags\DisplayFunction.cs" />
+    <Compile Include="Drivers\Lcd\Flags\Registers.cs" />
+    <Compile Include="Drivers\Lcd\Hd44780Driver.cs" />
+    <Compile Include="Drivers\Lcd\Interfaces\ILcd.cs" />
+    <Compile Include="Drivers\Lcd\LcdInterfaceBase.cs" />
+    <Compile Include="Drivers\Lcd\LcdInterfaceI2c.cs" />
+    <Compile Include="Drivers\Lcd\LcdInterfaceI2c4Bit.cs" />
+    <Compile Include="Drivers\Lcd\LcdRgbDriver.cs" />
     <Compile Include="Drivers\Ssd1306\Interfaces\ISsd1306Display.cs" />
     <Compile Include="Drivers\UpsHat\Interfaces\IUpsHat.cs" />
     <Compile Include="Drivers\UpsHat\UpsHatDriver.cs" />
@@ -133,6 +145,7 @@
     <Compile Include="Drivers\Ssd1306\DisplayImage.cs" />
     <Compile Include="Drivers\Ssd1306\DisplayImages.cs" />
     <Compile Include="Helpers\ArrayConverter.cs" />
+    <Compile Include="Helpers\DelayHelper.cs" />
     <Compile Include="Helpers\I2cScanner.cs" />
     <Compile Include="Models\Exceptions\ControllerNotFoundException.cs" />
     <Compile Include="Models\Exceptions\DeviceException.cs" />
@@ -151,7 +164,9 @@
       <Version>12.0.3</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
