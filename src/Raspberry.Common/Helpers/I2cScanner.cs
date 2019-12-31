@@ -9,7 +9,7 @@ namespace Common.Helpers
 {
 	public static class I2cScanner
 	{
-		public static async Task<Byte[]> FindDevicesAsync()
+		public static async Task<Byte[]> ScanBusAsync()
 		{
 			var returnValue = new List<Byte>();
 			var deviceSelector = I2cDevice.GetDeviceSelector();
@@ -55,7 +55,7 @@ namespace Common.Helpers
 				SharingMode = I2cSharingMode.Exclusive
 			});
 			if(device == null)
-				throw new DeviceNotFoundException("PWM reader was not found!");
+				throw new DeviceNotFoundException($"Device with address: {address} was not found!");
 
 			return device;
 		}

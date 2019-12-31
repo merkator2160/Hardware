@@ -123,8 +123,11 @@
     <Compile Include="Const\Hw354.cs" />
     <Compile Include="Const\LepinServo.cs" />
     <Compile Include="Const\Sg90.cs" />
+    <Compile Include="Drivers\Ssd1306\Interfaces\ISsd1306Display.cs" />
+    <Compile Include="Drivers\UpsHat\Interfaces\IUpsHat.cs" />
+    <Compile Include="Drivers\UpsHat\UpsHatDriver.cs" />
     <Compile Include="Drivers\Ssd1306\Command.cs" />
-    <Compile Include="Drivers\Ssd1306\Display.cs" />
+    <Compile Include="Drivers\Ssd1306\Ssd1306DisplayDriver.cs" />
     <Compile Include="Drivers\Ssd1306\DisplayFontClass.cs" />
     <Compile Include="Drivers\Ssd1306\DisplayFontTable.cs" />
     <Compile Include="Drivers\Ssd1306\DisplayImage.cs" />

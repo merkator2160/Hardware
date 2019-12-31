@@ -1,6 +1,7 @@
-﻿using Common.Models.Exceptions;
+﻿using Common.Drivers.Ssd1306.Interfaces;
+using Common.Helpers;
+using Common.Models.Exceptions;
 using System;
-using Windows.Devices.Enumeration;
 using Windows.Devices.I2c;
 
 namespace Common.Drivers.Ssd1306
@@ -18,34 +19,30 @@ namespace Common.Drivers.Ssd1306
 	/// 
 	/// For DIYMall branded OLEDs the I2C address is 0x3C.  It may vary by manufacturer and can be changed down below.
 	/// </summary>
-	public class Display : IDisposable
+	public class Ssd1306DisplayDriver : ISsd1306Display, IDisposable
 	{
 		private const UInt32 _screenWidthPx = 128;                         // Number of horizontal pixels on the display
 		private const UInt32 _screenHeightPx = 64;                         // Number of vertical pixels on the display
 		private const UInt32 _screenHeightPixels = _screenHeightPx / 8;    // The vertical pixels on this display are arranged into 'pages' of 8 pixels each
-		private readonly Byte[,] _displayBuffer = new Byte[_screenWidthPx, _screenHeightPixels];                     // A local buffer we use to store graphics data for the screen
+		private const Byte _defaultAddress = 60;
 
-		// Definitions for I2C
-		private const Byte _defaultAddress = 0x3C;
-		private const String _i2cControllerName = "I2C1";
-		private readonly Byte _address;
-		private I2cDevice _displayI2c;
+		private readonly Byte[,] _displayBuffer = new Byte[_screenWidthPx, _screenHeightPixels];    // A local buffer we use to store graphics data for the screen
+		private readonly I2cDevice _displayI2c;
 
 
-		public Display() : this(_defaultAddress, false)
+		public Ssd1306DisplayDriver() : this(_defaultAddress)
 		{
 
 		}
-		public Display(Byte address, Boolean proceedOnFail)
+		public Ssd1306DisplayDriver(Byte address)
 		{
-			_address = address;
+			_displayI2c = I2cScanner.GetDeviceAsync(address).GetAwaiter().GetResult();
 
-			InitI2cDevice(proceedOnFail);
-			InitDisplay(proceedOnFail);
+			InitDisplay();
 		}
 
 
-		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
+		// ISsd1306Display ////////////////////////////////////////////////////////////////////////
 		public void Refresh()
 		{
 			SendCommand(Command.ResetColAddr);          // Reset the column address pointer back to 0
@@ -199,26 +196,7 @@ namespace Common.Drivers.Ssd1306
 
 
 		// SUPPORT FUNCTIONS //////////////////////////////////////////////////////////////////////
-		/// <summary>
-		/// Initialize GPIO, I2C, and the display 
-		/// The device may not respond to multiple Init calls without being power cycled
-		/// so we allow an optional boolean to excuse failures which is useful while debugging
-		/// without power cycling the display
-		/// </summary>
-		private async void InitI2cDevice(Boolean proceedOnFail)
-		{
-			var settings = new I2cConnectionSettings(_address)
-			{
-				BusSpeed = I2cBusSpeed.FastMode
-			};
-			var aqs = I2cDevice.GetDeviceSelector(_i2cControllerName);
-			var dis = await DeviceInformation.FindAllAsync(aqs);
-
-			_displayI2c = await I2cDevice.FromIdAsync(dis[0].Id, settings);
-			if(_displayI2c == null && !proceedOnFail)
-				throw new DeviceNotFoundException("No one I2C controllers was found!");
-		}
-		private void InitDisplay(Boolean proceedOnFail)
+		private void InitDisplay()
 		{
 			try
 			{
@@ -230,10 +208,7 @@ namespace Common.Drivers.Ssd1306
 			}
 			catch(Exception ex)
 			{
-				if(!proceedOnFail)
-				{
-					throw new DeviceException("Display Initialization Failed", ex);
-				}
+				throw new DeviceException("Display initialization failed!", ex);
 			}
 		}
 		private void SendData(Byte[] Data)

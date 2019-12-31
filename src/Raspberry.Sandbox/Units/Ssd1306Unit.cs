@@ -8,7 +8,7 @@ namespace Raspberry.Sandbox.Units
 		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
 		public void Run(IBackgroundTaskInstance taskInstance)
 		{
-			using(var display = new Display())
+			using(var display = new Ssd1306DisplayDriver())
 			{
 				display.Clear();
 

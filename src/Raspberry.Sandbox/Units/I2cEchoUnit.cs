@@ -23,7 +23,7 @@ namespace Raspberry.Sandbox.Units
 				var inputBuffer = new Byte[outputBuffer.Length];
 
 				i2cDevice.Write(outputBuffer);
-				//pwmDevice.WriteRead(outputBuffer, inputBuffer);
+				//i2cDevice.WriteRead(outputBuffer, inputBuffer);
 				i2cDevice.Read(inputBuffer);
 
 				foreach(var x in inputBuffer)
