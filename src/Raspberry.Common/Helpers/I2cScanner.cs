@@ -43,5 +43,21 @@ namespace Common.Helpers
 
 			return returnValue.ToArray();
 		}
+		public static async Task<I2cDevice> GetDeviceAsync(Int32 address)
+		{
+			var dis = await DeviceInformation.FindAllAsync(I2cDevice.GetDeviceSelector("I2C1"));
+			if(dis.Count <= 0)
+				throw new DeviceNotFoundException("No one I2C controllers was found!");
+
+			var device = await I2cDevice.FromIdAsync(dis[0].Id, new I2cConnectionSettings(address)
+			{
+				BusSpeed = I2cBusSpeed.FastMode,
+				SharingMode = I2cSharingMode.Exclusive
+			});
+			if(device == null)
+				throw new DeviceNotFoundException("PWM reader was not found!");
+
+			return device;
+		}
 	}
 }
