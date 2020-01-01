@@ -1,9 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-using Common.Helpers;
+﻿using Common.Helpers;
 using System;
+using System.Device.I2c;
 
 namespace Common.Drivers.Lcd
 {
@@ -92,9 +89,9 @@ namespace Common.Drivers.Lcd
 
 
 		// SUPPORT FUNCTIONS //////////////////////////////////////////////////////////////////////
-		public static LcdInterfaceBase CreateI2c(Int32 address, Boolean uses8Bit = true)
+		public static LcdInterfaceBase CreateI2c(Int32 address, Int32 busId = 1, Boolean uses8Bit = true)
 		{
-			var device = I2cScanner.GetDeviceAsync(address).GetAwaiter().GetResult();
+			var device = I2cDevice.Create(new I2cConnectionSettings(busId, address));
 			if(uses8Bit)
 				return new LcdInterfaceI2c(device);
 

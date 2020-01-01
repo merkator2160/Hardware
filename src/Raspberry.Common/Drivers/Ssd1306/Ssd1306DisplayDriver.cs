@@ -1,8 +1,7 @@
 ﻿using Common.Drivers.Ssd1306.Interfaces;
-using Common.Helpers;
 using Common.Models.Exceptions;
 using System;
-using Windows.Devices.I2c;
+using System.Device.I2c;
 
 namespace Common.Drivers.Ssd1306
 {
@@ -26,12 +25,12 @@ namespace Common.Drivers.Ssd1306
 		private const UInt32 _screenHeightPixels = _screenHeightPx / 8;    // The vertical pixels on this display are arranged into 'pages' of 8 pixels each
 
 		private readonly Byte[,] _displayBuffer = new Byte[_screenWidthPx, _screenHeightPixels];    // A local buffer we use to store graphics data for the screen
-		private readonly I2cDevice _displayI2c;
+		private readonly I2cDevice _device;
 
 
-		public Ssd1306DisplayDriver(Byte address)
+		public Ssd1306DisplayDriver(Byte address, Int32 busId = 1)
 		{
-			_displayI2c = I2cScanner.GetDeviceAsync(address).GetAwaiter().GetResult();
+			_device = I2cDevice.Create(new I2cConnectionSettings(busId, address));
 
 			InitDisplay();
 		}
@@ -212,7 +211,7 @@ namespace Common.Drivers.Ssd1306
 			Data.CopyTo(commandBuffer, 1);
 			commandBuffer[0] = 0x40; // display buffer register
 
-			_displayI2c.Write(commandBuffer);
+			_device.Write(commandBuffer);
 		}
 		private void SendCommand(Byte[] Command)
 		{
@@ -220,7 +219,7 @@ namespace Common.Drivers.Ssd1306
 			Command.CopyTo(commandBuffer, 1);
 			commandBuffer[0] = 0x00; // control register
 
-			_displayI2c.Write(commandBuffer);
+			_device.Write(commandBuffer);
 		}
 		private Byte[] Serialize(Byte[,] displayBuffer)
 		{
@@ -244,7 +243,7 @@ namespace Common.Drivers.Ssd1306
 		// IDisposable ////////////////////////////////////////////////////////////////////////////
 		public void Dispose()
 		{
-			_displayI2c?.Dispose();
+			_device?.Dispose();
 		}
 	}
 }

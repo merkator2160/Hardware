@@ -136,7 +136,7 @@ namespace Common.Drivers.Lcd
 		/// <param name="top">The row position from the top starting with 0.</param>
 		public void SetCursorPosition(Int32 left, Int32 top)
 		{
-			Int32 rows = _rowOffsets.Length;
+			var rows = _rowOffsets.Length;
 			if(top < 0 || top >= rows)
 			{
 				throw new ArgumentOutOfRangeException(nameof(top));
@@ -145,7 +145,7 @@ namespace Common.Drivers.Lcd
 			// Throw if we're given a negative left value or the calculated address would be
 			// larger than the max "good" address. Addressing is covered in detail in
 			// InitializeRowOffsets above.
-			Int32 newAddress = left + _rowOffsets[top];
+			var newAddress = left + _rowOffsets[top];
 			if(left < 0 || (rows == 1 && newAddress >= 80) || (rows > 1 && newAddress >= 104))
 			{
 				throw new ArgumentOutOfRangeException(nameof(left));
@@ -259,8 +259,8 @@ namespace Common.Drivers.Lcd
 		/// <param name="value">Text to be displayed.</param>
 		public void Write(String value)
 		{
-			Byte[] buffer = ArrayPool<Byte>.Shared.Rent(value.Length);
-			for(Int32 i = 0; i < value.Length; ++i)
+			var buffer = ArrayPool<Byte>.Shared.Rent(value.Length);
+			for(var i = 0; i < value.Length; ++i)
 			{
 				buffer[i] = (Byte)value[i];
 			}

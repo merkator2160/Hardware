@@ -1,10 +1,6 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-using Common.Drivers.Lcd.Flags;
+﻿using Common.Drivers.Lcd.Flags;
 using System;
-using Windows.Devices.I2c;
+using System.Device.I2c;
 
 namespace Common.Drivers.Lcd
 {
@@ -49,7 +45,7 @@ namespace Common.Drivers.Lcd
 				0x00,
 				command
 			};
-			_device.Write(buffer.ToArray());
+			_device.Write(buffer);
 		}
 		public override void SendCommands(ReadOnlySpan<Byte> commands)
 		{
@@ -64,7 +60,7 @@ namespace Common.Drivers.Lcd
 			Span<Byte> buffer = stackalloc Byte[commands.Length + 1];
 			buffer[0] = 0x00;
 			commands.CopyTo(buffer.Slice(1));
-			_device.Write(buffer.ToArray());
+			_device.Write(buffer);
 		}
 		public override void SendData(Byte value)
 		{
@@ -73,7 +69,7 @@ namespace Common.Drivers.Lcd
 				(Byte)ControlByteFlags.RegisterSelect,
 				value
 			};
-			_device.Write(buffer.ToArray());
+			_device.Write(buffer);
 		}
 		public override void SendData(ReadOnlySpan<Byte> values)
 		{
@@ -82,14 +78,14 @@ namespace Common.Drivers.Lcd
 			const Int32 MaxCopy = 20;
 			Span<Byte> buffer = stackalloc Byte[MaxCopy + 1];
 			buffer[0] = (Byte)ControlByteFlags.RegisterSelect;
-			Span<Byte> bufferData = buffer.Slice(1);
+			var bufferData = buffer.Slice(1);
 
 			while(values.Length > 0)
 			{
-				ReadOnlySpan<Byte> currentValues = values.Slice(0, values.Length > MaxCopy ? MaxCopy : values.Length);
+				var currentValues = values.Slice(0, values.Length > MaxCopy ? MaxCopy : values.Length);
 				values = values.Slice(currentValues.Length);
 				currentValues.CopyTo(bufferData);
-				_device.Write(buffer.Slice(0, currentValues.Length + 1).ToArray());
+				_device.Write(buffer.Slice(0, currentValues.Length + 1));
 			}
 		}
 

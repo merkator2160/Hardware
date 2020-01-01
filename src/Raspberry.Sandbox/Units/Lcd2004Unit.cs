@@ -9,7 +9,7 @@ namespace Raspberry.Sandbox.Units
 	{
 		public void Run(IBackgroundTaskInstance taskInstance)
 		{
-			using(var lcd = new Hd44780Driver(new Size(20, 4), LcdInterfaceBase.CreateI2c(39, false)))
+			using(var lcd = new Hd44780Driver(new Size(20, 4), LcdInterfaceBase.CreateI2c(39, 1, false)))
 			{
 				lcd.Clear();
 

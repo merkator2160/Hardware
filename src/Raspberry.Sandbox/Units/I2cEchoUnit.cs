@@ -17,7 +17,7 @@ namespace Raspberry.Sandbox.Units
 		}
 		public async Task RunAsync(IBackgroundTaskInstance taskInstance)
 		{
-			using(var i2cDevice = await I2cScanner.GetDeviceAsync(_arduinoAddress))
+			using(var i2cDevice = await I2cHelper.GetDeviceAsync(_arduinoAddress))
 			{
 				var outputBuffer = new Byte[] { 10, 11, 12 };
 				var inputBuffer = new Byte[outputBuffer.Length];

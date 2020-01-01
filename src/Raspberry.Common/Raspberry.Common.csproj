@@ -135,6 +135,13 @@
     <Compile Include="Drivers\Lcd\LcdInterfaceI2c.cs" />
     <Compile Include="Drivers\Lcd\LcdInterfaceI2c4Bit.cs" />
     <Compile Include="Drivers\Lcd\LcdRgbDriver.cs" />
+    <Compile Include="Drivers\Pca9685\Interfaces\IPca9685.cs" />
+    <Compile Include="Drivers\Pca9685\Pca9685Driver.cs" />
+    <Compile Include="Drivers\Pca9685\Pca9685PwmChannel.cs" />
+    <Compile Include="Drivers\Pca9685\Registers\Mode1.cs" />
+    <Compile Include="Drivers\Pca9685\Registers\Mode2.cs" />
+    <Compile Include="Drivers\Pca9685\Registers\Register.cs" />
+    <Compile Include="Drivers\ServoMotor.cs" />
     <Compile Include="Drivers\Ssd1306\Interfaces\ISsd1306Display.cs" />
     <Compile Include="Drivers\UpsHat\Interfaces\IUpsHat.cs" />
     <Compile Include="Drivers\UpsHat\UpsHatDriver.cs" />
@@ -146,26 +153,25 @@
     <Compile Include="Drivers\Ssd1306\DisplayImages.cs" />
     <Compile Include="Helpers\ArrayConverter.cs" />
     <Compile Include="Helpers\DelayHelper.cs" />
-    <Compile Include="Helpers\I2cScanner.cs" />
+    <Compile Include="Helpers\I2cHelper.cs" />
     <Compile Include="Models\Exceptions\ControllerNotFoundException.cs" />
     <Compile Include="Models\Exceptions\DeviceException.cs" />
     <Compile Include="Models\Exceptions\DeviceNotFoundException.cs" />
+    <Compile Include="Models\PinVector32.cs" />
+    <Compile Include="Models\PinVector64.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\ClassLibrary1.rd.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.IoT.Lightning">
-      <Version>1.1.0</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL" />
+    <PackageReference Include="System.Device.Gpio">
+      <Version>1.0.0</Version>
+    </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

@@ -7,7 +7,7 @@ using Windows.Devices.I2c;
 
 namespace Common.Helpers
 {
-	public static class I2cScanner
+	public static class I2cHelper
 	{
 		public static async Task<Byte[]> ScanBusAsync()
 		{
