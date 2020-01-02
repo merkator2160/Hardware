@@ -5,7 +5,7 @@ using System.Device.I2c;
 
 namespace Raspberry.Sandbox.Samples
 {
-	public sealed class Pca9685Sample
+	internal sealed class Pca9685Sample
 	{
 		// Some SG90s can do 180 angle range but some other will be oscillating on the edge values
 		// Max angle which doesn't cause any issues found experimentally was as below.

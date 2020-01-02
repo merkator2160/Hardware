@@ -7,11 +7,11 @@ namespace Common.Drivers.UpsHat
 {
 	public sealed class UpsHatDriver : IUpsHat, IDisposable
 	{
-		private const Byte _defaultAddress = 54;
+		public const Int32 DefaultAddress = 0x36;
 		private readonly I2cDevice _device;
 
 
-		public UpsHatDriver() : this(_defaultAddress)
+		public UpsHatDriver() : this(DefaultAddress)
 		{
 
 		}

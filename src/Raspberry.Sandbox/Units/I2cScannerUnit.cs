@@ -11,7 +11,7 @@ namespace Raspberry.Sandbox.Units
 			var devices = I2cHelper.ScanBusAsync().GetAwaiter().GetResult();
 			foreach(var x in devices)
 			{
-				Debug.WriteLine($"Device found at address: {x}");
+				Debug.WriteLine($"Device found at address: 0x{x:X}");
 			}
 		}
 	}

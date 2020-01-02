@@ -87,7 +87,7 @@ namespace Common.Drivers
 		/// <param name="microseconds">The pulse width, in microseconds, to write to the servo motor.</param>
 		public void WritePulseWidth(Int32 microseconds)
 		{
-			Double dutyCycle = (Double)microseconds / 1_000_000 * _pwmChannel.Frequency; // Convert to seconds 1st.
+			var dutyCycle = (Double)microseconds / 1_000_000 * _pwmChannel.Frequency; // Convert to seconds 1st.
 			_pwmChannel.DutyCycle = dutyCycle;
 		}
 

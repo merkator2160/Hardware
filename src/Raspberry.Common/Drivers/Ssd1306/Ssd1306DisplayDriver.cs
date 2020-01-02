@@ -26,9 +26,14 @@ namespace Common.Drivers.Ssd1306
 
 		private readonly Byte[,] _displayBuffer = new Byte[_screenWidthPx, _screenHeightPixels];    // A local buffer we use to store graphics data for the screen
 		private readonly I2cDevice _device;
+		public const Int32 DefaultAddress = 0x3C;
 
 
-		public Ssd1306DisplayDriver(Byte address, Int32 busId = 1)
+		public Ssd1306DisplayDriver() : this(DefaultAddress)
+		{
+
+		}
+		public Ssd1306DisplayDriver(Int32 address, Int32 busId = 1)
 		{
 			_device = I2cDevice.Create(new I2cConnectionSettings(busId, address));
 

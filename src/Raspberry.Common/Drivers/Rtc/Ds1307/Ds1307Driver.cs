@@ -9,7 +9,7 @@ namespace Common.Drivers.Rtc.Ds1307
 	/// </summary>
 	public class Ds1307Driver : RtcBase
 	{
-		public const Byte DefaultI2cAddress = 104;
+		public const Byte DefaultI2cAddress = 0x68;
 		private I2cDevice _i2cDevice;
 
 

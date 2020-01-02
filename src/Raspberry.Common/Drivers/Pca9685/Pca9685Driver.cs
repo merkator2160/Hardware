@@ -14,14 +14,14 @@ namespace Common.Drivers.Pca9685
 	/// </summary>
 	public class Pca9685Driver : IPca9685, IDisposable
 	{
-		public const Byte _i2cAddressBase = 64;
+		public const Byte IcAddressBase = 0x40;
 
 		private I2cDevice _device;
 		private readonly Boolean _usingExternalClock;
 		private UInt16 _createdChannelsMask;
 
 
-		public Pca9685Driver() : this(_i2cAddressBase)
+		public Pca9685Driver() : this(IcAddressBase)
 		{
 
 		}

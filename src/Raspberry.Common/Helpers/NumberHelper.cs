@@ -24,8 +24,8 @@ namespace Common.Helpers
 		/// <returns>decimal</returns>
 		public static Int32 Bcd2Dec(Byte[] bcds)
 		{
-			Int32 result = 0;
-			foreach(Byte bcd in bcds)
+			var result = 0;
+			foreach(var bcd in bcds)
 			{
 				result *= 100;
 				result += Bcd2Dec(bcd);

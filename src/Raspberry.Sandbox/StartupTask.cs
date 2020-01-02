@@ -14,7 +14,7 @@ namespace Raspberry.Sandbox
 			deferral = taskInstance.GetDeferral();
 
 			//new UpsHatUnit().Run(taskInstance);
-			new Ds3231Unit().Run(taskInstance);
+			new Bmp280Unit().Run(taskInstance);
 			//new I2cScannerUnit().Run(taskInstance);
 
 			deferral.Complete();

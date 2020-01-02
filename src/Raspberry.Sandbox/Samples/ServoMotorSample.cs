@@ -4,7 +4,7 @@ using System.Device.Pwm;
 
 namespace Raspberry.Sandbox.Samples
 {
-	internal class ServoMotorSample
+	internal sealed class ServoMotorSample
 	{
 		public static void Run()
 		{

@@ -7,7 +7,7 @@ namespace Common.Drivers.Rtc.Ds3231
 {
 	public class Ds3231Driver : RtcBase
 	{
-		public const Byte DefaultI2cAddress = 104;
+		public const Byte DefaultI2cAddress = 0x68;
 		private I2cDevice _i2cDevice;
 
 
