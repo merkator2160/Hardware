@@ -124,6 +124,8 @@
     <Compile Include="Const\Hw354.cs" />
     <Compile Include="Const\LepinServo.cs" />
     <Compile Include="Const\Sg90.cs" />
+    <Compile Include="Const\Units\Pressure.cs" />
+    <Compile Include="Const\Units\Temperature.cs" />
     <Compile Include="Drivers\Lcd\Flags\ControlByteFlags.cs" />
     <Compile Include="Drivers\Lcd\Flags\DisplayControl.cs" />
     <Compile Include="Drivers\Lcd\Flags\DisplayEntryMode.cs" />
@@ -142,6 +144,13 @@
     <Compile Include="Drivers\Pca9685\Registers\Mode1.cs" />
     <Compile Include="Drivers\Pca9685\Registers\Mode2.cs" />
     <Compile Include="Drivers\Pca9685\Registers\Register.cs" />
+    <Compile Include="Drivers\Rtc\Ds1307\Ds1307Driver.cs" />
+    <Compile Include="Drivers\Rtc\Ds1307\Ds1307Register.cs" />
+    <Compile Include="Drivers\Rtc\Ds3231\Ds3231Driver.cs" />
+    <Compile Include="Drivers\Rtc\Ds3231\Ds3231Register.cs" />
+    <Compile Include="Drivers\Rtc\Pcf8563\Pcf8563Register.cs" />
+    <Compile Include="Drivers\Rtc\Pcf8563\Pcf8563Driver.cs" />
+    <Compile Include="Drivers\Rtc\RtcBase.cs" />
     <Compile Include="Drivers\ServoMotor.cs" />
     <Compile Include="Drivers\Ssd1306\Interfaces\ISsd1306Display.cs" />
     <Compile Include="Drivers\UpsHat\Interfaces\IUpsHat.cs" />
@@ -155,6 +164,7 @@
     <Compile Include="Helpers\ArrayConverter.cs" />
     <Compile Include="Helpers\DelayHelper.cs" />
     <Compile Include="Helpers\I2cHelper.cs" />
+    <Compile Include="Helpers\NumberHelper.cs" />
     <Compile Include="Models\Exceptions\ControllerNotFoundException.cs" />
     <Compile Include="Models\Exceptions\DeviceException.cs" />
     <Compile Include="Models\Exceptions\DeviceNotFoundException.cs" />
