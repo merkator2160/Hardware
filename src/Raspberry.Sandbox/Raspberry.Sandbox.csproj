@@ -107,6 +107,7 @@
     <Compile Include="Samples\DcMotorSample.cs" />
     <Compile Include="Samples\ServoMotorSample.cs" />
     <Compile Include="Samples\SoftPwmSample.cs" />
+    <Compile Include="Samples\SoftwareSpiSample.cs" />
     <Compile Include="StartupTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Units\BlinkyUnit.cs" />

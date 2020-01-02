@@ -179,6 +179,7 @@
     <Compile Include="Drivers\Rtc\RtcBase.cs" />
     <Compile Include="Drivers\ServoMotor.cs" />
     <Compile Include="Drivers\SoftwarePwmChannel.cs" />
+    <Compile Include="Drivers\SoftwareSpi.cs" />
     <Compile Include="Drivers\Ssd1306\Interfaces\ISsd1306Display.cs" />
     <Compile Include="Drivers\UpsHat\Interfaces\IUpsHat.cs" />
     <Compile Include="Drivers\UpsHat\UpsHatDriver.cs" />
