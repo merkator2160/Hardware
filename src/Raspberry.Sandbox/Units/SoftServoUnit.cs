@@ -22,37 +22,35 @@ namespace Raspberry.Sandbox.Units
 					return;
 
 				var pwmController = pwmControllers.First();
-				var servoGpioPin = pwmController.OpenPin(5);
-
 				pwmController.SetDesiredFrequency(50);
-
-				const Double _stepSize = 0.001;
-				const Int32 _stepDelay = 10;
-
-				var position = Sg90.MinPosition;
-				servoGpioPin.SetActiveDutyCyclePercentage(position);
-				servoGpioPin.Start();
-
-				while(true)
+				using(var servoGpioPin = pwmController.OpenPin(5))
 				{
-					while(position < Sg90.MaxPosition)
-					{
-						servoGpioPin.SetActiveDutyCyclePercentage(position);
-						Thread.Sleep(_stepDelay);
-						position = position + _stepSize;
-					}
-					Thread.Sleep(1000);
+					const Double _stepSize = 0.001;
+					const Int32 _stepDelay = 10;
 
-					while(position > Sg90.MinPosition)
+					var position = Sg90.MinPositionFrq;
+					servoGpioPin.SetActiveDutyCyclePercentage(position);
+					servoGpioPin.Start();
+
+					while(true)
 					{
-						servoGpioPin.SetActiveDutyCyclePercentage(position);
-						Thread.Sleep(_stepDelay);
-						position = position - _stepSize;
+						while(position < Sg90.MaxPositionFrq)
+						{
+							servoGpioPin.SetActiveDutyCyclePercentage(position);
+							Thread.Sleep(_stepDelay);
+							position += _stepSize;
+						}
+						Thread.Sleep(1000);
+
+						while(position > Sg90.MinPositionFrq)
+						{
+							servoGpioPin.SetActiveDutyCyclePercentage(position);
+							Thread.Sleep(_stepDelay);
+							position -= _stepSize;
+						}
+						Thread.Sleep(1000);
 					}
-					Thread.Sleep(1000);
 				}
-
-				servoGpioPin.Stop();
 			}
 		}
 	}

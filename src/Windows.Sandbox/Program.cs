@@ -1,10 +1,11 @@
-﻿using Windows.Sandbox.Units;
+﻿using System;
+using Windows.Sandbox.Units;
 
 namespace Windows.Sandbox
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static void Main(String[] args)
 		{
 			SampleUnit.Run();
 		}

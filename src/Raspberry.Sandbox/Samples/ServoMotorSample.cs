@@ -8,13 +8,14 @@ namespace Raspberry.Sandbox.Samples
 	{
 		public static void Run()
 		{
-			Console.WriteLine("Hello Servo Motor!");
-
 			using var pwmChannel = PwmChannel.Create(0, 0, 50);
-			using var servoMotor = new ServoMotor(pwmChannel, 160, 700, 2200);
-
-			WritePulseWidth(pwmChannel, servoMotor);
-			// WriteAngle(pwmChannel, servoMotor);
+			{
+				using var servoMotor = new ServoMotor(pwmChannel, 160, 700, 2200);
+				{
+					WritePulseWidth(pwmChannel, servoMotor);
+					// WriteAngle(pwmChannel, servoMotor);
+				}
+			}
 		}
 		private static void WritePulseWidth(PwmChannel pwmChannel, ServoMotor servoMotor)
 		{
@@ -30,7 +31,7 @@ namespace Raspberry.Sandbox.Samples
 					break;
 				}
 
-				if(!int.TryParse(pulseWidth, out var pulseWidthValue))
+				if(!Int32.TryParse(pulseWidth, out var pulseWidthValue))
 				{
 					Console.WriteLine($"Can not parse {pulseWidth}.  Try again.");
 				}
@@ -55,7 +56,7 @@ namespace Raspberry.Sandbox.Samples
 					break;
 				}
 
-				if(!int.TryParse(angle, out var angleValue))
+				if(!Int32.TryParse(angle, out var angleValue))
 				{
 					Console.WriteLine($"Can not parse {angle}.  Try again.");
 				}

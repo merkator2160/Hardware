@@ -34,13 +34,13 @@ namespace Raspberry.Sandbox.Units
 			const Double _stepSize = 0.001;
 			const Int32 _stepDelay = 10;
 
-			var position = Sg90.MinPosition;
+			var position = Sg90.MinPositionFrq;
 			servoGpioPin.SetActiveDutyCyclePercentage(position);
 			servoGpioPin.Start();
 
 			while(true)
 			{
-				while(position < Sg90.MaxPosition)
+				while(position < Sg90.MaxPositionFrq)
 				{
 					servoGpioPin.SetActiveDutyCyclePercentage(position);
 					Thread.Sleep(_stepDelay);
@@ -48,7 +48,7 @@ namespace Raspberry.Sandbox.Units
 				}
 				Thread.Sleep(1000);
 
-				while(position > Sg90.MinPosition)
+				while(position > Sg90.MinPositionFrq)
 				{
 					servoGpioPin.SetActiveDutyCyclePercentage(position);
 					Thread.Sleep(_stepDelay);

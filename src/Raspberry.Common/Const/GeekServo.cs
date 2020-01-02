@@ -4,19 +4,19 @@ using System;
 
 namespace Common.Const
 {
-	public static class Sg90
+	public static class GeekServo
 	{
 		public const Double MinPositionFrq = 0.025;
 		public const Double MaxPositionFrq = 0.108;
 
-		public const Int32 MaxAngle = 180;
+		public const Int32 MaxAngleRange = 270;
 		public const Int32 MinPulseWidthMicroseconds = 600;
 		public const Int32 MaxPulseWidthMicroseconds = 2600;
 
 
-		public static ServoMotor CreateSg90Servo(this Pca9685Driver pca9685, Int32 channel)
+		public static ServoMotor CreateGeekServo(this Pca9685Driver pca9685, Int32 channel)
 		{
-			return new ServoMotor(pca9685.CreatePwmChannel(channel), MaxAngle, MinPulseWidthMicroseconds, MaxPulseWidthMicroseconds);
+			return new ServoMotor(pca9685.CreatePwmChannel(channel), MaxAngleRange, MinPulseWidthMicroseconds, MaxPulseWidthMicroseconds);
 		}
 	}
 }
