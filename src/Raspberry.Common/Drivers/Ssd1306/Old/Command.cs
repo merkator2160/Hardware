@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Drivers.Ssd1306
+namespace Common.Drivers.Ssd1306.Old
 {
 	/// <summary>
 	/// Display commands. See the data sheet for details on commands: http://www.adafruit.com/datasheets/SSD1306.pdf

@@ -1,9 +1,9 @@
-﻿using Common.Drivers.Ssd1306.Interfaces;
+﻿using Common.Drivers.Ssd1306.Old.Interfaces;
 using Common.Models.Exceptions;
 using System;
 using System.Device.I2c;
 
-namespace Common.Drivers.Ssd1306
+namespace Common.Drivers.Ssd1306.Old
 {
 	/// <summary>
 	/// This driver is intended to be used with SSD1306 based OLED displays connected via I2c

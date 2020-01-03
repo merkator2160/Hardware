@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Common.Drivers.Ssd1306
+namespace Common.Drivers.Ssd1306.Old
 {
 	/// <summary>
 	/// This class contains the character data needed to output render text on the display

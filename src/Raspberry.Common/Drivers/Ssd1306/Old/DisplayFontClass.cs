@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Drivers.Ssd1306
+namespace Common.Drivers.Ssd1306.Old
 {
 	/// <summary>
 	/// FontCharacter descriptor contains font information for a  single character

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Drivers.Ssd1306
+namespace Common.Drivers.Ssd1306.Old
 {
 	/// <summary>
 	/// Images were generated with http://dotmatrixtool.com

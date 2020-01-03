@@ -108,6 +108,8 @@
     <Compile Include="Samples\ServoMotorSample.cs" />
     <Compile Include="Samples\SoftPwmSample.cs" />
     <Compile Include="Samples\SoftwareSpiSample.cs" />
+    <Compile Include="Samples\Ssd\BasicFont.cs" />
+    <Compile Include="Samples\Ssd\Ssd13xxSample.cs" />
     <Compile Include="StartupTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Units\BlinkyUnit.cs" />
@@ -159,6 +161,10 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png">
       <InProject>false</InProject>
     </Content>
+    <Content Include="Samples\Ssd\images\dotnet-bot.bmp" />
+    <Content Include="Samples\Ssd\images\github-dotnet-iot-black.bmp" />
+    <Content Include="Samples\Ssd\images\github-dotnet-iot-white.bmp" />
+    <Content Include="Samples\Ssd\images\shapes.bmp" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.IoT.Devices">

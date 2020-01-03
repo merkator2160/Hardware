@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Drivers.Ssd1306.Interfaces
+namespace Common.Drivers.Ssd1306.Old.Interfaces
 {
 	public interface ISsd1306Display
 	{

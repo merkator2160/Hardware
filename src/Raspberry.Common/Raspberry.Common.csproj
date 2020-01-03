@@ -180,15 +180,65 @@
     <Compile Include="Drivers\ServoMotor.cs" />
     <Compile Include="Drivers\SoftwarePwmChannel.cs" />
     <Compile Include="Drivers\SoftwareSpi.cs" />
-    <Compile Include="Drivers\Ssd1306\Interfaces\ISsd1306Display.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\ActivateScroll.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\DeactivateScroll.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\ICommand.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\ISharedCommand.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\ISsd1306Command.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\ISsd1327Command.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\SetContrastControlForBank0.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\SetDisplayOff.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\SetDisplayOn.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\SetInverseDisplay.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\SetMultiplexRatio.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\ContinuousVerticalAndHorizontalScrollSetup.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\EntireDisplayOn.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\HorizontalScrollSetup.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\NoOperation.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetChargePump.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetColumnAddress.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetComOutputScanDirection.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetComPinsHardwareConfiguration.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetDisplayClockDivideRatioOscillatorFrequency.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetDisplayOffset.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetDisplayStartLine.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetHigherColumnStartAddressForPageAddressingMode.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetLowerColumnStartAddressForPageAddressingMode.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetMemoryAddressingMode.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetNormalDisplay.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetPageAddress.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetPageStartAddressForPageAddressingMode.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetPreChargePeriod.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetSegmentReMap.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetVcomhDeselectLevel.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1306Commands\SetVerticalScrollArea.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1327Commands\SelectDefaultLinearGrayScaleTable.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1327Commands\SetColumnAddress.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1327Commands\SetComDeselectVoltageLevel.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1327Commands\SetDisplayClockDivideRatioOscillatorFrequency.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1327Commands\SetDisplayOffset.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1327Commands\SetDisplayStartLine.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1327Commands\SetInternalVddRegulator.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1327Commands\SetNormalDisplay.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1327Commands\SetPhaseLength.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1327Commands\SetPreChargeVoltage.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1327Commands\SetReMap.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1327Commands\SetRowAddress.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1327Commands\SetSecondPreChargePeriod.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1327Commands\SetSecondPreChargeVsl.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Commands\Ssd1327Commands\SetUnlockDriver.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Ssd1306.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Ssd1327.cs" />
+    <Compile Include="Drivers\Ssd1306\New\Ssd13xx.cs" />
+    <Compile Include="Drivers\Ssd1306\Old\Interfaces\ISsd1306Display.cs" />
     <Compile Include="Drivers\UpsHat\Interfaces\IUpsHat.cs" />
     <Compile Include="Drivers\UpsHat\UpsHatDriver.cs" />
-    <Compile Include="Drivers\Ssd1306\Command.cs" />
-    <Compile Include="Drivers\Ssd1306\Ssd1306DisplayDriver.cs" />
-    <Compile Include="Drivers\Ssd1306\DisplayFontClass.cs" />
-    <Compile Include="Drivers\Ssd1306\DisplayFontTable.cs" />
-    <Compile Include="Drivers\Ssd1306\DisplayImage.cs" />
-    <Compile Include="Drivers\Ssd1306\DisplayImages.cs" />
+    <Compile Include="Drivers\Ssd1306\Old\Command.cs" />
+    <Compile Include="Drivers\Ssd1306\Old\Ssd1306DisplayDriver.cs" />
+    <Compile Include="Drivers\Ssd1306\Old\DisplayFontClass.cs" />
+    <Compile Include="Drivers\Ssd1306\Old\DisplayFontTable.cs" />
+    <Compile Include="Drivers\Ssd1306\Old\DisplayImage.cs" />
+    <Compile Include="Drivers\Ssd1306\Old\DisplayImages.cs" />
     <Compile Include="Helpers\ArrayConverter.cs" />
     <Compile Include="Helpers\DelayHelper.cs" />
     <Compile Include="Helpers\I2cHelper.cs" />
@@ -211,6 +261,10 @@
     <PackageReference Include="System.Device.Gpio">
       <Version>1.0.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Drivers\Pcf8591\Cpp\PCF8591.cpp" />
+    <Content Include="Drivers\Pcf8591\Cpp\PCF8591.h" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
