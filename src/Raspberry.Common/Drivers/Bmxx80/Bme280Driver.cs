@@ -10,20 +10,17 @@ namespace Common.Drivers.Bmxx80
 	/// </summary>
 	public class Bme280Driver : Bmx280Base
 	{
-		/// <summary>
-		/// The expected chip ID of the BME280.
-		/// </summary>
+		private const Byte DefaultAddress = 0x77;
 		private const Byte DeviceId = 0x60;
-
-		/// <summary>
-		/// Calibration data for the <see cref="Bme680Driver"/>.
-		/// </summary>
-		private Bme280CalibrationData _bme280Calibration;
-
+		private readonly Bme280CalibrationData _bme280Calibration;
 		private Sampling _humiditySampling;
 
 
 
+		public Bme280Driver(Int32 deviceAddress, Int32 busId = 1) : this(I2cDevice.Create(new I2cConnectionSettings(busId, deviceAddress)))
+		{
+
+		}
 		public Bme280Driver(I2cDevice i2cDevice) : base(DeviceId, i2cDevice)
 		{
 			_bme280Calibration = (Bme280CalibrationData)_calibrationData;

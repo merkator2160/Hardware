@@ -13,78 +13,32 @@ namespace Common.Drivers.Bmxx80
 	/// </summary>
 	public abstract class Bmxx80Base : IDisposable
 	{
-		/// <summary>
-		/// Calibration data for the sensor.
-		/// </summary>
 		internal Bmxx80CalibrationData _calibrationData;
-
-		/// <summary>
-		/// I2C device used to communicate with the device.
-		/// </summary>
 		protected I2cDevice _i2cDevice;
-
-		/// <summary>
-		/// Chosen communication protocol.
-		/// </summary>
 		protected CommunicationProtocol _communicationProtocol;
-
-		/// <summary>
-		/// The control register of the sensor.
-		/// </summary>
 		protected Byte _controlRegister;
-
-		/// <summary>
-		/// Bmxx80 communication protocol.
-		/// </summary>
-		public enum CommunicationProtocol
-		{
-			/// <summary>
-			/// I²C communication protocol.
-			/// </summary>
-			I2c
-		}
-
-		/// <summary>
-		/// The variable TemperatureFine carries a fine resolution temperature value over to the
-		/// pressure compensation formula and could be implemented as a global variable.
-		/// </summary>
-		protected Int32 TemperatureFine
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// The temperature calibration factor.
-		/// </summary>
-		protected virtual Int32 TempCalibrationFactor => 1;
 
 		private Sampling _temperatureSampling;
 		private Sampling _pressureSampling;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Bmxx80Base"/> class.
-		/// </summary>
-		/// <param name="deviceId">The ID of the device.</param>
-		/// <param name="i2cDevice">The <see cref="I2cDevice"/> to create with.</param>
-		/// <exception cref="ArgumentNullException">Thrown when the given <see cref="I2cDevice"/> is null.</exception>
-		/// <exception cref="IOException">Thrown when the device cannot be found on the bus.</exception>
+
+
 		protected Bmxx80Base(Byte deviceId, I2cDevice i2cDevice)
 		{
 			_i2cDevice = i2cDevice ?? throw new ArgumentNullException(nameof(i2cDevice));
 			_i2cDevice.WriteByte((Byte)Bmxx80Register.CHIPID);
 
 			var readSignature = _i2cDevice.ReadByte();
-
 			if(readSignature != deviceId)
-			{
 				throw new IOException($"Unable to find a chip with id {deviceId}");
-			}
 
 			ReadCalibrationData();
 			SetDefaultConfiguration();
 		}
 
+
+
+		// PROPERTIES /////////////////////////////////////////////////////////////////////////////
 		/// <summary>
 		/// Gets or sets the pressure sampling.
 		/// </summary>
@@ -132,6 +86,23 @@ namespace Common.Drivers.Bmxx80
 		}
 
 		/// <summary>
+		/// The variable TemperatureFine carries a fine resolution temperature value over to the
+		/// pressure compensation formula and could be implemented as a global variable.
+		/// </summary>
+		protected Int32 TemperatureFine
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// The temperature calibration factor.
+		/// </summary>
+		protected virtual Int32 TempCalibrationFactor => 1;
+
+
+		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
+		/// <summary>
 		/// When called, the device is reset using the complete power-on-reset procedure.
 		/// The device will reset to the default configuration.
 		/// </summary>
@@ -168,6 +139,33 @@ namespace Common.Drivers.Bmxx80
 		/// <returns><code>true</code> if measurement was not skipped, otherwise <code>false</code>.</returns>
 		public abstract Boolean TryReadPressure(out Pressure pressure);
 
+
+		// SUPPORT FUNCTIONS //////////////////////////////////////////////////////////////////////
+		protected virtual void SetDefaultConfiguration()
+		{
+			PressureSampling = Sampling.UltraLowPower;
+			TemperatureSampling = Sampling.UltraLowPower;
+		}
+		private void ReadCalibrationData()
+		{
+			switch(this)
+			{
+				case Bme280Driver _:
+					_calibrationData = new Bme280CalibrationData();
+					_controlRegister = (Byte)Bmx280Register.CTRL_MEAS;
+					break;
+				case Bmp280Driver _:
+					_calibrationData = new Bmp280CalibrationData();
+					_controlRegister = (Byte)Bmx280Register.CTRL_MEAS;
+					break;
+				case Bme680Driver _:
+					_calibrationData = new Bme680CalibrationData();
+					_controlRegister = (Byte)Bme680Register.CTRL_MEAS;
+					break;
+			}
+
+			_calibrationData.ReadFromDevice(this);
+		}
 		/// <summary>
 		/// Compensates the temperature.
 		/// </summary>
@@ -298,52 +296,8 @@ namespace Common.Drivers.Bmxx80
 			return (Sampling)value;
 		}
 
-		/// <summary>
-		/// Sets the default configuration for the sensor.
-		/// </summary>
-		protected virtual void SetDefaultConfiguration()
-		{
-			PressureSampling = Sampling.UltraLowPower;
-			TemperatureSampling = Sampling.UltraLowPower;
-		}
 
-		/// <summary>
-		/// Specifies the Endianness of a device.
-		/// </summary>
-		protected internal enum Endianness
-		{
-			/// <summary>
-			/// Indicates little endian.
-			/// </summary>
-			LittleEndian,
-
-			/// <summary>
-			/// Indicates big endian.
-			/// </summary>
-			BigEndian
-		}
-
-		private void ReadCalibrationData()
-		{
-			switch(this)
-			{
-				case Bme280Driver _:
-					_calibrationData = new Bme280CalibrationData();
-					_controlRegister = (Byte)Bmx280Register.CTRL_MEAS;
-					break;
-				case Bmp280Driver _:
-					_calibrationData = new Bmp280CalibrationData();
-					_controlRegister = (Byte)Bmx280Register.CTRL_MEAS;
-					break;
-				case Bme680Driver _:
-					_calibrationData = new Bme680CalibrationData();
-					_controlRegister = (Byte)Bme680Register.CTRL_MEAS;
-					break;
-			}
-
-			_calibrationData.ReadFromDevice(this);
-		}
-
+		// IDisposable ////////////////////////////////////////////////////////////////////////////
 		/// <summary>
 		/// Cleanup.
 		/// </summary>
@@ -361,6 +315,18 @@ namespace Common.Drivers.Bmxx80
 		{
 			_i2cDevice?.Dispose();
 			_i2cDevice = null;
+		}
+
+
+		// ENUMS //////////////////////////////////////////////////////////////////////////////////
+		protected internal enum Endianness
+		{
+			LittleEndian,
+			BigEndian
+		}
+		public enum CommunicationProtocol
+		{
+			I2c
 		}
 	}
 }

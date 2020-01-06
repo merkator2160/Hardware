@@ -31,15 +31,14 @@ namespace Common.Drivers.Bmxx80
 		private Bmx280FilteringMode _filteringMode;
 		private StandbyTime _standbyTime;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Bmx280Base"/> class.
-		/// </summary>
-		/// <param name="deviceId">The ID of the device.</param>
-		/// <param name="i2cDevice">The <see cref="I2cDevice"/> to create with.</param>
-		protected Bmx280Base(Byte deviceId, I2cDevice i2cDevice)
-			: base(deviceId, i2cDevice)
+
+
+		protected Bmx280Base(Byte deviceId, I2cDevice i2cDevice) : base(deviceId, i2cDevice)
 		{
+
 		}
+
+
 
 		/// <summary>
 		/// Gets or sets the IIR filter mode.
