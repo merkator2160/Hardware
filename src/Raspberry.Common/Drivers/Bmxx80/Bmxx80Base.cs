@@ -233,13 +233,6 @@ namespace Common.Drivers.Bmxx80
 				default:
 					throw new ArgumentOutOfRangeException(nameof(endianness), endianness, null);
 			}
-
-			//return endianness switch
-			//{
-			//	Endianness.LittleEndian => BinaryPrimitives.ReadUInt16LittleEndian(bytes),
-			//	Endianness.BigEndian => BinaryPrimitives.ReadUInt16BigEndian(bytes),
-			//	_ => throw new ArgumentOutOfRangeException(nameof(endianness), endianness, null)
-			//};
 		}
 
 		/// <summary>
@@ -271,13 +264,6 @@ namespace Common.Drivers.Bmxx80
 				default:
 					throw new ArgumentOutOfRangeException(nameof(endianness), endianness, null);
 			}
-
-			//return endianness switch
-			//	{
-			//	Endianness.LittleEndian => BinaryPrimitives.ReadUInt32LittleEndian(bytes),
-			//	Endianness.BigEndian => BinaryPrimitives.ReadUInt32BigEndian(bytes),
-			//	_ => throw new ArgumentOutOfRangeException(nameof(endianness), endianness, null)
-			//	};
 		}
 
 		/// <summary>

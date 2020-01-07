@@ -1,12 +1,9 @@
 ﻿using Common.Helpers;
-using Common.Models.Exceptions;
 using Newtonsoft.Json;
 using System;
+using System.Device.I2c;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
-using Windows.Devices.Enumeration;
-using Windows.Devices.I2c;
 
 namespace Raspberry.Sandbox.Units
 {
@@ -17,15 +14,11 @@ namespace Raspberry.Sandbox.Units
 
 		public void Run(IBackgroundTaskInstance taskInstance)
 		{
-			RunAsync(taskInstance).GetAwaiter().GetResult();
-		}
-		public async Task RunAsync(IBackgroundTaskInstance taskInstance)
-		{
-			using(var pwmDevice = await GetPwmDeviceAsync())
+			using(var device = I2cDevice.Create(new I2cConnectionSettings(1, _arduinoAddress)))
 			{
 				while(true)
 				{
-					var values = ReadValues(pwmDevice);
+					var values = ReadValues(device);
 					var str = JsonConvert.SerializeObject(values);
 
 					Debug.WriteLine(str);
@@ -35,29 +28,13 @@ namespace Raspberry.Sandbox.Units
 
 
 		// SUPPORT FUNCTIONS ////////////////////////////////////////////////////////////////////////////
-		private static async Task<I2cDevice> GetPwmDeviceAsync()
-		{
-			var dis = await DeviceInformation.FindAllAsync(I2cDevice.GetDeviceSelector("I2C1"));
-			if(dis.Count <= 0)
-				throw new DeviceNotFoundException("No one I2C controllers was found!");
-
-			var device = await I2cDevice.FromIdAsync(dis[0].Id, new I2cConnectionSettings(_arduinoAddress)
-			{
-				BusSpeed = I2cBusSpeed.FastMode,
-				SharingMode = I2cSharingMode.Exclusive
-			});
-			if(device == null)
-				throw new DeviceNotFoundException("PWM reader was not found!");
-
-			return device;
-		}
 		private static Int16[] ReadValues(I2cDevice pwmDevice)
 		{
-			var buffer = new Byte[18];
+			Span<Byte> inputBuffer = stackalloc Byte[18];
 
-			pwmDevice.Read(buffer);
+			pwmDevice.Read(inputBuffer);
 
-			return buffer.ToInt16();
+			return inputBuffer.ToInt16Array();
 		}
 	}
 }

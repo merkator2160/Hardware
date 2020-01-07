@@ -24,18 +24,20 @@ namespace Common.Drivers.UpsHat
 		// IUpsHat ////////////////////////////////////////////////////////////////////////////////
 		public Single ReadVoltage()
 		{
-			var inputBuffer = new Byte[2];
+			Span<Byte> inputBuffer = stackalloc Byte[2];
+			Span<Byte> outputBuffer = stackalloc Byte[] { 2 };
 
-			_device.WriteRead(new Byte[] { 2 }, inputBuffer);
+			_device.WriteRead(outputBuffer, inputBuffer);
 			var rawValue = BinaryPrimitives.ReadUInt16BigEndian(inputBuffer);
 
 			return (Single)Math.Round(rawValue * 78.125 / 1000000, 2);
 		}
 		public Byte ReadCapacity()
 		{
-			var inputBuffer = new Byte[2];
+			Span<Byte> inputBuffer = stackalloc Byte[2];
+			Span<Byte> outputBuffer = stackalloc Byte[] { 4 };
 
-			_device.WriteRead(new Byte[] { 4 }, inputBuffer);
+			_device.WriteRead(outputBuffer, inputBuffer);
 			var rawValue = BinaryPrimitives.ReadUInt16BigEndian(inputBuffer);
 
 			return (Byte)(rawValue / 256);
