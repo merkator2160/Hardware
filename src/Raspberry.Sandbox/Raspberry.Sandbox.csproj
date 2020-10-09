@@ -119,6 +119,7 @@
     <Compile Include="Units\I2cListenerUnit.cs" />
     <Compile Include="Units\I2cScannerUnit.cs" />
     <Compile Include="Units\I2cEchoUnit.cs" />
+    <Compile Include="Units\Ks0218HatUnit.cs" />
     <Compile Include="Units\Lcd1602Unit.cs" />
     <Compile Include="Units\Lcd2004Unit.cs" />
     <Compile Include="Units\LepinServoUnit.cs" />
@@ -161,6 +162,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png">
       <InProject>false</InProject>
     </Content>
+    <Content Include="Samples\Ks0218Sample.cpp" />
     <Content Include="Samples\Ssd\images\dotnet-bot.bmp" />
     <Content Include="Samples\Ssd\images\github-dotnet-iot-black.bmp" />
     <Content Include="Samples\Ssd\images\github-dotnet-iot-white.bmp" />

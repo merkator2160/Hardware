@@ -44,16 +44,16 @@ namespace Core.Sandbox.Units.SbusSoftwareDecoder.Sbus
 				if(value == _endOfStream)
 					return false;
 
-				if(value == _sBusMessageHeader)
-				{
-					messageBuffer[0] = (Byte)value;
-					for(var i = 1; i < _messageLength; i++)
-					{
-						messageBuffer[i] = (Byte)serialPort.ReadByte();
-					}
+				if(value != _sBusMessageHeader)
+					continue;
 
-					return ValidateMessage(messageBuffer);
+				messageBuffer[0] = (Byte)value;
+				for(var i = 1; i < _messageLength; i++)
+				{
+					messageBuffer[i] = (Byte)serialPort.ReadByte();
 				}
+
+				return ValidateMessage(messageBuffer);
 
 			} while(serialPort.BytesToRead > 0);
 

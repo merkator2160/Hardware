@@ -12,8 +12,7 @@ namespace Core.Sandbox.Units.SbusSoftwareDecoder
 {
 	internal static class SbusSoftwareDecoderUnite
 	{
-		private const Byte _portNumber = 8;
-		private const Int32 _portSpeed = 100000;
+		private const Byte _portNumber = 3;
 
 		private static String _bufferLogFilePath;
 		private static String _channelValuesFilePath;
@@ -26,20 +25,16 @@ namespace Core.Sandbox.Units.SbusSoftwareDecoder
 		{
 			_bufferLogFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "SbusStream.txt");
 			if(File.Exists(_bufferLogFilePath))
-			{
 				File.Delete(_bufferLogFilePath);
-			}
 
 			_channelValuesFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "ChannelValues.txt");
 			if(File.Exists(_channelValuesFilePath))
-			{
 				File.Delete(_channelValuesFilePath);
-			}
 
 			_converter = new SbusConverter
 			{
 				IsFilterEnable = false,
-				IgnoreLostFrame = true
+				IgnoreLostFrame = false
 			};
 
 			OpenPort();
@@ -62,11 +57,11 @@ namespace Core.Sandbox.Units.SbusSoftwareDecoder
 			var message = _converter.Parse(messageBuffer);
 			//($"{message.ServoChannels[2]}\r\n").SaveOnDisk(_channelValuesFilePath, Encoding.UTF8, FileMode.Append);
 
-			if(_messageCount % 10 == 0)
-			{
-				Console.Clear();
-				PrintResult(message);
-			}
+			if(_messageCount % 10 != 0)
+				return;
+
+			Console.Clear();
+			PrintResult(message);
 		}
 
 
@@ -75,7 +70,7 @@ namespace Core.Sandbox.Units.SbusSoftwareDecoder
 		{
 			var serialPorts = SerialPort.GetPortNames();
 			var device = serialPorts.First(p => p.Equals($"COM{_portNumber}"));
-			using(var port = new SerialPort(device, _portSpeed, Parity.None, 8, StopBits.One)
+			using(var port = new SerialPort(device, 100000, Parity.None, 8, StopBits.One)
 			{
 				Handshake = Handshake.None
 			})

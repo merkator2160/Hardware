@@ -1,4 +1,4 @@
-﻿using Core.Sandbox.Units.SbusHardwareDecoder;
+﻿using Core.Sandbox.Units.SbusSoftwareDecoder;
 using System;
 
 namespace Core.Sandbox
@@ -7,7 +7,7 @@ namespace Core.Sandbox
 	{
 		static void Main(String[] args)
 		{
-			SbusHardwareDecoderUnit.Run();
+			SbusSoftwareDecoderUnite.Run();
 		}
 	}
 }
