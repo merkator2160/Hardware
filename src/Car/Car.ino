@@ -9,7 +9,7 @@
 #define JOYSTICK_X 0
 #define JOYSTICK_Y 1
 
-#define JOYSTICK_SENSETIVITY_CONSTRAIN 30
+#define JOYSTICK_SENSITIVITY_CONSTRAIN 30
 
 
 void setup()
@@ -21,23 +21,22 @@ void setup()
 
 	Serial.begin(9600);
 }
-
 void loop()
 {
-	int x = analogRead(JOYSTICK_X);
-	int y = analogRead(JOYSTICK_Y);
-	boolean joystickButton = digitalRead(JOYSTICK_BTN);
+	auto x = analogRead(JOYSTICK_X);
+	auto y = analogRead(JOYSTICK_Y);
+	auto joystickButton = digitalRead(JOYSTICK_BTN);
 	digitalWrite(LED, !joystickButton);
 
-	int centralSpeed = SetSensetivityConstrain(ConvertToSpeed(y), JOYSTICK_SENSETIVITY_CONSTRAIN);
-	int speedOffset = SetSensetivityConstrain(ConvertToSpeed(x), JOYSTICK_SENSETIVITY_CONSTRAIN);
+	int centralSpeed = SetSensitivityConstrain(ConvertToSpeed(y), JOYSTICK_SENSITIVITY_CONSTRAIN);
+	int speedOffset = SetSensitivityConstrain(ConvertToSpeed(x), JOYSTICK_SENSITIVITY_CONSTRAIN);
 
 	CalculateWheelActions(centralSpeed, speedOffset);
 }
 
 
 // FUNCTIONS //////////////////////////////////////////////////////////////////////////////////
-int SetSensetivityConstrain(int value, int limit)
+int SetSensitivityConstrain(int value, int limit)
 {
 	if (value <= limit && value >= -limit)
 		return 0;
@@ -79,9 +78,9 @@ void CalculateWheelActions(int centralSpeed, int speedOffset)
 		rightSpeed = speedOffset;
 	}
 
-	MoveShassi(leftSpeed, rightSpeed);
+	moveChassis(leftSpeed, rightSpeed);
 }
-void MoveShassi(int speedLeft, int speedRight)
+void moveChassis(int speedLeft, int speedRight)
 {
 	analogWrite(M2, speedLeft);
 	if (speedLeft >= 0)
