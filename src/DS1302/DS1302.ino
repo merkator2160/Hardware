@@ -24,7 +24,7 @@ void setup()
     delay(300);
     Serial.begin(9600);
     time.begin();
-    time.settime(0,34,7,11,9,19,3);  // 0  сек, 51 мин, 21 час, 27, окт€бр€, 2015 года, вторник
+    time.settime(0,34,7,11,9,19,3);
 }
 void loop()
 {
@@ -33,4 +33,4 @@ void loop()
       Serial.println(time.gettime("d-m-Y, H:i:s, D"));
       delay(1);
     }
-//}
+}

@@ -1,19 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Threading;
 
 namespace Core.Sandbox.Units.ArduinoListener
 {
-	internal class ArduinoListenerUnit
+	internal class SerialValueListenerUnit
 	{
 		private const Byte _portNumber = 5;
 		private const Int32 _portSpeed = 9600;
+		private const Boolean _refreshAlways = false;
 
+		private static Dictionary<String, String> _values;
 
 		public static void Run()
 		{
-
+			_values = new Dictionary<String, String>();
 
 			var serialPorts = SerialPort.GetPortNames();
 			var device = serialPorts.First(p => p.Equals($"COM{_portNumber}"));
@@ -37,7 +40,8 @@ namespace Core.Sandbox.Units.ArduinoListener
 			var serialPort = (SerialPort)sender;
 			var log = serialPort.ReadLine();
 
-			ParseLog(log);
+			ParseValues(log);
+			PrintValues();
 
 			Console.WriteLine();
 		}
@@ -56,17 +60,34 @@ namespace Core.Sandbox.Units.ArduinoListener
 				Console.WriteLine("Waiting for connection!");
 			}
 		}
-		private static void ParseLog(String str)
+		private static void ParseValues(String str)
 		{
 			var clearStr = str.Trim('\\', 'n', 'r');
 			var variables = clearStr.Split(',');
 
-			Console.Clear();
+			if(_refreshAlways)
+				_values.Clear();
+
 			foreach(var x in variables)
 			{
 				var valuePair = x.Split(':');
 
-				Console.WriteLine($"{valuePair[0]}: {valuePair[1]}");
+				if(!_values.ContainsKey(valuePair[0]))
+				{
+					_values.Add(valuePair[0], valuePair[1]);
+					return;
+				}
+
+				_values[valuePair[0]] = valuePair[1];
+			}
+		}
+		private static void PrintValues()
+		{
+			Console.Clear();
+
+			foreach(var (key, value) in _values)
+			{
+				Console.WriteLine($"{key}: {value}");
 			}
 		}
 	}

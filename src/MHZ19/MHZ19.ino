@@ -13,7 +13,7 @@ MHZ19 mhz(&ss);
 
 void setup()
 {
-    lcd.begin();
+    lcd.init();
     lcd.backlight();
 	
     ss.begin(9600);	
