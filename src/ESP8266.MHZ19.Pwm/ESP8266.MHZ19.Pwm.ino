@@ -1,4 +1,4 @@
-﻿#define pwmPin 3
+﻿#define pwmPin 2
 #define LedPin 5
 
 int prevVal = LOW;
@@ -6,7 +6,7 @@ long th, tl, h, l, ppm;
 
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(115200);
 	
     pinMode(pwmPin, INPUT);
     pinMode(LedPin, OUTPUT);

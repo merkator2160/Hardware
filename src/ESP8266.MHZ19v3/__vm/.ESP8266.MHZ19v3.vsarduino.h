@@ -113,6 +113,6 @@ typedef long __PTRDIFF_TYPE__;
 #define interrupts() sei()
 #define noInterrupts() cli()
 
-#include "ESP8266.MHZ19.Pwm.ino"
+#include "ESP8266.MHZ19v3.ino"
 #endif
 #endif

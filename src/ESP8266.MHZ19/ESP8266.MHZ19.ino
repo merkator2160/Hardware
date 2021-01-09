@@ -23,8 +23,10 @@ int readCO2()
     {
         Serial.read();
     }
+	
     byte cmd[9] = { 0xFF, 0x01, 0x86, 0x00, 0x00, 0x00, 0x00, 0x00, 0x79 };
-    char response[9]; // for answer
+	
+    char response[9]; // for answer	
     Serial.write(cmd, 9); //request PPM CO2
 	
     memset(response, 0, 9);
@@ -35,8 +37,8 @@ int readCO2()
     {    	
         return -1;
     }
-    int responseHigh = (int)response[2];
-    int responseLow = (int)response[3];
+    auto responseHigh = (int)response[2];
+    auto responseLow = (int)response[3];
 	
     return (256 * responseHigh) + responseLow;
 }

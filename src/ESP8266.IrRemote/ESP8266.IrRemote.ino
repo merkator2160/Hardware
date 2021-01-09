@@ -13,12 +13,10 @@ void setup()
     Serial.begin(115200);
     irrecv.enableIRIn();
 	
-    while (!Serial)  // Wait for the serial connection to be establised.
+    while (!Serial)         // Wait for the serial connection to be establised.
         delay(50);
 	
-    Serial.println();
-    Serial.print("IRrecvDemo is now running and waiting for IR message on Pin ");
-    Serial.println(kRecvPin);
+    Serial << "IRrecvDemo is now running and waiting for IR message on Pin " << kRecvPin << "\n";
 }
 
 void loop()
