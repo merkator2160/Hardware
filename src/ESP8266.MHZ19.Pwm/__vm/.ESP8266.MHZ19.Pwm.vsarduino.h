@@ -88,6 +88,6 @@ typedef void *__builtin_va_list;
 #define pgm_read_float(address_short) float()
 #define pgm_read_ptr(address_short)   short()
 
-#include "IrRemote.ino"
+#include "ESP8266.MHZ19.Pwm.ino"
 #endif
 #endif

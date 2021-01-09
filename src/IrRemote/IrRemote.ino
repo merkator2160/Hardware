@@ -1,8 +1,9 @@
-#include "IRremote.h"
+#include <IRremote.h>
+#include <Streaming.h>
 
 
 IRrecv irrecv(2);
-decode_results results;
+uint32_t previousCommand;
 
 
 void setup()
@@ -10,12 +11,24 @@ void setup()
 	Serial.begin(9600);
 	irrecv.enableIRIn();
 }
-
 void loop()
 {
-	if (irrecv.decode(&results))
-	{
-		Serial.println(results.value, HEX);
-		irrecv.resume();
-	}
+    if (irrecv.decode())
+    {
+        //Serial << irrecv.results.value << "\n";
+    	
+        /*irrecv.printResultShort(&Serial);
+        Serial.println();*/
+    	
+        if (irrecv.results.value != previousCommand)
+        {
+            Serial << irrecv.results.value << "\n";
+                    	
+            previousCommand = irrecv.results.value;
+        }
+    	           
+        irrecv.resume();
+    }
+
+    delay(100);
 }

@@ -4,7 +4,7 @@
 #include <Streaming.h>
 #include <LiquidCrystal_I2C.h> 
 
-const uint8_t delayMs = 1000;
+const int delayMs = 5000;
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);     // IIC Address, strLength, numberOfRows
 SoftwareSerial ss(3, 2);                // RX, TX
@@ -24,8 +24,8 @@ void loop()
 	auto data = mhz.retrieveData();
     if (data == MHZ19_RESULT_OK)
     {
-        //sendData();
-        printData();
+        sendData();
+        //printData();
     }
     else
     {
