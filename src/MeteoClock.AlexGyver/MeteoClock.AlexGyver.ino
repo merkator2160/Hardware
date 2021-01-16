@@ -29,7 +29,7 @@
 // ------------------------- НАСТРОЙКИ --------------------
 #define RESET_CLOCK 0       // сброс часов на время загрузки прошивки (для модуля с несъёмной батарейкой). Не забудь поставить 0 и прошить ещё раз!
 #define SENS_TIME 30000     // время обновления показаний сенсоров на экране, миллисекунд
-#define LED_MODE 0          // тип RGB светодиода: 0 - главный катод, 1 - главный анод
+#define LED_MODE 1          // тип RGB светодиода: 0 - главный катод, 1 - главный анод
 
 // управление яркостью
 #define BRIGHT_CONTROL 0      // 0/1 - запретить/разрешить управление яркостью (при отключении яркость всегда будет макс.)
@@ -41,12 +41,16 @@
 
 #define BLUE_YELLOW 1       // жёлтый цвет вместо синего (1 да, 0 нет) но из за особенностей подключения жёлтый не такой яркий
 #define DISP_MODE 1         // в правом верхнем углу отображать: 0 - год, 1 - день недели, 2 - секунды
-#define WEEK_LANG 1         // язык дня недели: 0 - английский, 1 - русский (транслит)
+#define WEEK_LANG 0         // язык дня недели: 0 - английский, 1 - русский (транслит)
 #define DEBUG 0             // вывод на дисплей лог инициализации датчиков при запуске. Для дисплея 1602 не работает! Но дублируется через порт!
 #define PRESSURE 1          // 0 - график давления, 1 - график прогноза дождя (вместо давления). Не забудь поправить пределы гроафика
 #define CO2_SENSOR 1        // включить или выключить поддержку/вывод с датчика СО2 (1 вкл, 0 выкл)
 #define DISPLAY_TYPE 1      // тип дисплея: 1 - 2004 (большой), 0 - 1602 (маленький)
 #define DISPLAY_ADDR 0x27   // адрес платы дисплея: 0x27 или 0x3f. Если дисплей не работает - смени адрес! На самом дисплее адрес не указан
+
+#define MinCO2 1000         // green
+#define NormalCO2 1500      // orange/blue
+#define MaxCO2 2000         // red
 
 // пределы отображения для графиков
 #define TEMP_MIN 15
@@ -55,8 +59,8 @@
 #define HUM_MAX 100
 #define PRESS_MIN -100
 #define PRESS_MAX 100
-#define CO2_MIN 300
-#define CO2_MAX 2000
+#define CO2_MIN 500
+#define CO2_MAX 3000
 
 // адрес BME280 жёстко задан в файле библиотеки Adafruit_BME280.h
 // стоковый адрес был 0x77, у китайского модуля адрес 0x76.
@@ -305,13 +309,13 @@ void drawClock(byte hours, byte minutes, byte x, byte y, boolean dotState) {
 
 #if (WEEK_LANG == 0)
 static const char* dayNames[] = {
-  "Sund",
-  "Mond",
-  "Tues",
-  "Wedn",
-  "Thur",
-  "Frid",
-  "Satu",
+  "SUN",
+  "MON",
+  "TUE",
+  "WED",
+  "THU",
+  "FRY",
+  "SAT",
 };
 #else
 static const char* dayNames[] = {
@@ -344,11 +348,13 @@ void drawData() {
     }
 }
 
-void drawPlot(byte pos, byte row, byte width, byte height, int min_val, int max_val, int* plot_array, String label) {
+void drawPlot(byte pos, byte row, byte width, byte height, int min_val, int max_val, int* plot_array, String label)
+{
     int max_value = -32000;
     int min_value = 32000;
 
-    for (byte i = 0; i < 15; i++) {
+    for (byte i = 0; i < 15; i++) 
+    {
         if (plot_array[i] > max_value) max_value = plot_array[i];
         if (plot_array[i] < min_value) min_value = plot_array[i];
     }
@@ -357,7 +363,8 @@ void drawPlot(byte pos, byte row, byte width, byte height, int min_val, int max_
     lcd.setCursor(16, 2); lcd.print(plot_array[14]);
     lcd.setCursor(16, 3); lcd.print(min_value);
 
-    for (byte i = 0; i < width; i++) {                  // каждый столбец параметров
+    for (byte i = 0; i < width; i++) 
+    {                  // каждый столбец параметров
         int fill_val = plot_array[i];
         fill_val = constrain(fill_val, min_val, max_val);
         byte infill, fract;
@@ -417,36 +424,54 @@ byte LED_ON = (255 - LED_BRIGHT_MAX);
 byte LED_OFF = (255 - LED_BRIGHT_MIN);
 #endif
 
-void setLED(byte color) {
-    // сначала всё выключаем
-    if (!LED_MODE) {
+void setLED(byte color)
+{
+    setCo2LedOff();
+	
+    switch (color)      // 0 выкл, 1 красный, 2 зелёный, 3 синий (или жёлтый)
+	{    
+	    case 0:
+	        break;
+	    case 1:
+    		analogWrite(LED_R, LED_ON);
+	        break;
+	    case 2:
+    		analogWrite(LED_G, LED_ON);
+	        break;
+	    case 3:
+	        if (!BLUE_YELLOW)
+	        {
+	            analogWrite(LED_B, LED_ON);         // blue
+	        }
+	        else 
+	        {
+	            analogWrite(LED_R, LED_ON - 128);    // yellow
+	            analogWrite(LED_G, LED_ON);
+	        }
+	        break;
+    }
+}
+
+void setCo2LedOff()
+{
+    if (!LED_MODE)
+    {
         analogWrite(LED_R, 0);
         analogWrite(LED_G, 0);
         analogWrite(LED_B, 0);
     }
-    else {
+    else
+    {
         analogWrite(LED_R, 255);
         analogWrite(LED_G, 255);
         analogWrite(LED_B, 255);
     }
-    switch (color) {    // 0 выкл, 1 красный, 2 зелёный, 3 синий (или жёлтый)
-    case 0:
-        break;
-    case 1: analogWrite(LED_R, LED_ON);
-        break;
-    case 2: analogWrite(LED_G, LED_ON);
-        break;
-    case 3:
-        if (!BLUE_YELLOW) analogWrite(LED_B, LED_ON);
-        else {
-            analogWrite(LED_R, LED_ON - 50);    // чутка уменьшаем красный
-            analogWrite(LED_G, LED_ON);
-        }
-        break;
-    }
 }
 
-void setup() {
+// MAIN FUNCTIONS /////////////////////////////////////////////////////////////////////////////////
+
+void setup()
+{
     Serial.begin(9600);
 
     pinMode(BACKLIGHT, OUTPUT);
@@ -561,12 +586,14 @@ void setup() {
 
     bme.takeForcedMeasurement();
     uint32_t Pressure = bme.readPressure();
-    for (byte i = 0; i < 6; i++) {   // счётчик от 0 до 5
+    for (byte i = 0; i < 6; i++) 
+    {   // счётчик от 0 до 5
         pressure_array[i] = Pressure;  // забить весь массив текущим давлением
         time_array[i] = i;             // забить массив времени числами 0 - 5
     }
 
-    if (DISPLAY_TYPE == 1) {
+    if (DISPLAY_TYPE == 1) 
+    {
         loadClock();
         drawClock(hrs, mins, 0, 0, 1);
         drawData();
@@ -580,16 +607,23 @@ void loop() {
     if (sensorsTimer.isReady()) readSensors();    // читаем показания датчиков с периодом SENS_TIME
 
 #if (DISPLAY_TYPE == 1)
-    if (clockTimer.isReady()) clockTick();        // два раза в секунду пересчитываем время и мигаем точками
+    if (clockTimer.isReady()) 
+        clockTick();                              // два раза в секунду пересчитываем время и мигаем точками
+	
     plotSensorsTick();                            // тут внутри несколько таймеров для пересчёта графиков (за час, за день и прогноз)
     modesTick();                                  // тут ловим нажатия на кнопку и переключаем режимы
-    if (mode == 0) {                                  // в режиме "главного экрана"
-        if (drawSensorsTimer.isReady()) drawSensors();  // обновляем показания датчиков на дисплее с периодом SENS_TIME
+    if (mode == 0) 
+    {                                  // в режиме "главного экрана"
+        if (drawSensorsTimer.isReady())
+            drawSensors();  // обновляем показания датчиков на дисплее с периодом SENS_TIME
     }
-    else {                                          // в любом из графиков
-        if (plotTimer.isReady()) redrawPlot();          // перерисовываем график
+    else 
+    {                                          // в любом из графиков
+        if (plotTimer.isReady()) 
+            redrawPlot();          // перерисовываем график
     }
 #else
-    if (drawSensorsTimer.isReady()) drawSensors();
+    if (drawSensorsTimer.isReady()) 
+        drawSensors();
 #endif
 }
