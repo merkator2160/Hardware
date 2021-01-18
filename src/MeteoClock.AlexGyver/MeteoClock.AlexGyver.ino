@@ -48,9 +48,16 @@
 #define DISPLAY_TYPE 1      // тип дисплея: 1 - 2004 (большой), 0 - 1602 (маленький)
 #define DISPLAY_ADDR 0x27   // адрес платы дисплея: 0x27 или 0x3f. Если дисплей не работает - смени адрес! На самом дисплее адрес не указан
 
+// CO2
 #define MinCO2 1000         // green
 #define NormalCO2 1500      // orange/blue
 #define MaxCO2 2000         // red
+
+// CO2 led color
+#define COLOR_GREEN 2
+#define COLOR_ORANGE 3
+#define COLOR_RED 1
+#define COLOR_OFF 0
 
 // пределы отображения для графиков
 #define TEMP_MIN 15
@@ -61,6 +68,7 @@
 #define PRESS_MAX 100
 #define CO2_MIN 500
 #define CO2_MAX 3000
+
 
 // адрес BME280 жёстко задан в файле библиотеки Adafruit_BME280.h
 // стоковый адрес был 0x77, у китайского модуля адрес 0x76.
@@ -281,10 +289,14 @@ void drawDig(byte dig, byte x, byte y) {
     }
 }
 
-void drawdots(byte x, byte y, boolean state) {
+void drawDots(byte x, byte y, boolean state)
+{
     byte code;
-    if (state) code = 165;
-    else code = 32;
+    if (state) 
+        code = 165;
+    else 
+        code = 32;
+	
     lcd.setCursor(x, y);
     lcd.write(code);
     lcd.setCursor(x, y + 1);
