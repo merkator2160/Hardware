@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MqttMessageProcessor.Models.Enums;
+using Newtonsoft.Json;
 using System;
 
 namespace MqttMessageProcessor.Models
@@ -6,9 +7,13 @@ namespace MqttMessageProcessor.Models
 	public class DomosticzInMessage
 	{
 		[JsonProperty("idx")]
-		public Int32 DeviceId { get; set; }
+		public DomosticzDevice DeviceId { get; set; }
 		public Int32 Rssi { get; set; }
-		public Int32 Nvalue { get; set; }
-		public String Svalue { get; set; }
+
+		[JsonProperty("nvalue")]
+		public Int32 NumericValue { get; set; }
+
+		[JsonProperty("svalue")]
+		public String StringValue { get; set; }
 	}
 }
