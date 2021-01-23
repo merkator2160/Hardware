@@ -1,45 +1,98 @@
+using Autofac;
+using Autofac.Extras.NLog;
+using IotHub.Api.Middleware;
+using IotHub.Api.Middleware.Cors;
+using IotHub.Api.Middleware.Hangfire;
+using IotHub.Common.Config;
+using IotHub.Common.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Serialization;
 
 namespace IotHub.Api
 {
 	internal class Startup
 	{
-		public Startup(IConfiguration configuration)
+		private readonly IConfiguration _configuration;
+		private readonly IWebHostEnvironment _env;
+
+
+		public Startup(IWebHostEnvironment env)
 		{
-			Configuration = configuration;
+			_env = env;
+			_configuration = CustomConfigurationProvider.CreateConfiguration(env.EnvironmentName, env.ContentRootPath);
 		}
 
 
-		public IConfiguration Configuration { get; }
-
-
-
+		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddControllers();
-			services.AddSwaggerGen(c =>
-			{
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "IotHub.Api", Version = "v1" });
-			});
+			services
+				.AddSingleton<IActionContextAccessor, ActionContextAccessor>()
+				.AddScoped(x => x.GetRequiredService<IUrlHelperFactory>().GetUrlHelper(x.GetRequiredService<IActionContextAccessor>().ActionContext));
+			services.AddCors(CorsMiddleware.AddPolitics);
+			services.AddConfiguredSwaggerGen();
+			services.AddHangfire();
+			services.AddHealthChecks();
+			services.ConfigureResponseHandling();
+			services
+				.AddControllers()
+				.AddNewtonsoftJson(options =>
+				{
+					options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+				})
+				.SetCompatibilityVersion(CompatibilityVersion.Latest);
 		}
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		public void ConfigureContainer(ContainerBuilder builder)
 		{
-			if(env.IsDevelopment())
+			var assembliesToScan = Collector.LoadAssemblies("DenverTraffic");
+
+			builder.RegisterLocalServices();
+			builder.RegisterLocalHangfireJobs();
+			builder.RegisterLocalConfiguration(_configuration);
+
+			builder.RegisterModule<NLogModule>();
+			builder.RegisterModule(new AutoMapperModule(assembliesToScan));
+		}
+		public void Configure(IApplicationBuilder app)
+		{
+			if(_env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
-				app.UseSwagger();
-				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IotHub.Api v1"));
+				app.UseCors(CorsPolicies.Development);
+			}
+			if(_env.IsStaging())
+			{
+				app.UseDeveloperExceptionPage();
+				app.UseCors(CorsPolicies.Staging);
+			}
+			if(_env.IsProduction())
+			{
+				app.UseHsts();
+				app.UseCors(CorsPolicies.Production);
 			}
 
 			app.UseHttpsRedirection();
 			app.UseRouting();
+			app.UseAuthentication();
+			app.UseAuthorization();
+
+			app.UseHangfire();
+			app.ConfigureHangfireJobs();
+			app.UseConfiguredSwagger();
+			app.UseResponseCompression();
+
+			app.UseGlobalExceptionHandler();
 			app.UseEndpoints(endpoints =>
 			{
+				endpoints.MapHealthChecks("/healthz", new HealthCheckOptions());
 				endpoints.MapControllers();
 			});
 		}

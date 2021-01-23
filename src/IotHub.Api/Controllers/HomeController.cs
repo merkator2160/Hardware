@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DenverTraffic.FingerprintBuilder.Api.Controllers
+namespace IotHub.Api.Controllers
 {
 	[ApiController]
 #if !DEBUG
@@ -11,7 +11,7 @@ namespace DenverTraffic.FingerprintBuilder.Api.Controllers
 		[HttpGet("/")]
 		public IActionResult Index()
 		{
-			return Ok("Fingerprint builder service");
+			return Ok("IoT hub service");
 		}
 	}
 }

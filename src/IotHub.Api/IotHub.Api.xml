@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IotHub.Api</name>
+    </assembly>
+    <members>
+        <member name="M:IotHub.Api.Middleware.ErrorHandlingMiddleware.UseGlobalExceptionHandler(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            It don't allow information from unhandled exceptions leave application borders. 
+            Also provides these exceptions logging.
+            </summary>
+        </member>
+        <member name="T:IotHub.Api.Middleware.Hangfire.HangfireMiddleware">
+            <summary>
+            https://stackoverflow.com/questions/44383174/hangfire-with-horizontal-scaling
+            https://stackoverflow.com/questions/42201809/hangfire-recurring-job-on-every-server/42202844
+            http://docs.hangfire.io/en/latest/background-processing/configuring-queues.html
+            </summary>
+        </member>
+    </members>
+</doc>
