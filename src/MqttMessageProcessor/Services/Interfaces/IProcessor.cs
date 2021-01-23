@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MqttMessageProcessor.Interfaces
+namespace MqttMessageProcessor.Services.Interfaces
 {
 	internal interface IProcessor : IDisposable
 	{

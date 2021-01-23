@@ -1,4 +1,4 @@
-﻿namespace MqttMessageProcessor.Models.Enums
+﻿namespace MqttMessageProcessor.Services.Models.Enums
 {
 	public enum DomosticzDevice
 	{

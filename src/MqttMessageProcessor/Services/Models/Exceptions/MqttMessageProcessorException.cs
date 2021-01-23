@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace MqttMessageProcessor.Models.Exceptions
+namespace MqttMessageProcessor.Services.Models.Exceptions
 {
 	public class MqttMessageProcessorException : ApplicationException
 	{

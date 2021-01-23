@@ -1,8 +1,8 @@
-﻿using MqttMessageProcessor.Models.Enums;
+﻿using MqttMessageProcessor.Services.Models.Enums;
 using Newtonsoft.Json;
 using System;
 
-namespace MqttMessageProcessor.Models
+namespace MqttMessageProcessor.Services.Models
 {
 	public class DomosticzInMessage
 	{

@@ -1,12 +1,13 @@
 ﻿using System;
 
-namespace MqttMessageProcessor.Models.Config
+namespace MqttMessageProcessor.Services.Models.Config
 {
 	public class ProcessorConfig
 	{
-		public String IpAddress { get; set; }
+		public String HostName { get; set; }
 		public Int32 Port { get; set; }
 		public String Login { get; set; }
 		public String Password { get; set; }
+		public String ClientId { get; set; }
 	}
 }
