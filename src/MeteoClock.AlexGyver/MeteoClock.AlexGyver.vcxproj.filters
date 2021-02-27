@@ -19,11 +19,15 @@
     <None Include="src\arduino folders read me.txt">
       <Filter>Misc Files</Filter>
     </None>
-    <None Include="..\..\..\..\Arduino\Projects\MeteoClock (AlexGyver)\firmware\meteoClock_v1.5\functions.ino" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.MeteoClock.AlexGyver.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="symbols.ino">
+      <Filter>Source Files</Filter>
+    </Library>
   </ItemGroup>
 </Project>

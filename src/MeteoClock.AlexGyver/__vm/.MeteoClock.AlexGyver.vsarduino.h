@@ -89,6 +89,6 @@ typedef void *__builtin_va_list;
 #define pgm_read_ptr(address_short)   short()
 
 #include "MeteoClock.AlexGyver.ino"
-#include "..\..\..\..\Arduino\Projects\MeteoClock (AlexGyver)\firmware\meteoClock_v1.5\functions.ino"
+#include "symbols.ino"
 #endif
 #endif
