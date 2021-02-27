@@ -1,4 +1,4 @@
-﻿using IotHub.Common.Consts;
+﻿using IotHub.Common.Const;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;

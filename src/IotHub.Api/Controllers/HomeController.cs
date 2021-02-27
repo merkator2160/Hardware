@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 
 namespace IotHub.Api.Controllers
 {
@@ -11,7 +12,7 @@ namespace IotHub.Api.Controllers
 		[HttpGet("/")]
 		public IActionResult Index()
 		{
-			return Ok("IoT hub service");
+			return Ok($"IoT hub v{Assembly.GetExecutingAssembly().GetName().Version}");
 		}
 	}
 }

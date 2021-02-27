@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IotHub.Common.Consts
+namespace IotHub.Common.Const
 {
 	public static class HttpMimeType
 	{

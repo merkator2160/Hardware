@@ -1,5 +1,11 @@
-﻿using MqttMessageProcessor.Services.Models.Config;
+﻿using Autofac;
+using IotHub.Common.Config;
+using IotHub.Common.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using MqttMessageProcessor.Services.Interfaces;
 using System;
+using System.Diagnostics;
+using System.Threading;
 
 namespace MqttMessageProcessor
 {
@@ -9,15 +15,16 @@ namespace MqttMessageProcessor
 		{
 			try
 			{
-				using(var processor = new Processor(new ProcessorConfig()
+#if DEBUG
+				WaitForDebugger();
+#endif
+				var configuration = CustomConfigurationProvider.CollectEnvironmentRelatedConfiguration();
+				using(var container = CreateContainer(configuration))
 				{
-					HostName = "192.168.1.11",
-					Port = 1883,
-					Login = "user",
-					Password = ";4,wnmCvQ.7hMDdWuqv*",
-					ClientId = "63345ac1-5260-4a84-b4cc-e45f5ff9e388"
-				}))
-				{
+					//Console.WriteLine((String)configuration.GetValue(typeof(String), "ASPNETCORE_ENVIRONMENT"));
+
+					var processor = container.Resolve<IProcessor>();
+
 					processor.Start();
 
 					Console.ReadKey();
@@ -26,8 +33,35 @@ namespace MqttMessageProcessor
 			catch(Exception ex)
 			{
 				Console.WriteLine(ex.Message);
+				Console.WriteLine(ex.InnerException?.Message);
 				Console.ReadKey();
 			}
+		}
+
+
+		// SUPPORT FUNCTIONS ////////////////////////////////////////////////////////////////////////////
+		private static IContainer CreateContainer(IConfigurationRoot configuration)
+		{
+			var iotHubAssemblies = Collector.LoadAssemblies("MqttMessageProcessor");
+			var builder = new ContainerBuilder();
+
+			builder.RegisterServices(iotHubAssemblies);
+			//builder.RegisterServiceConfiguration(configuration, iotHubAssemblies);		// TODO: investigate .exe
+			builder.RegisterLocalConfiguration(configuration);
+
+			builder.RegisterType<Processor>().AsSelf().AsImplementedInterfaces().SingleInstance();
+			builder.RegisterModule(new AutoMapperModule(iotHubAssemblies));
+
+			return builder.Build();
+		}
+		static void WaitForDebugger()
+		{
+			Console.WriteLine("Waiting for debugger to attach");
+			while(!Debugger.IsAttached)
+			{
+				Thread.Sleep(100);
+			}
+			Console.WriteLine("Debugger attached");
 		}
 	}
 }

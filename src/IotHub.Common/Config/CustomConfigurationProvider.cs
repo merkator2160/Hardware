@@ -27,7 +27,8 @@ namespace IotHub.Common.Config
 			var builder = new ConfigurationBuilder()
 				.AddEnvironmentVariables()
 				.SetBasePath(basePath)
-				.AddJsonFile($"appsettings.{environment}.json", optional: false, reloadOnChange: false);
+				.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+				.AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: false);
 
 			return builder.Build();
 		}
