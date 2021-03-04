@@ -2,7 +2,7 @@
 
 namespace IotHub.Api.Services.Interfaces
 {
-	internal interface IProcessor : IDisposable
+	internal interface IMqttMessageProcessor
 	{
 		Boolean IsConnected { get; }
 

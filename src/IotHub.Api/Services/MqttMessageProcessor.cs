@@ -17,7 +17,7 @@ using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace IotHub.Api.Services
 {
-	internal class Processor : IProcessor
+	internal class MqttMessageProcessor : IMqttMessageProcessor, IMqttPublisher, IDisposable
 	{
 		private readonly ProcessorConfig _config;
 		private readonly Dictionary<String, MqttClient.MqttMsgPublishEventHandler> _handlerDictionary;
@@ -26,7 +26,7 @@ namespace IotHub.Api.Services
 		private Boolean _disposed;
 
 
-		public Processor(ProcessorConfig config)
+		public MqttMessageProcessor(ProcessorConfig config)
 		{
 			_config = config;
 			_mqttClient = new MqttClient(config.HostName, config.Port, false, null, null, MqttSslProtocols.None);
@@ -34,7 +34,7 @@ namespace IotHub.Api.Services
 		}
 
 
-		// IProcessor /////////////////////////////////////////////////////////////////////////////
+		// IMqttMessageProcessor //////////////////////////////////////////////////////////////////
 		public Boolean IsConnected => _mqttClient.IsConnected;
 
 		public void Start()
@@ -54,29 +54,27 @@ namespace IotHub.Api.Services
 		}
 
 
-		// SUPPORT FUNCTIONS //////////////////////////////////////////////////////////////////////
-		private Dictionary<String, MqttClient.MqttMsgPublishEventHandler> CreateHandlerDictionary()
-		{
-			return new Dictionary<String, MqttClient.MqttMsgPublishEventHandler>()
-			{
-				{"domoticz/in", OnDomosticzInReceived},
-				{"domoticz/out", OnDomosticzOutReceived},
-			};
-		}
-		private void SubscribeForTopics(String[] topics)
-		{
-			foreach(var x in topics)
-			{
-				_mqttClient.Subscribe(new String[] { x }, new Byte[] { MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE });
-			}
-		}
-		private void Publish<T>(String topic, T obj, Byte qos = MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, Boolean retain = false)
+		// IMqttPublisher /////////////////////////////////////////////////////////////////////////
+		public void Publish<T>(String topic, T obj, Byte qos = MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, Boolean retain = false)
 		{
 			Publish(topic, JsonConvert.SerializeObject(obj));
 		}
-		private void Publish(String topic, String message, Byte qos = MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, Boolean retain = false)
+		public void Publish(String topic, String message, Byte qos = MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, Boolean retain = false)
 		{
 			_mqttClient.Publish(topic, Encoding.UTF8.GetBytes(message), qos, retain);
+		}
+
+
+		// THREADS ////////////////////////////////////////////////////////////////////////////////
+		private void StatusThread()
+		{
+			while(true)
+			{
+				if(_mqttClient.IsConnected)
+					Publish("iotHub/status", "Connected");
+
+				Thread.Sleep(10000);
+			}
 		}
 
 
@@ -88,11 +86,14 @@ namespace IotHub.Api.Services
 		private void OnDomosticzInReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
 			var jsonMessage = Encoding.UTF8.GetString(eventArgs.Message);
-			var domosticzInMessage = JsonConvert.DeserializeObject<DomosticzInMessage>(jsonMessage);
-			if(domosticzInMessage.DeviceId != DomosticzDevice.WeatherStation)
-				return;
+			var message = JsonConvert.DeserializeObject<DomosticzInMessage>(jsonMessage);
 
-			var climateSensorValues = domosticzInMessage.StringValue.Split(';');
+			if(message.DeviceId != DomosticzDevice.WeatherStation)
+				HandleWeatherStationMessage(message);
+		}
+		private void HandleWeatherStationMessage(DomosticzInMessage message)
+		{
+			var climateSensorValues = message.StringValue.Split(';');
 			var temperature = climateSensorValues[0];
 			var humidity = climateSensorValues[1];
 			//var unknown = climateSensorValues[2];
@@ -110,27 +111,36 @@ namespace IotHub.Api.Services
 			Publish("iotHub/goncharova/weather/humidity", humidity);
 			Publish("iotHub/goncharova/weather/pressure/gpa", pressureStr);
 		}
+
 		private void OnDomosticzOutReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
 			var jsonMessage = Encoding.UTF8.GetString(eventArgs.Message);
-			var domosticzOutMessage = JsonConvert.DeserializeObject<DomosticzOutMessage>(jsonMessage);
+			var message = JsonConvert.DeserializeObject<DomosticzOutMessage>(jsonMessage);
 
-			if(domosticzOutMessage.DomosticzDeviceId != DomosticzDevice.ThermometerMyRoom)
-				return;
-
-			Publish("thermometerMiddleRoom/import/led", domosticzOutMessage.NumericValue);
+			if(message.DomosticzDeviceId == DomosticzDevice.ThermometerMyRoom)
+				HandleThermometerMyRoomMessage(message);
+		}
+		private void HandleThermometerMyRoomMessage(DomosticzOutMessage message)
+		{
+			Publish("thermometerMiddleRoom/import/led", message.NumericValue);
 		}
 
 
-		// THREADS ////////////////////////////////////////////////////////////////////////////////
-		private void StatusThread()
-		{
-			while(true)
-			{
-				if(_mqttClient.IsConnected)
-					Publish("iotHub/status", "Connected");
 
-				Thread.Sleep(10000);
+		// SUPPORT FUNCTIONS //////////////////////////////////////////////////////////////////////
+		private Dictionary<String, MqttClient.MqttMsgPublishEventHandler> CreateHandlerDictionary()
+		{
+			return new Dictionary<String, MqttClient.MqttMsgPublishEventHandler>()
+			{
+				{"domoticz/in", OnDomosticzInReceived},
+				{"domoticz/out", OnDomosticzOutReceived},
+			};
+		}
+		private void SubscribeForTopics(String[] topics)
+		{
+			foreach(var x in topics)
+			{
+				_mqttClient.Subscribe(new String[] { x }, new Byte[] { MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE });
 			}
 		}
 

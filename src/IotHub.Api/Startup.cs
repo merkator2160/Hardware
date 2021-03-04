@@ -60,12 +60,12 @@ namespace IotHub.Api
 			builder.RegisterLocalHangfireJobs();
 			builder.RegisterLocalConfiguration(_configuration);
 
-			builder.RegisterType<Processor>().AsSelf().AsImplementedInterfaces().SingleInstance();
+			builder.RegisterType<MqttMessageProcessor>().AsSelf().AsImplementedInterfaces().SingleInstance();
 
 			builder.RegisterModule<NLogModule>();
 			builder.RegisterModule(new AutoMapperModule(assembliesToScan));
 		}
-		public void Configure(IApplicationBuilder app, IProcessor processor)
+		public void Configure(IApplicationBuilder app, IMqttMessageProcessor processor)
 		{
 			processor.Start();
 
