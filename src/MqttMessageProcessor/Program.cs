@@ -46,7 +46,7 @@ namespace MqttMessageProcessor
 			var builder = new ContainerBuilder();
 
 			builder.RegisterServices(iotHubAssemblies);
-			//builder.RegisterServiceConfiguration(configuration, iotHubAssemblies);		// TODO: investigate .exe
+			//builder.RegisterServiceConfiguration(configuration, iotHubAssemblies);		// TODO: investigate .exe issue
 			builder.RegisterLocalConfiguration(configuration);
 
 			builder.RegisterType<Processor>().AsSelf().AsImplementedInterfaces().SingleInstance();

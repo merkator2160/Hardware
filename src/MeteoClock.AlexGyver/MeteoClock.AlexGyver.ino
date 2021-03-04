@@ -27,28 +27,28 @@
 */
 
 // ------------------------- НАСТРОЙКИ --------------------
-#define RESET_CLOCK 0       // сброс часов на время загрузки прошивки (для модуля с несъёмной батарейкой). Не забудь поставить 0 и прошить ещё раз!
-#define SENS_TIME 30000     // время обновления показаний сенсоров на экране, миллисекунд
-#define LED_MODE 1          // тип RGB светодиода: 0 - главный катод, 1 - главный анод
+#define RESET_CLOCK 0           // сброс часов на время загрузки прошивки (для модуля с несъёмной батарейкой). Не забудь поставить 0 и прошить ещё раз!
+#define SENS_TIME 10000         // sensor data acquisition time, ms
+#define DRAW_SENS_TIME 30000    // время обновления показаний сенсоров на экране, миллисекунд
+#define RESET_TO_MAIN_SCREEN_DELAY 30000
 
 // управление яркостью
-#define BRIGHT_THRESHOLD 150  // величина сигнала, ниже которой яркость переключится на минимум (0-1023)
-#define LED_BRIGHT_MAX 255    // макс яркость светодиода СО2 (0 - 255)
-#define LED_BRIGHT_MIN 10     // мин яркость светодиода СО2 (0 - 255)
-#define LCD_BRIGHT_MAX 255    // макс яркость подсветки дисплея (0 - 255)
-#define LCD_BRIGHT_MIN 0     // мин яркость подсветки дисплея (0 - 255)
+#define BRIGHT_THRESHOLD 150    // величина сигнала, ниже которой яркость переключится на минимум (0-1023)
+#define LED_BRIGHT_MAX 255      // макс яркость светодиода СО2 (0 - 255)
+#define LED_BRIGHT_MIN 10       // мин яркость светодиода СО2 (0 - 255)
+#define LCD_BRIGHT_MAX 255      // макс яркость подсветки дисплея (0 - 255)
+#define LCD_BRIGHT_MIN 0        // мин яркость подсветки дисплея (0 - 255)
 
-#define BLUE_YELLOW 1       // жёлтый цвет вместо синего (1 да, 0 нет) но из за особенностей подключения жёлтый не такой яркий
-#define DISP_MODE 1         // в правом верхнем углу отображать: 0 - год, 1 - день недели, 2 - секунды
-#define WEEK_LANG 0         // язык дня недели: 0 - английский, 1 - русский (транслит)
-#define DEBUG 0             // вывод на дисплей лог инициализации датчиков при запуске. Для дисплея 1602 не работает! Но дублируется через порт!
-#define PRESSURE 1          // 0 - график давления, 1 - график прогноза дождя (вместо давления). Не забудь поправить пределы гроафика
-#define DISPLAY_ADDR 0x27   // адрес платы дисплея: 0x27 или 0x3f. Если дисплей не работает - смени адрес! На самом дисплее адрес не указан
+#define DISP_MODE 1             // в правом верхнем углу отображать: 0 - год, 1 - день недели, 2 - секунды
+#define WEEK_LANG 0             // язык дня недели: 0 - английский, 1 - русский (транслит)
+#define DEBUG 0                 // вывод на дисплей лог инициализации датчиков при запуске. Дублируется через порт!
+#define PRESSURE 1              // 0 - график давления, 1 - график прогноза дождя (вместо давления). Не забудь поправить пределы гроафика
+#define DISPLAY_ADDR 0x27       // адрес платы дисплея: 0x27 или 0x3f. Если дисплей не работает - смени адрес! На самом дисплее адрес не указан
 
 // CO2
-#define MinCO2 1000         // green
-#define NormalCO2 1500      // orange/blue
-#define MaxCO2 2000         // red
+#define MinCO2 1000             // green
+#define NormalCO2 1500          // orange/blue
+#define MaxCO2 2000             // red
 
 // CO2 led color
 #define COLOR_GREEN 2
@@ -92,6 +92,7 @@
 // библиотеки
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+#include <Streaming.h>
 
 LiquidCrystal_I2C lcd(DISPLAY_ADDR, 20, 4);
 
@@ -109,12 +110,13 @@ MHZ19_uart mhz19;
 
 #include <GyverTimer.h>
 GTimer_ms sensorsTimer(SENS_TIME);
-GTimer_ms drawSensorsTimer(SENS_TIME);
+GTimer_ms drawSensorsTimer(DRAW_SENS_TIME);
 GTimer_ms clockTimer(500);
 GTimer_ms hourPlotTimer((long)4 * 60 * 1000);         // 4 минуты
 GTimer_ms dayPlotTimer((long)1.6 * 60 * 60 * 1000);   // 1.6 часа
 GTimer_ms plotTimer(240000);
 GTimer_ms predictTimer((long)10 * 60 * 1000);         // 10 минут
+GTimer_ms resetToMainScreenTimer(RESET_TO_MAIN_SCREEN_DELAY);
 //GTimer_ms brightTimer(2000);
 
 #include "GyverButton.h"
@@ -175,13 +177,9 @@ static const char* dayNames[] = {
 };
 #endif
 
-#if (LED_MODE == 0)
-byte LED_ON = (LED_BRIGHT_MAX);
-byte LED_OFF = (LED_BRIGHT_MIN);
-#else
-byte LED_ON = (255 - LED_BRIGHT_MAX);
-byte LED_OFF = (255 - LED_BRIGHT_MIN);
-#endif
+const byte ledMax = (255 - LED_BRIGHT_MAX);
+const byte ledMin = (255 - LED_BRIGHT_MIN);
+byte ledCurrent = ledMax;
 
 
 // MAIN FUNCTIONS /////////////////////////////////////////////////////////////////////////////////
@@ -196,7 +194,7 @@ void setup()
     pinMode(LED_B, OUTPUT);
     setLed(0);
 
-    digitalWrite(LED_COM, LED_MODE);
+    digitalWrite(LED_COM, 1);               // 1 for main anode, 0 main cathode
     analogWrite(BACKLIGHT, LCD_BRIGHT_MAX);
 
     lcd.init();
@@ -344,29 +342,21 @@ void loop()
     }
 }
 
-// FUNCTIONS //////////////////////////////////////////////////////////////////////////////////////
 
+// FUNCTIONS //////////////////////////////////////////////////////////////////////////////////////
 void checkBrightness()
 {
 	const auto photoValue = analogRead(PHOTO);
 	
-    if (photoValue < BRIGHT_THRESHOLD)     // если темно
+    if (photoValue < BRIGHT_THRESHOLD)          // если темно
     {
         analogWrite(BACKLIGHT, LCD_BRIGHT_MIN);
-#if (LED_MODE == 0)
-        LED_ON = (LED_BRIGHT_MIN);
-#else
-        LED_ON = (255 - LED_BRIGHT_MIN);
-#endif
+        ledCurrent = ledMin;
     }
     else                                        // если светло
     {
         analogWrite(BACKLIGHT, LCD_BRIGHT_MAX);
-#if (LED_MODE == 0)
-        LED_ON = (LED_BRIGHT_MAX);
-#else
-        LED_ON = (255 - LED_BRIGHT_MAX);
-#endif
+        ledCurrent = ledMax;
     }
 }
 void readSensors()
@@ -376,14 +366,32 @@ void readSensors()
     dispHum = bme.readHumidity();
     dispPres = (float)bme.readPressure() * 0.00750062;    // 1 hectopascal [gPa] = 0,750063755419211 pressure in millimeters of mercury pillar (0°C) [mm mer.pill.]
 
-    dispCO2 = mhz19.getPPM();
-    selectCo2LedColor(dispCO2);
+	dispCO2 = mhz19.getPPM();    
 }
-void selectCo2LedColor(int ppm)
+void drawSensors()
+{
+    lcd.setCursor(0, 2);
+    lcd.print(String(dispTemp, 1));
+    lcd.write(223);
+    lcd.setCursor(6, 2);
+    lcd.print(" " + String(dispHum) + "%  ");
+
+    lcd.print(String(dispCO2) + " ppm");
+    if (dispCO2 < 1000) lcd.print(" ");
+
+    lcd.setCursor(0, 3);
+    lcd.print(String(dispPres) + " mm  rain ");
+    lcd.print(F("       "));
+    lcd.setCursor(13, 3);
+    lcd.print(String(dispRain) + "%");   
+	
+    setCo2LedColor(dispCO2);
+}
+void setCo2LedColor(int ppm)
 {
     if (ppm < MinCO2)
     {
-        setLed(COLOR_GREEN);
+    	setLed(COLOR_GREEN);        
         return;
     }
 
@@ -404,48 +412,35 @@ void selectCo2LedColor(int ppm)
 void setLed(byte color)
 {
     setCo2LedOff();
-
+	
     switch (color)      // 0 выкл, 1 красный, 2 зелёный, 3 синий (или жёлтый)
     {
     case 0:
         break;
     case 1:
-        analogWrite(LED_R, LED_ON);
+        analogWrite(LED_R, ledCurrent);
         break;
     case 2:
-        analogWrite(LED_G, LED_ON);
+        analogWrite(LED_G, ledCurrent);
         break;
     case 3:
-        if (!BLUE_YELLOW)
-        {
-            analogWrite(LED_B, LED_ON);          // blue
-        }
-        else
-        {
-            analogWrite(LED_R, LED_ON - 128);    // yellow
-            analogWrite(LED_G, LED_ON);
-        }
+        //analogWrite(LED_B, LED_ON);          // blue       
+
+        analogWrite(LED_R, map(ledCurrent, 0, 255, 128, 255));    // yellow, red is slightly brighter than green
+        analogWrite(LED_G, ledCurrent);
+    	
         break;
     }
 }
 void setCo2LedOff()
 {
-    if (!LED_MODE)
-    {
-        analogWrite(LED_R, 0);
-        analogWrite(LED_G, 0);
-        analogWrite(LED_B, 0);
-    }
-    else
-    {
-        analogWrite(LED_R, 255);
-        analogWrite(LED_G, 255);
-        analogWrite(LED_B, 255);
-    }
+    analogWrite(LED_R, 255);
+    analogWrite(LED_G, 255);
+    analogWrite(LED_B, 255);    
 }
 
 boolean dotFlag;
-boolean lcdLightEnabled = true;
+boolean lightEnabled = true;
 
 void clockTick()
 {
@@ -581,24 +576,31 @@ void modesTick()
     if (button.isClick())
     {
         mode++;
-
         if (mode > 8) mode = 0;
+
+        resetToMainScreenTimer.reset();
         changeFlag = true;
     }
     if (button.isHolded())
     {
-        //mode = 0;             // return to main screen
-        //changeFlag = true;
-    	
-        lcdLightEnabled = !lcdLightEnabled;
-        if(lcdLightEnabled)
+    	lightEnabled = !lightEnabled;
+        if(lightEnabled)
         {
             analogWrite(BACKLIGHT, LCD_BRIGHT_MAX);
+            //ledCurrent = ledMax;
+            //setCo2LedColor(dispCO2);
         }
         else
-        {
+        {        	
             analogWrite(BACKLIGHT, LCD_BRIGHT_MIN);
-        }
+            //ledCurrent = ledMin;
+            //setCo2LedColor(dispCO2);
+        }        
+    }
+    if(resetToMainScreenTimer.isReady())
+    {
+    	mode = 0;             // return to main screen
+    	changeFlag = true;
     }
 
     if (changeFlag)
@@ -619,23 +621,6 @@ void modesTick()
             redrawPlot();
         }
     }
-}
-void drawSensors()
-{
-    lcd.setCursor(0, 2);
-    lcd.print(String(dispTemp, 1));
-    lcd.write(223);
-    lcd.setCursor(6, 2);
-    lcd.print(" " + String(dispHum) + "%  ");
-
-    lcd.print(String(dispCO2) + " ppm");
-    if (dispCO2 < 1000) lcd.print(" ");
-
-    lcd.setCursor(0, 3);
-    lcd.print(String(dispPres) + " mm  rain ");
-    lcd.print(F("       "));
-    lcd.setCursor(13, 3);
-    lcd.print(String(dispRain) + "%");
 }
 void redrawPlot()
 {

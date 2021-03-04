@@ -1,4 +1,5 @@
-﻿using MqttMessageProcessor.Services.Interfaces;
+﻿using MqttMessageProcessor.Const;
+using MqttMessageProcessor.Services.Interfaces;
 using MqttMessageProcessor.Services.Models;
 using MqttMessageProcessor.Services.Models.Config;
 using MqttMessageProcessor.Services.Models.Enums;
@@ -101,7 +102,7 @@ namespace MqttMessageProcessor
 			var formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
 			if(Single.TryParse(pressureStr, NumberStyles.AllowDecimalPoint, formatter, out var pressureGpa))
 			{
-				var pressureMpl = Math.Round(pressureGpa * 0.00750062, 2);    // 1 hectopascal [gPa] = 0,750063755419211 pressure in millimeters of mercury pillar (0°C) [mm mer.pill.]
+				var pressureMpl = Math.Round(pressureGpa * Global.PressureCoefficient, 2);
 				Publish("iotHub/goncharova/weather/pressure/mpl", pressureMpl);
 			}
 
