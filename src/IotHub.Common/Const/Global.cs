@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MqttMessageProcessor.Const
+namespace IotHub.Common.Const
 {
 	public static class Global
 	{

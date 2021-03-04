@@ -5,6 +5,8 @@ using Microsoft.Extensions.Logging;
 using NLog;
 using NLog.Web;
 using System;
+using System.Diagnostics;
+using System.Threading;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace IotHub.Api
@@ -13,6 +15,10 @@ namespace IotHub.Api
 	{
 		private static void Main(String[] args)
 		{
+#if DEBUG
+			//WaitForDebugger();
+#endif
+
 			var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
 			try
 			{
@@ -45,6 +51,15 @@ namespace IotHub.Api
 						})
 						.UseNLog();
 				});
+		}
+		static void WaitForDebugger()
+		{
+			Console.WriteLine("Waiting for debugger to attach");
+			while(!Debugger.IsAttached)
+			{
+				Thread.Sleep(100);
+			}
+			Console.WriteLine("Debugger attached");
 		}
 	}
 }

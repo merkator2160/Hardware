@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace MqttMessageProcessor.Services.Models.Config
+namespace IotHub.Api.Services.Models.Config
 {
-	public class ProcessorConfig
+	internal class ProcessorConfig
 	{
 		public String HostName { get; set; }
 		public Int32 Port { get; set; }

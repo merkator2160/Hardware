@@ -1,9 +1,9 @@
-﻿using MqttMessageProcessor.Const;
-using MqttMessageProcessor.Services.Interfaces;
-using MqttMessageProcessor.Services.Models;
-using MqttMessageProcessor.Services.Models.Config;
-using MqttMessageProcessor.Services.Models.Enums;
-using MqttMessageProcessor.Services.Models.Exceptions;
+﻿using IotHub.Api.Services.Interfaces;
+using IotHub.Api.Services.Models;
+using IotHub.Api.Services.Models.Config;
+using IotHub.Api.Services.Models.Enums;
+using IotHub.Api.Services.Models.Exceptions;
+using IotHub.Common.Const;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
-namespace MqttMessageProcessor
+namespace IotHub.Api.Services
 {
 	internal class Processor : IProcessor
 	{

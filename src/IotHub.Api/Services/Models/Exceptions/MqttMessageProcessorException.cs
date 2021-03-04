@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace MqttMessageProcessor.Services.Models.Exceptions
+namespace IotHub.Api.Services.Models.Exceptions
 {
-	public class MqttMessageProcessorException : ApplicationException
+	internal class MqttMessageProcessorException : ApplicationException
 	{
 		public MqttMessageProcessorException()
 		{

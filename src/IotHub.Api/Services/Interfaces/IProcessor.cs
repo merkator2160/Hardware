@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MqttMessageProcessor.Services.Interfaces
+namespace IotHub.Api.Services.Interfaces
 {
 	internal interface IProcessor : IDisposable
 	{

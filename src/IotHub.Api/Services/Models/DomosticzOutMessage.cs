@@ -1,10 +1,10 @@
-﻿using MqttMessageProcessor.Services.Models.Enums;
+﻿using IotHub.Api.Services.Models.Enums;
 using Newtonsoft.Json;
 using System;
 
-namespace MqttMessageProcessor.Services.Models
+namespace IotHub.Api.Services.Models
 {
-	public class DomosticzOutMessage
+	internal class DomosticzOutMessage
 	{
 		public Byte Battery { get; set; }
 		public Int32 Rssi { get; set; }

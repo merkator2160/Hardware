@@ -3,6 +3,8 @@ using Autofac.Extras.NLog;
 using IotHub.Api.Middleware;
 using IotHub.Api.Middleware.Cors;
 using IotHub.Api.Middleware.Hangfire;
+using IotHub.Api.Services;
+using IotHub.Api.Services.Interfaces;
 using IotHub.Common.Config;
 using IotHub.Common.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
@@ -58,11 +60,15 @@ namespace IotHub.Api
 			builder.RegisterLocalHangfireJobs();
 			builder.RegisterLocalConfiguration(_configuration);
 
+			builder.RegisterType<Processor>().AsSelf().AsImplementedInterfaces().SingleInstance();
+
 			builder.RegisterModule<NLogModule>();
 			builder.RegisterModule(new AutoMapperModule(assembliesToScan));
 		}
-		public void Configure(IApplicationBuilder app)
+		public void Configure(IApplicationBuilder app, IProcessor processor)
 		{
+			processor.Start();
+
 			if(_env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
