@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Hangfire;
 using Hangfire.MemoryStorage;
+using IotHub.Api.Middleware.Hangfire.Jobs;
 using IotHub.Common.Hangfire.Auth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +28,7 @@ namespace IotHub.Api.Middleware.Hangfire
 			});
 			app.UseHangfireServer(new BackgroundJobServerOptions()
 			{
-				Queues = new[] { "default", CreateEnvironmentDependentQueueName() }
+				Queues = new[] { "default" }
 			});
 		}
 		public static void AddHangfire(this IServiceCollection services)
@@ -44,17 +45,11 @@ namespace IotHub.Api.Middleware.Hangfire
 		public static void ConfigureHangfireJobs(this IApplicationBuilder app)
 		{
 #if DEVELOPMENT
-			var parameter = new SampleJobParameter()
-			{
-				Parameter = $"{nameof(SampleParametrizedAsyncJob)} is executing"
-			};
-
-			BackgroundJob.Enqueue<SampleParametrizedAsyncJob>(p => p.ExecuteAsync(parameter));
-			RecurringJob.AddOrUpdate<SampleParametrizedAsyncJob>(
-				p => p.ExecuteAsync(parameter),
-				Cron.Minutely,
-				timeZone: TimeZoneInfo.Utc,
-				queue: CreateEnvironmentDependentQueueName());
+			BackgroundJob.Enqueue<UpTimeJob>(p => p.Execute());
+			RecurringJob.AddOrUpdate<UpTimeJob>(
+				p => p.Execute(),
+				"0 * * ? * *",
+				timeZone: TimeZoneInfo.Utc);
 #else
 			ConfigureOneTimeJobs();
 			ConfigureRecurringJobs();
@@ -69,15 +64,14 @@ namespace IotHub.Api.Middleware.Hangfire
 		}
 		private static void ConfigureOneTimeJobs()
 		{
-			//BackgroundJob.Enqueue<DeliveryReportJob>(p => p.ExecuteAsync());
+			BackgroundJob.Enqueue<UpTimeJob>(p => p.Execute());
 		}
 		private static void ConfigureRecurringJobs()
 		{
-			//RecurringJob.AddOrUpdate<SampleJob>(
-			// p => p.ExecuteAsync(),
-			// Cron.Minutely,
-			// timeZone: TimeZoneInfo.Utc,
-			// queue: CreateEnvironmentDependentQueueName());
+			RecurringJob.AddOrUpdate<UpTimeJob>(
+			 p => p.Execute(),
+			 "0 * * ? * *",
+			 timeZone: TimeZoneInfo.Utc);
 		}
 	}
 }

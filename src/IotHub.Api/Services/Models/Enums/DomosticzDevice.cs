@@ -3,6 +3,7 @@
 	internal enum DomosticzDevice
 	{
 		WeatherStation = 1,
-		ThermometerMyRoom = 3
+		ThermometerMyRoom = 3,
+		Pressure = 7
 	}
 }

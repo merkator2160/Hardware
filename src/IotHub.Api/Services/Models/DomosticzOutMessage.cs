@@ -18,7 +18,7 @@ namespace IotHub.Api.Services.Models
 		public String Id { get; set; }
 
 		[JsonProperty("idx")]
-		public DomosticzDevice DomosticzDeviceId { get; set; }
+		public DomosticzDevice DeviceId { get; set; }
 
 		public String Name { get; set; }
 
@@ -28,8 +28,8 @@ namespace IotHub.Api.Services.Models
 		[JsonProperty("stype")]
 		public String StringType { get; set; }
 
-		[JsonProperty("svalue1")]
-		public String StringValue1 { get; set; }
+		[JsonProperty("svalue")]
+		public String StringValue { get; set; }
 		public String SwitchType { get; set; }
 		public Int32 Unit { get; set; }
 	}

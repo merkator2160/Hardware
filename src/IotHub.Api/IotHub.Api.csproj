@@ -4,9 +4,15 @@
     <TargetFramework>net5.0</TargetFramework>
 	  <Version>1.0.0.299</Version>
 	  <UserSecretsId>8c64e4d2-bad9-4d44-a6c2-c37ebca8e6c5</UserSecretsId>
+	  <Configurations>Debug;Release;Development</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>IotHub.Api.xml</DocumentationFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Development|AnyCPU'">
     <DocumentationFile>IotHub.Api.xml</DocumentationFile>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>

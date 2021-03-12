@@ -1,4 +1,4 @@
-﻿using Core.Sandbox.Units;
+﻿using Core.Sandbox.Units.MassTransit;
 using System;
 
 namespace Core.Sandbox
@@ -7,7 +7,7 @@ namespace Core.Sandbox
 	{
 		static void Main(String[] args)
 		{
-			MqttUnit.Run();
+			MassTransitUnit.Run();
 		}
 	}
 }

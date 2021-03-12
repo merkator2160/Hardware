@@ -60,14 +60,14 @@ namespace IotHub.Api
 			builder.RegisterLocalHangfireJobs();
 			builder.RegisterLocalConfiguration(_configuration);
 
-			builder.RegisterType<MqttMessageProcessor>().AsSelf().AsImplementedInterfaces().SingleInstance();
+			builder.RegisterType<MosquittoClient>().AsSelf().AsImplementedInterfaces().SingleInstance();
 
 			builder.RegisterModule<NLogModule>();
 			builder.RegisterModule(new AutoMapperModule(assembliesToScan));
 		}
-		public void Configure(IApplicationBuilder app, IMqttMessageProcessor processor)
+		public void Configure(IApplicationBuilder app, IMosquittoClient mosquittoClient)
 		{
-			processor.Start();
+			mosquittoClient.Start();
 
 			if(_env.IsDevelopment())
 			{
