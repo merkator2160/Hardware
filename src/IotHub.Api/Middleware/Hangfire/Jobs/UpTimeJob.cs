@@ -2,6 +2,7 @@
 using IotHub.Api.Services.Interfaces;
 using IotHub.Common.Hangfire.Interfaces;
 using System;
+using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace IotHub.Api.Middleware.Hangfire.Jobs
 {
@@ -28,7 +29,7 @@ namespace IotHub.Api.Middleware.Hangfire.Jobs
 		{
 			if(_mqttPublisher.IsConnected)
 			{
-				_mqttPublisher.Publish("iotHub/upTime", (DateTime.Now - _startDate).ToString(@"dd\:hh\:mm\:ss"));
+				_mqttPublisher.Publish("iotHub/upTime", (DateTime.Now - _startDate).ToString(@"dd\:hh\:mm\:ss"), MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, true);
 			}
 		}
 	}
