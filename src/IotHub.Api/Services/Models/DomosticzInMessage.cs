@@ -1,4 +1,4 @@
-﻿using IotHub.Api.Services.Models.Enums;
+﻿using IotHub.Common.Enums;
 using Newtonsoft.Json;
 using System;
 
@@ -8,10 +8,12 @@ namespace IotHub.Api.Services.Models
 	{
 		[JsonProperty("idx")]
 		public DomosticzDevice DeviceId { get; set; }
-		public Int32 Rssi { get; set; }
+		public Byte Rssi { get; set; }
+
+		public Byte Battery { get; set; }
 
 		[JsonProperty("nvalue")]
-		public Int32 NumericValue { get; set; }
+		public Single NumericValue { get; set; }
 
 		[JsonProperty("svalue")]
 		public String StringValue { get; set; }

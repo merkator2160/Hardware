@@ -1,6 +1,6 @@
 ﻿using IotHub.Api.Services.Models;
-using IotHub.Api.Services.Models.Enums;
 using IotHub.Common.Const;
+using IotHub.Common.Enums;
 using IotHub.Common.Exceptions;
 using Newtonsoft.Json;
 using System;
@@ -12,6 +12,9 @@ using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace IotHub.Api.Services
 {
+	/// <summary>
+	/// Domoticz message structure: https://piandmore.wordpress.com/2019/02/04/mqtt-out-for-domoticz/
+	/// </summary>
 	internal partial class MosquittoClient
 	{
 		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
@@ -31,17 +34,6 @@ namespace IotHub.Api.Services
 			if(message.DeviceId == DomosticzDevice.WeatherStation)
 				HandleWeatherStationMessage(message);
 		}
-		private void OnDomosticzOutReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
-		{
-			var jsonMessage = Encoding.UTF8.GetString(eventArgs.Message);
-			var message = JsonConvert.DeserializeObject<DomosticzOutMessage>(jsonMessage);
-
-			if(message.DeviceId == DomosticzDevice.ThermometerMyRoom)
-				HandleThermometerMyRoomMessage(message);
-		}
-
-
-		// SUPPORT FUNCTIONS //////////////////////////////////////////////////////////////////////
 		private void HandleWeatherStationMessage(DomosticzInMessage message)
 		{
 			var climateSensorValues = message.StringValue.Split(';');
@@ -61,7 +53,6 @@ namespace IotHub.Api.Services
 			{
 				DeviceId = DomosticzDevice.Pressure,
 				Rssi = message.Rssi,
-				NumericValue = message.NumericValue,
 				StringValue = pressureMpl.ToString(CultureInfo.InvariantCulture)
 			});
 			Publish("iotHub/goncharova/weather/pressure/mpl", pressureMpl);
@@ -69,9 +60,22 @@ namespace IotHub.Api.Services
 			Publish("iotHub/goncharova/weather/humidity", humidity);
 			Publish("iotHub/goncharova/weather/pressure/gpa", pressureStr);
 		}
-		private void HandleThermometerMyRoomMessage(DomosticzOutMessage message)
+
+		private void OnDomosticzOutReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
-			Publish("thermometerMiddleRoom/import/led", message.NumericValue);
+			var jsonMessage = Encoding.UTF8.GetString(eventArgs.Message);
+			var message = JsonConvert.DeserializeObject<DomosticzOutMessage>(jsonMessage);
+
+			switch(message.DeviceId)
+			{
+				case DomosticzDevice.LedSwitch:
+					HandleLedSwitchMessage(message);
+					break;
+			}
+		}
+		private void HandleLedSwitchMessage(DomosticzOutMessage message)
+		{
+			Publish("domoticz/out/thermometerMiddleRoom/import/led", message.NumericValue);
 		}
 	}
 }

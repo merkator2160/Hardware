@@ -75,6 +75,7 @@ namespace IotHub.Api.Services
 			var handlerDictionary = new Dictionary<String, MqttClient.MqttMsgPublishEventHandler>();
 
 			AddDomosticzHandlers(handlerDictionary);
+			AddZigbeeHandlers(handlerDictionary);
 
 			return handlerDictionary;
 		}

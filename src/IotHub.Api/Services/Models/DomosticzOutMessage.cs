@@ -1,4 +1,4 @@
-﻿using IotHub.Api.Services.Models.Enums;
+﻿using IotHub.Common.Enums;
 using Newtonsoft.Json;
 using System;
 

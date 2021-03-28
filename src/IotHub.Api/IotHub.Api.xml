@@ -17,5 +17,10 @@
             http://docs.hangfire.io/en/latest/background-processing/configuring-queues.html
             </summary>
         </member>
+        <member name="T:IotHub.Api.Services.MosquittoClient">
+            <summary>
+            Domoticz message structure: https://piandmore.wordpress.com/2019/02/04/mqtt-out-for-domoticz/
+            </summary>
+        </member>
     </members>
 </doc>
