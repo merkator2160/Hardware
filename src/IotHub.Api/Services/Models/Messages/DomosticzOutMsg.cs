@@ -2,9 +2,9 @@
 using Newtonsoft.Json;
 using System;
 
-namespace IotHub.Api.Services.Models
+namespace IotHub.Api.Services.Models.Messages
 {
-	internal class DomosticzOutMessage
+	internal class DomosticzOutMsg
 	{
 		public Byte Battery { get; set; }
 		public Int32 Rssi { get; set; }
@@ -23,7 +23,7 @@ namespace IotHub.Api.Services.Models
 		public String Name { get; set; }
 
 		[JsonProperty("nvalue")]
-		public Int32 NumericValue { get; set; }
+		public Single NumericValue { get; set; }
 
 		[JsonProperty("stype")]
 		public String StringType { get; set; }

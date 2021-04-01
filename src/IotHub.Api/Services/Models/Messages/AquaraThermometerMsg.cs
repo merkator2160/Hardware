@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace IotHub.Api.Services.Models
+namespace IotHub.Api.Services.Models.Messages
 {
-	internal class AquaraThermometerMessage
+	internal class AquaraThermometerMsg
 	{
 		public Byte Battery { get; set; }
 		public Single Humidity { get; set; }

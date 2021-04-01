@@ -2,9 +2,9 @@
 using Newtonsoft.Json;
 using System;
 
-namespace IotHub.Api.Services.Models
+namespace IotHub.Api.Services.Models.Messages
 {
-	internal class DomosticzInMessage
+	internal class DomosticzInMsg
 	{
 		[JsonProperty("idx")]
 		public DomosticzDevice DeviceId { get; set; }

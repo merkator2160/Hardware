@@ -2,8 +2,6 @@ using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NLog;
-using NLog.Web;
 using System;
 using System.Diagnostics;
 using System.Threading;
@@ -18,21 +16,7 @@ namespace IotHub.Api
 #if DEBUG
 			//WaitForDebugger();
 #endif
-
-			var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
-			try
-			{
-				CreateHostBuilder(args).Build().Run();
-			}
-			catch(Exception ex)
-			{
-				logger.Error(ex, "Stopped program because of exception");
-				throw;
-			}
-			finally
-			{
-				LogManager.Shutdown();
-			}
+			CreateHostBuilder(args).Build().Run();
 		}
 		private static IHostBuilder CreateHostBuilder(String[] args)
 		{
@@ -48,8 +32,7 @@ namespace IotHub.Api
 							logging.SetMinimumLevel(LogLevel.Trace);
 							logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
 							logging.AddDebug();
-						})
-						.UseNLog();
+						});
 				});
 		}
 		static void WaitForDebugger()

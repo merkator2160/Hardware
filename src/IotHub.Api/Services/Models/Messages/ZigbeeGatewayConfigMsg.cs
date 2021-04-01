@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace IotHub.Api.Services.Models
+namespace IotHub.Api.Services.Models.Messages
 {
-	internal class ZigbeeGatewayConfig
+	internal class ZigbeeGatewayConfigMsg
 	{
 		public Int64 UpTime { get; set; }
 		public String UpTimeStr { get; set; }

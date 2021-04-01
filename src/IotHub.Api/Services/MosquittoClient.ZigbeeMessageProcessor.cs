@@ -1,4 +1,4 @@
-﻿using IotHub.Api.Services.Models;
+﻿using IotHub.Api.Services.Models.Messages;
 using IotHub.Common.Const;
 using IotHub.Common.Enums;
 using Newtonsoft.Json;
@@ -24,9 +24,9 @@ namespace IotHub.Api.Services
 		private void OnLargeRoomThermometerMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
 			var jsonStr = Encoding.UTF8.GetString(eventArgs.Message);
-			var message = JsonConvert.DeserializeObject<AquaraThermometerMessage>(jsonStr);
+			var message = JsonConvert.DeserializeObject<AquaraThermometerMsg>(jsonStr);
 
-			Publish("domoticz/in", new DomosticzInMessage()
+			Publish("domoticz/in", new DomosticzInMsg()
 			{
 				DeviceId = DomosticzDevice.ThermometerLargeRoom,
 				Rssi = message.LinkQuality,
@@ -37,9 +37,9 @@ namespace IotHub.Api.Services
 		private void OnMiddleRoomThermometerMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
 			var jsonStr = Encoding.UTF8.GetString(eventArgs.Message);
-			var message = JsonConvert.DeserializeObject<AquaraThermometerMessage>(jsonStr);
+			var message = JsonConvert.DeserializeObject<AquaraThermometerMsg>(jsonStr);
 
-			Publish("domoticz/in", new DomosticzInMessage()
+			Publish("domoticz/in", new DomosticzInMsg()
 			{
 				DeviceId = DomosticzDevice.ThermometerMiddleRoom,
 				Rssi = message.LinkQuality,

@@ -11,6 +11,9 @@ using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace IotHub.Api.Services
 {
+	/// <summary>
+	/// MQTT documentation: https://mosquitto.org/man/mqtt-7.html
+	/// </summary>
 	internal partial class MosquittoClient : IMosquittoClient, IMqttPublisher, IDisposable
 	{
 		private readonly ProcessorConfig _config;
@@ -35,17 +38,24 @@ namespace IotHub.Api.Services
 				throw new MqttMessageProcessorException($"\"{nameof(MosquittoClient)}\" has already started!");
 
 			_mqttClient.MqttMsgPublishReceived += OnMsgReceived;
-			_mqttClient.Connect(_config.ClientId, _config.Login, _config.Password);
+			_mqttClient.Connect(
+				clientId: _config.ClientId,
+				username: _config.Login,
+				password: _config.Password,
+				willRetain: true,
+				willQosLevel: MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE,
+				willFlag: true,
+				willTopic: "iotHub/status",
+				willMessage: "Disconnected",
+				cleanSession: true,
+				keepAlivePeriod: 60);
 
 			SubscribeForTopics(_handlerDictionary.Keys.ToArray());
-
-			Publish("iotHub/status", "Connected", MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, true);
 		}
 		public void Stop()
 		{
-			Publish("iotHub/status", "Disconnected", MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, true);
-
-			_mqttClient?.Disconnect();
+			if(_mqttClient.IsConnected)
+				_mqttClient.Disconnect();
 		}
 
 

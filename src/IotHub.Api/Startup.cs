@@ -4,7 +4,6 @@ using IotHub.Api.Middleware;
 using IotHub.Api.Middleware.Cors;
 using IotHub.Api.Middleware.Hangfire;
 using IotHub.Api.Services;
-using IotHub.Api.Services.Interfaces;
 using IotHub.Common.Config;
 using IotHub.Common.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
@@ -17,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
+using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace IotHub.Api
 {
@@ -65,9 +65,19 @@ namespace IotHub.Api
 			builder.RegisterModule<NLogModule>();
 			builder.RegisterModule(new AutoMapperModule(assembliesToScan));
 		}
-		public void Configure(IApplicationBuilder app, IMosquittoClient mosquittoClient)
+		public void Configure(IApplicationBuilder app, MosquittoClient mosquittoClient, IHostApplicationLifetime hostApplicationLifetime)
 		{
-			mosquittoClient.Start();
+			hostApplicationLifetime.ApplicationStarted.Register(() =>
+			{
+				mosquittoClient.Start();
+				mosquittoClient.Publish("iotHub/status", "Connected", MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, true);
+			});
+			hostApplicationLifetime.ApplicationStopping.Register(() =>
+			{
+				mosquittoClient.Publish("iotHub/status", "Disconnected", MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, true);
+				mosquittoClient.Stop();
+			});
+
 
 			if(_env.IsDevelopment())
 			{

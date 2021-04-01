@@ -1,4 +1,4 @@
-﻿using IotHub.Api.Services.Models;
+﻿using IotHub.Api.Services.Models.Messages;
 using IotHub.Common.Const;
 using IotHub.Common.Enums;
 using IotHub.Common.Exceptions;
@@ -29,12 +29,12 @@ namespace IotHub.Api.Services
 		private void OnDomosticzInReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
 			var jsonMessage = Encoding.UTF8.GetString(eventArgs.Message);
-			var message = JsonConvert.DeserializeObject<DomosticzInMessage>(jsonMessage);
+			var message = JsonConvert.DeserializeObject<DomosticzInMsg>(jsonMessage);
 
 			if(message.DeviceId == DomosticzDevice.WeatherStation)
 				HandleWeatherStationMessage(message);
 		}
-		private void HandleWeatherStationMessage(DomosticzInMessage message)
+		private void HandleWeatherStationMessage(DomosticzInMsg message)
 		{
 			var climateSensorValues = message.StringValue.Split(';');
 			var temperature = climateSensorValues[0];
@@ -49,7 +49,7 @@ namespace IotHub.Api.Services
 
 			var pressureMpl = Math.Round(pressureGpa * Global.PressureCoefficient, 2);
 
-			Publish("domoticz/in", new DomosticzInMessage()
+			Publish("domoticz/in", new DomosticzInMsg()
 			{
 				DeviceId = DomosticzDevice.Pressure,
 				Rssi = message.Rssi,
@@ -64,7 +64,7 @@ namespace IotHub.Api.Services
 		private void OnDomosticzOutReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
 			var jsonMessage = Encoding.UTF8.GetString(eventArgs.Message);
-			var message = JsonConvert.DeserializeObject<DomosticzOutMessage>(jsonMessage);
+			var message = JsonConvert.DeserializeObject<DomosticzOutMsg>(jsonMessage);
 
 			switch(message.DeviceId)
 			{
@@ -73,7 +73,7 @@ namespace IotHub.Api.Services
 					break;
 			}
 		}
-		private void HandleLedSwitchMessage(DomosticzOutMessage message)
+		private void HandleLedSwitchMessage(DomosticzOutMsg message)
 		{
 			Publish("domoticz/out/thermometerMiddleRoom/import/led", message.NumericValue);
 		}
