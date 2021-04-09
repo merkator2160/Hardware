@@ -19,6 +19,7 @@ namespace IotHub.Api.Services
 		private readonly ProcessorConfig _config;
 		private readonly Dictionary<String, MqttClient.MqttMsgPublishEventHandler> _handlerDictionary;
 		private readonly MqttClient _mqttClient;
+		private readonly JsonSerializerSettings _serializerSettings;
 
 		private Boolean _disposed;
 
@@ -28,6 +29,11 @@ namespace IotHub.Api.Services
 			_config = config;
 			_mqttClient = new MqttClient(config.HostName, config.Port, false, null, null, MqttSslProtocols.None);
 			_handlerDictionary = CreateHandlerDictionary();
+			_serializerSettings = new JsonSerializerSettings()
+			{
+				NullValueHandling = NullValueHandling.Ignore,
+				DefaultValueHandling = DefaultValueHandling.Ignore
+			};
 		}
 
 
@@ -64,7 +70,7 @@ namespace IotHub.Api.Services
 
 		public void Publish<T>(String topic, T obj, Byte qos = MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, Boolean retain = false)
 		{
-			Publish(topic, JsonConvert.SerializeObject(obj));
+			Publish(topic, JsonConvert.SerializeObject(obj, _serializerSettings));
 		}
 		public void Publish(String topic, String message, Byte qos = MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, Boolean retain = false)
 		{
@@ -75,7 +81,14 @@ namespace IotHub.Api.Services
 		// HANDLERS ///////////////////////////////////////////////////////////////////////////////
 		private void OnMsgReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
-			_handlerDictionary[eventArgs.Topic].Invoke(sender, eventArgs);
+			try
+			{
+				_handlerDictionary[eventArgs.Topic].Invoke(sender, eventArgs);
+			}
+			catch(Exception ex)
+			{
+				Publish("iotHub/error", $"{ex.Message}\r\n{ex.StackTrace}", MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, true);
+			}
 		}
 
 
@@ -86,6 +99,8 @@ namespace IotHub.Api.Services
 
 			AddDomosticzHandlers(handlerDictionary);
 			AddZigbeeHandlers(handlerDictionary);
+			AddMiddleRoomDeviceHandlers(handlerDictionary);
+			AddWeatherDeviceHandlers(handlerDictionary);
 
 			return handlerDictionary;
 		}

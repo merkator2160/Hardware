@@ -2,11 +2,15 @@
 {
 	public enum DomosticzDevice
 	{
-		WeatherStation = 1,
 		LedSwitch = 3,
-		TableThermometerMiddleRoom = 4,
-		Pressure = 7,
-		ThermometerLargeRoom = 8,
-		ThermometerMiddleRoom = 9
+		MiddleRoomDust = 5,
+		MiddleRoomCo2 = 6,
+		WeatherStationPressure = 7,
+		LargeRoomThermometer = 8,
+		Thermometer1 = 9,
+		MiddleRoomThermometer = 10,
+		MiddleRoomHumidity = 11,
+		WeatherStationHumidity = 12,
+		WeatherStationTemperature = 13,
 	}
 }

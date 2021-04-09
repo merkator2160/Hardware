@@ -17,10 +17,10 @@ namespace IotHub.Api.Services
 	/// </summary>
 	internal partial class MosquittoClient
 	{
-		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
+		// TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
 		public void AddDomosticzHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
-			handlerDictionary.Add("domoticz/in", OnDomosticzInReceived);
+			//handlerDictionary.Add("domoticz/in", OnDomosticzInReceived);		// sample
 			handlerDictionary.Add("domoticz/out", OnDomosticzOutReceived);
 		}
 
@@ -31,9 +31,9 @@ namespace IotHub.Api.Services
 			var jsonMessage = Encoding.UTF8.GetString(eventArgs.Message);
 			var message = JsonConvert.DeserializeObject<DomosticzInMsg>(jsonMessage);
 
-			if(message.DeviceId == DomosticzDevice.WeatherStation)
-				HandleWeatherStationMessage(message);
-		}
+			//if(message.DeviceId == DomosticzDevice.WeatherStation)
+			//	HandleWeatherStationMessage(message);
+		}           // sample
 		private void HandleWeatherStationMessage(DomosticzInMsg message)
 		{
 			var climateSensorValues = message.StringValue.Split(';');
@@ -51,7 +51,7 @@ namespace IotHub.Api.Services
 
 			Publish("domoticz/in", new DomosticzInMsg()
 			{
-				DeviceId = DomosticzDevice.Pressure,
+				DeviceId = DomosticzDevice.WeatherStationPressure,
 				Rssi = message.Rssi,
 				StringValue = pressureMpl.ToString(CultureInfo.InvariantCulture)
 			});
@@ -59,7 +59,7 @@ namespace IotHub.Api.Services
 			Publish("iotHub/goncharova/weather/temperature", temperature);
 			Publish("iotHub/goncharova/weather/humidity", humidity);
 			Publish("iotHub/goncharova/weather/pressure/gpa", pressureStr);
-		}
+		}                               // sample
 
 		private void OnDomosticzOutReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
@@ -75,7 +75,7 @@ namespace IotHub.Api.Services
 		}
 		private void HandleLedSwitchMessage(DomosticzOutMsg message)
 		{
-			Publish("domoticz/out/thermometerMiddleRoom/import/led", message.NumericValue);
+			Publish("monitor/import/led", message.NumericValue);
 		}
 	}
 }

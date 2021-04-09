@@ -12,11 +12,11 @@ namespace IotHub.Api.Services
 {
 	internal partial class MosquittoClient
 	{
-		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
+		// TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
 		public void AddZigbeeHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
 			handlerDictionary.Add($"zigbee/{ZigbeeDevice.LargeRoomThermometer}", OnLargeRoomThermometerMessageReceived);
-			handlerDictionary.Add($"zigbee/{ZigbeeDevice.MiddleRoomThermometer}", OnMiddleRoomThermometerMessageReceived);
+			handlerDictionary.Add($"zigbee/{ZigbeeDevice.Thermometer1}", OnThermometer1MessageReceived);
 		}
 
 
@@ -28,22 +28,22 @@ namespace IotHub.Api.Services
 
 			Publish("domoticz/in", new DomosticzInMsg()
 			{
-				DeviceId = DomosticzDevice.ThermometerLargeRoom,
+				DeviceId = DomosticzDevice.LargeRoomThermometer,
 				Rssi = message.LinkQuality,
-				Battery = message.Battery,
+				Battery = message.BatteryPercentage,
 				StringValue = $"{message.Temperature};{message.Humidity};{(Byte)DomosticzEnvironmentLevel.Normal};{message.Pressure};{(Byte)DomosticzBarometerPrediction.NoPrediction}"
 			});
 		}
-		private void OnMiddleRoomThermometerMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
+		private void OnThermometer1MessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
 			var jsonStr = Encoding.UTF8.GetString(eventArgs.Message);
 			var message = JsonConvert.DeserializeObject<AquaraThermometerMsg>(jsonStr);
 
 			Publish("domoticz/in", new DomosticzInMsg()
 			{
-				DeviceId = DomosticzDevice.ThermometerMiddleRoom,
+				DeviceId = DomosticzDevice.Thermometer1,
 				Rssi = message.LinkQuality,
-				Battery = message.Battery,
+				Battery = message.BatteryPercentage,
 				StringValue = $"{message.Temperature};{message.Humidity};{(Byte)DomosticzEnvironmentLevel.Normal};{message.Pressure};{(Byte)DomosticzBarometerPrediction.NoPrediction}"
 			});
 		}

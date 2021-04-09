@@ -9,7 +9,6 @@ namespace IotHub.Api.Services.Models.Messages
 		[JsonProperty("idx")]
 		public DomosticzDevice DeviceId { get; set; }
 		public Byte Rssi { get; set; }
-
 		public Byte Battery { get; set; }
 
 		[JsonProperty("nvalue")]
