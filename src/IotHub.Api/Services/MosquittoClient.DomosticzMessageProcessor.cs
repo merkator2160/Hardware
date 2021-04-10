@@ -69,13 +69,9 @@ namespace IotHub.Api.Services
 			switch(message.DeviceId)
 			{
 				case DomosticzDevice.LedSwitch:
-					HandleLedSwitchMessage(message);
+					Publish("monitor/import/led", message.NumericValue);
 					break;
 			}
-		}
-		private void HandleLedSwitchMessage(DomosticzOutMsg message)
-		{
-			Publish("monitor/import/led", message.NumericValue);
 		}
 	}
 }

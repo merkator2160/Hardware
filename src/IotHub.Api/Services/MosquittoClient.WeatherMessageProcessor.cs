@@ -16,9 +16,9 @@ namespace IotHub.Api.Services
 		// TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
 		public void AddWeatherDeviceHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
-			handlerDictionary.Add("weatherStation/bmp280/temperature", OnWeatherStationTemperatureMessageReceived);
-			handlerDictionary.Add("weatherStation/bmp280/humidity", OnWeatherStationHumidityMessageReceived);
-			handlerDictionary.Add("weatherStation/bmp280/pressure", OnWeatherStationPressureMessageReceived);
+			handlerDictionary.Add("weatherStation/bmp280/temp", OnWeatherStationTemperatureMessageReceived);
+			handlerDictionary.Add("weatherStation/bmp280/hum", OnWeatherStationHumidityMessageReceived);
+			handlerDictionary.Add("weatherStation/bmp280/press", OnWeatherStationPressureMessageReceived);
 		}
 
 
