@@ -16,7 +16,7 @@ namespace IotHub.Api.Services
 		public void AddZigbeeHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
 			handlerDictionary.Add($"zigbee/{ZigbeeDevice.LargeRoomThermometer}", OnLargeRoomThermometerMessageReceived);
-			handlerDictionary.Add($"zigbee/{ZigbeeDevice.Thermometer1}", OnThermometer1MessageReceived);
+			handlerDictionary.Add($"zigbee/{ZigbeeDevice.SideRoomThermometer}", OnThermometer1MessageReceived);
 		}
 
 
@@ -41,7 +41,7 @@ namespace IotHub.Api.Services
 
 			Publish("domoticz/in", new DomosticzInMsg()
 			{
-				DeviceId = DomosticzDevice.Thermometer1,
+				DeviceId = DomosticzDevice.SideRoomThermometer,
 				Rssi = message.LinkQuality,
 				Battery = message.BatteryPercentage,
 				StringValue = $"{message.Temperature};{message.Humidity};{(Byte)DomosticzEnvironmentLevel.Normal};{message.Pressure};{(Byte)DomosticzBarometerPrediction.NoPrediction}"

@@ -6,6 +6,7 @@ namespace IotHub.Common.Const
 	{
 		public const String SingleClick = "single";
 		public const String DoubleClick = "double";
-		public const String LongPush = "hold";
+		public const String Hold = "hold";
+		public const String Release = "release";
 	}
 }

@@ -4,6 +4,8 @@ namespace IotHub.Common.Const.IrController
 {
 	public static class AverTv
 	{
+		public const String Model = "RM-FR";
+
 		public const Int64 TvFm = 1086292095;
 		public const Int64 Power = 1086259455;
 

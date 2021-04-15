@@ -7,7 +7,7 @@
 		MiddleRoomCo2 = 6,
 		WeatherStationPressure = 7,
 		LargeRoomThermometer = 8,
-		Thermometer1 = 9,
+		SideRoomThermometer = 9,
 		MiddleRoomThermometer = 10,
 		MiddleRoomHumidity = 11,
 		WeatherStationHumidity = 12,
