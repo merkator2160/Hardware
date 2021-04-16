@@ -31,8 +31,7 @@ namespace IotHub.Api.Services
 			_handlerDictionary = CreateHandlerDictionary();
 			_serializerSettings = new JsonSerializerSettings()
 			{
-				NullValueHandling = NullValueHandling.Ignore,
-				DefaultValueHandling = DefaultValueHandling.Ignore
+				NullValueHandling = NullValueHandling.Ignore
 			};
 		}
 
@@ -97,10 +96,11 @@ namespace IotHub.Api.Services
 		{
 			var handlerDictionary = new Dictionary<String, MqttClient.MqttMsgPublishEventHandler>();
 
-			AddDomosticzHandlers(handlerDictionary);
+			AddDomoticzHandlers(handlerDictionary);
 			AddZigbeeHandlers(handlerDictionary);
 			AddMiddleRoomDeviceHandlers(handlerDictionary);
 			AddWeatherDeviceHandlers(handlerDictionary);
+			AddLedHandlers(handlerDictionary);
 
 			return handlerDictionary;
 		}

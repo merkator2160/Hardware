@@ -18,7 +18,7 @@ namespace IotHub.Api.Services
 	internal partial class MosquittoClient
 	{
 		// TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
-		public void AddDomosticzHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
+		public void AddDomoticzHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
 			//handlerDictionary.Add("domoticz/in", OnDomosticzInReceived);		// sample
 			handlerDictionary.Add("domoticz/out", OnDomosticzOutReceived);
@@ -69,7 +69,7 @@ namespace IotHub.Api.Services
 			switch(message.DeviceId)
 			{
 				case DomosticzDevice.LedSwitch:
-					Publish("monitor/import/led", message.NumericValue);
+					OnDomoticzLedMessageReceived(message);
 					break;
 			}
 		}
