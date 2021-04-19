@@ -1,5 +1,6 @@
 ﻿using IotHub.Api.Services.Models.Messages;
 using IotHub.Common.Const;
+using IotHub.Common.Const.IrController;
 using IotHub.Common.Enums;
 using Newtonsoft.Json;
 using System;
@@ -47,18 +48,20 @@ namespace IotHub.Api.Services
 				return;
 
 			if(message.Action.Equals(AquaraButtonActions.SingleClick))
-			{
-				if(_ledState == 1)
-				{
-					_ledState = 0;
-					Publish("monitor/import/led", _ledState);
-				}
-				else
-				{
-					_ledState = 1;
-					Publish("monitor/import/led", _ledState);
-				}
-			}
+				ToggleLed();
+		}
+
+
+
+		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
+		private void HandleIrValueForLed(Int64 value)
+		{
+			if(value.Equals(AverTv.Record))
+				ToggleLed();
+		}
+		private void ToggleLed()
+		{
+			Publish("monitor/import/led", _ledState == 1 ? 0 : 1);
 		}
 	}
 }

@@ -101,6 +101,7 @@ namespace IotHub.Api.Services
 			AddMiddleRoomDeviceHandlers(handlerDictionary);
 			AddWeatherDeviceHandlers(handlerDictionary);
 			AddLedHandlers(handlerDictionary);
+			AddIrHandlers(handlerDictionary);
 
 			return handlerDictionary;
 		}
