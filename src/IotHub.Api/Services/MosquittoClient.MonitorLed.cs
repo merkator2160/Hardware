@@ -44,7 +44,7 @@ namespace IotHub.Api.Services
 			var jsonMessage = Encoding.UTF8.GetString(eventArgs.Message);
 			var message = JsonConvert.DeserializeObject<AquaraButtonMsg>(jsonMessage);
 
-			if(message.Action == null)
+			if(message.Action == null)      // System message
 				return;
 
 			if(message.Action.Equals(AquaraButtonActions.SingleClick))
