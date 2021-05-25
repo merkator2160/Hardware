@@ -19,7 +19,6 @@ namespace IotHub.Api.Services
 			handlerDictionary.Add($"zigbee/{ZigbeeDevice.LargeRoomThermometer}", OnLargeRoomThermometerMessageReceived);
 			handlerDictionary.Add($"zigbee/{ZigbeeDevice.SideRoomThermometer}", OnThermometer1MessageReceived);
 			handlerDictionary.Add($"zigbee/{ZigbeeDevice.KitchenFikusMoistureSensor}", OnKitchenFikusMoistureSensorMessageReceived);
-			handlerDictionary.Add($"zigbee/{ZigbeeDevice.ButtonPad12}", OnButtonPad12MessageReceived);
 		}
 
 
@@ -57,29 +56,28 @@ namespace IotHub.Api.Services
 
 			Publish("domoticz/in", new DomosticzInMsg()
 			{
-				DeviceId = DomosticzDevice.FikusLight,
+				DeviceId = DomosticzDevice.KitchenFikusLight,
 				Rssi = message.LinkQuality,
 				Battery = message.BatteryPercentage,
 				StringValue = message.Illuminance.ToString(CultureInfo.InvariantCulture)
 			});
 			Publish("domoticz/in", new DomosticzInMsg()
 			{
-				DeviceId = DomosticzDevice.FikusSoilMoisture,
+				DeviceId = DomosticzDevice.KitchenFikusSoilMoisture,
 				Rssi = message.LinkQuality,
 				Battery = message.BatteryPercentage,
 				StringValue = message.SoilMoisture.ToString(CultureInfo.InvariantCulture)
 			});
-		}
-		private void OnButtonPad12MessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
-		{
-			var jsonStr = Encoding.UTF8.GetString(eventArgs.Message);
-			var message = JsonConvert.DeserializeObject<ModkamButtonPadMsg>(jsonStr);
+			Publish("domoticz/in", new DomosticzInMsg()
+			{
+				DeviceId = DomosticzDevice.KitchenFikusTemperature,
+				Rssi = message.LinkQuality,
+				Battery = message.BatteryPercentage,
+				StringValue = message.TemperatureDs.ToString(CultureInfo.InvariantCulture)
+			});
 
-			if(message.Action == null)      // System message
-				return;
-
-			if(message.Action.Equals(ModkamButtonPadActions.Button1SingleClick))
-				ToggleLed();
+			if(message.SoilMoisture < 90F)
+				StartPump(1);
 		}
 	}
 }

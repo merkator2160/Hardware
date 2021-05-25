@@ -15,5 +15,6 @@ namespace IotHub.Common.Const
 		public const String TestMoistureSensor = "0x00124B0022609BE6";          // Model: modkam.ru	DIYRuZ_Flower, end device
 		public const String KitchenFikusMoistureSensor = "0x00124B002203B9B9";  // Model: modkam.ru	DIYRuZ_Flower, end device
 		public const String ButtonPad12 = "0x00124B0022609BBE";                 // Model: modkam.ru	DIYRuZ_FreePad, end device
+		public const String IrrigationStation = "0x00124B002257349F";                   // Model: modkam.ru	DIYRuZ_Flower_WS, end device
 	}
 }

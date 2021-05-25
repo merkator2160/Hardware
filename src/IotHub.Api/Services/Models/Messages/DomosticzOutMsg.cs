@@ -7,7 +7,7 @@ namespace IotHub.Api.Services.Models.Messages
 	internal class DomosticzOutMsg
 	{
 		public Byte Battery { get; set; }
-		public Int32 Rssi { get; set; }
+		public Byte Rssi { get; set; }
 		public String Description { get; set; }
 
 		[JsonProperty("dtype")]

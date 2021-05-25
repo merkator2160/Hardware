@@ -12,7 +12,7 @@ namespace IotHub.Api.Services.Models.Messages
 
 		[JsonProperty("last_seen")]
 		public Int32 LastSeen { get; set; }
-		public Single LinkQuality { get; set; }
+		public Byte LinkQuality { get; set; }
 
 		[JsonProperty("voltage")]
 		public Single BatteryVoltage { get; set; }

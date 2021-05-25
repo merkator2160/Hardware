@@ -95,14 +95,19 @@ namespace IotHub.Api.Services
 		public Dictionary<String, MqttClient.MqttMsgPublishEventHandler> CreateHandlerDictionary()
 		{
 			var handlerDictionary = new Dictionary<String, MqttClient.MqttMsgPublishEventHandler>();
-
+#if DEBUG
+			AddButtonHandlers(handlerDictionary);
+			AddWaterPumpHandlers(handlerDictionary);
+#else
 			AddDomoticzHandlers(handlerDictionary);
 			AddZigbeeHandlers(handlerDictionary);
 			AddMiddleRoomDeviceHandlers(handlerDictionary);
 			AddWeatherDeviceHandlers(handlerDictionary);
 			AddLedHandlers(handlerDictionary);
 			AddIrHandlers(handlerDictionary);
-
+			AddButtonHandlers(handlerDictionary);
+			AddWaterPumpHandlers(handlerDictionary);
+#endif
 			return handlerDictionary;
 		}
 		private void SubscribeForTopics(String[] topics)

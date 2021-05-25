@@ -12,7 +12,8 @@
 		MiddleRoomHumidity = 11,
 		WeatherStationHumidity = 12,
 		WeatherStationTemperature = 13,
-		FikusLight = 14,
-		FikusSoilMoisture = 15,
+		KitchenFikusLight = 14,
+		KitchenFikusSoilMoisture = 15,
+		KitchenFikusTemperature = 16,
 	}
 }
