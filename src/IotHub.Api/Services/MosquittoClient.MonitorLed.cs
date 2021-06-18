@@ -17,7 +17,7 @@ namespace IotHub.Api.Services
 
 
 		// TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
-		public void AddLedHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
+		public void AddMonitorLedHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
 			handlerDictionary.Add("monitor/led", OnMonitorLedStateChangeConfirmationReceived);
 			handlerDictionary.Add($"zigbee/{ZigbeeDevice.Button1}", OnButton1MessageReceived);

@@ -12,8 +12,8 @@ namespace IotHub.Common.Const
 		public const String SideRoomCircuitRelay = "0x60A423FFFED2EFAF";        // Model: BW-SHP13, router
 		public const String LargeRoomCircuitRelay = "0x60A423FFFEFF8B47";       // Model: BW-SHP13, router
 		public const String LargeRoomCircuitRelay2 = "0x60A423FFFEF8E07B";      // Model: BW-SHP13, router
-		public const String TestMoistureSensor = "0x00124B0022609BE6";          // Model: modkam.ru	DIYRuZ_Flower, end device
-		public const String KitchenFikusMoistureSensor = "0x00124B002203B9B9";  // Model: modkam.ru	DIYRuZ_Flower, end device
+		public const String KitchenKaktusSensor = "0x00124B0022609BE6";          // Model: modkam.ru	DIYRuZ_Flower, end device
+		public const String KitchenFikusSensor = "0x00124B002203B9B9";  // Model: modkam.ru	DIYRuZ_Flower, end device
 		public const String ButtonPad12 = "0x00124B0022609BBE";                 // Model: modkam.ru	DIYRuZ_FreePad, end device
 		public const String IrrigationStation = "0x00124B002257349F";                   // Model: modkam.ru	DIYRuZ_Flower_WS, end device
 	}

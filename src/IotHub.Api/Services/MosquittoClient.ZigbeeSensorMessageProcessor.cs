@@ -18,7 +18,8 @@ namespace IotHub.Api.Services
 		{
 			handlerDictionary.Add($"zigbee/{ZigbeeDevice.LargeRoomThermometer}", OnLargeRoomThermometerMessageReceived);
 			handlerDictionary.Add($"zigbee/{ZigbeeDevice.SideRoomThermometer}", OnThermometer1MessageReceived);
-			handlerDictionary.Add($"zigbee/{ZigbeeDevice.KitchenFikusMoistureSensor}", OnKitchenFikusMoistureSensorMessageReceived);
+			handlerDictionary.Add($"zigbee/{ZigbeeDevice.KitchenFikusSensor}", OnKitchenFikusSensorMessageReceived);
+			handlerDictionary.Add($"zigbee/{ZigbeeDevice.KitchenKaktusSensor}", OnKitchenKaktusSensorMessage);
 		}
 
 
@@ -49,7 +50,7 @@ namespace IotHub.Api.Services
 				StringValue = $"{message.Temperature};{message.Humidity};{(Byte)DomosticzEnvironmentLevel.Normal};{message.Pressure};{(Byte)DomosticzBarometerPrediction.NoPrediction}"
 			});
 		}
-		private void OnKitchenFikusMoistureSensorMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
+		private void OnKitchenFikusSensorMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
 			var jsonStr = Encoding.UTF8.GetString(eventArgs.Message);
 			var message = JsonConvert.DeserializeObject<ModkamSoilMoistureSensorMsg>(jsonStr);
@@ -76,8 +77,28 @@ namespace IotHub.Api.Services
 				StringValue = message.TemperatureDs.ToString(CultureInfo.InvariantCulture)
 			});
 
-			if(message.SoilMoisture < 90F)
+			if(message.SoilMoisture < 80F)
 				StartPump(1);
+		}
+		private void OnKitchenKaktusSensorMessage(Object sender, MqttMsgPublishEventArgs eventArgs)
+		{
+			var jsonStr = Encoding.UTF8.GetString(eventArgs.Message);
+			var message = JsonConvert.DeserializeObject<ModkamSoilMoistureSensorMsg>(jsonStr);
+
+			Publish("domoticz/in", new DomosticzInMsg()
+			{
+				DeviceId = DomosticzDevice.KitchenKaktusLight,
+				Rssi = message.LinkQuality,
+				Battery = message.BatteryPercentage,
+				StringValue = message.Illuminance.ToString(CultureInfo.InvariantCulture)
+			});
+			Publish("domoticz/in", new DomosticzInMsg()
+			{
+				DeviceId = DomosticzDevice.KitchenKaktusSoilMoisture,
+				Rssi = message.LinkQuality,
+				Battery = message.BatteryPercentage,
+				StringValue = message.SoilMoisture.ToString(CultureInfo.InvariantCulture)
+			});
 		}
 	}
 }

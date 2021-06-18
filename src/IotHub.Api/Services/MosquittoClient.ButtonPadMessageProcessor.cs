@@ -31,7 +31,13 @@ namespace IotHub.Api.Services
 				ToggleLed();
 
 			if(message.Action.Equals(ModkamButtonPadActions.Button2SingleClick))
+				StartPump(1);
+
+			if(message.Action.Equals(ModkamButtonPadActions.Button3SingleClick))
 				StartPump(2);
+
+			if(message.Action.Equals(ModkamButtonPadActions.Button4SingleClick))
+				StartPump(3);
 		}
 	}
 }

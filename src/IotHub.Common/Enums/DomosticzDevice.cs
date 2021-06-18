@@ -15,5 +15,7 @@
 		KitchenFikusLight = 14,
 		KitchenFikusSoilMoisture = 15,
 		KitchenFikusTemperature = 16,
+		KitchenKaktusSoilMoisture = 17,
+		KitchenKaktusLight = 18,
 	}
 }

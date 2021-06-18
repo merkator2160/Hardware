@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using IotHub.Common.Converters;
+using Newtonsoft.Json;
 using System;
 
 namespace IotHub.Api.Services.Models.Messages
@@ -11,7 +12,8 @@ namespace IotHub.Api.Services.Models.Messages
 		public Byte BatteryPercentage { get; set; }
 
 		[JsonProperty("last_seen")]
-		public Int32 LastSeen { get; set; }
+		[JsonConverter(typeof(PosixDateTimeConverter))]
+		public DateTime LastSeen { get; set; }
 		public Byte LinkQuality { get; set; }
 
 		[JsonProperty("voltage")]

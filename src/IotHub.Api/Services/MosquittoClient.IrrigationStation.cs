@@ -44,7 +44,7 @@ namespace IotHub.Api.Services
 			if(pumpNumber < 1 || pumpNumber > 3)
 				throw new MqttMessageProcessorException($"Irrigation station has no pump with number {pumpNumber}! Irrigation station has pumps with numbers: 1, 2, 3.");
 
-			Publish($"zigbee/{ZigbeeDevice.IrrigationStation}/set/pump_1", "ON");
+			Publish($"zigbee/{ZigbeeDevice.IrrigationStation}/set/pump_{pumpNumber}", "ON");
 		}
 	}
 }

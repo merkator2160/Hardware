@@ -15,7 +15,7 @@ namespace IotHub.Common.Converters
 		{
 			var value = reader.Value;
 			var posixTimeStamp = Int64.Parse(value.ToString());
-			var time = posixTimeStamp.FromPosixTimeMs();
+			var time = posixTimeStamp.FromPosixTimeSec();
 			return time;
 		}
 	}
