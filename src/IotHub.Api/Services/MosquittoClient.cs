@@ -98,8 +98,8 @@ namespace IotHub.Api.Services
 #if DEBUG
 			//AddButtonHandlers(handlerDictionary);
 			//AddWaterPumpHandlers(handlerDictionary);
-			//AddZigbeeHandlers(handlerDictionary);
-			AddMonitorLedHandlers(handlerDictionary);
+			AddZigbeeHandlers(handlerDictionary);
+			//AddMonitorLedHandlers(handlerDictionary);
 #else
 			AddDomoticzHandlers(handlerDictionary);
 			AddZigbeeHandlers(handlerDictionary);

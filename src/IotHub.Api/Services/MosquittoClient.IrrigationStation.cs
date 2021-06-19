@@ -39,6 +39,11 @@ namespace IotHub.Api.Services
 
 
 		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
+		/// <summary>
+		/// Pump 1 - kitchen fikus.
+		/// Pump 2 - N/C.
+		/// Pump 3 - N/C.
+		/// </summary>
 		private void StartPump(Byte pumpNumber)
 		{
 			if(pumpNumber < 1 || pumpNumber > 3)

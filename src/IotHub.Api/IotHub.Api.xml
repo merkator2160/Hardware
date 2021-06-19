@@ -56,5 +56,12 @@
             Domoticz message structure: https://piandmore.wordpress.com/2019/02/04/mqtt-out-for-domoticz/
             </summary>
         </member>
+        <member name="M:IotHub.Api.Services.MosquittoClient.StartPump(System.Byte)">
+            <summary>
+            Pump 1 - kitchen fikus.
+            Pump 2 - N/C.
+            Pump 3 - N/C.
+            </summary>
+        </member>
     </members>
 </doc>

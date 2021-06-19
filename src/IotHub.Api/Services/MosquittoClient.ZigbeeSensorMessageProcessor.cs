@@ -77,7 +77,7 @@ namespace IotHub.Api.Services
 				StringValue = message.TemperatureDs.ToString(CultureInfo.InvariantCulture)
 			});
 
-			if(message.SoilMoisture < 80F)
+			if(message.SoilMoisture < 70F)
 				StartPump(1);
 		}
 		private void OnKitchenKaktusSensorMessage(Object sender, MqttMsgPublishEventArgs eventArgs)
