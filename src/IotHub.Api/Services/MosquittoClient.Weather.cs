@@ -14,7 +14,7 @@ namespace IotHub.Api.Services
 	internal partial class MosquittoClient
 	{
 		// TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
-		public void AddWeatherDeviceHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
+		public void AddWeatherHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
 			handlerDictionary.Add("weatherStation/bmp280/temp", OnWeatherStationTemperatureMessageReceived);
 			handlerDictionary.Add("weatherStation/bmp280/hum", OnWeatherStationHumidityMessageReceived);

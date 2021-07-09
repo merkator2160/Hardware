@@ -36,9 +36,7 @@ namespace Core.Sandbox.Units.SbusHardwareDecoder
 		private static void PortOnDataReceived(Object sender, SerialDataReceivedEventArgs serialDataReceivedEventArgs)
 		{
 			var serialPort = (SerialPort)sender;
-
 			var message = serialPort.ReadLine();
-
 			var processedMessage = ParseMessage(message);
 
 			Console.Clear();

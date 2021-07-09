@@ -17,5 +17,6 @@
 		KitchenFikusTemperature = 16,
 		KitchenKaktusSoilMoisture = 17,
 		KitchenKaktusLight = 18,
+		KitchenGloxiniaSoilMoisture = 19,
 	}
 }

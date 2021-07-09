@@ -1,4 +1,5 @@
-﻿using Core.Sandbox.Units.SbusSoftwareDecoder.Sbus.Models;
+﻿using Core.Common.Filters;
+using Core.Sandbox.Units.SbusSoftwareDecoder.Sbus.Models;
 using System;
 using System.Collections.Generic;
 using System.IO.Ports;
@@ -21,7 +22,7 @@ namespace Core.Sandbox.Units.SbusSoftwareDecoder.Sbus
 
 		public SbusConverter()
 		{
-			_filter = CreateFilter(12, 585.0f, 10.0f);  // filter size must be equals the number of channels
+			_filter = CreateFilter(12, 585.0f, 10.0f);      // filter size must be equal to the number of channels
 		}
 
 

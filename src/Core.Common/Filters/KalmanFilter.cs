@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Core.Sandbox.Units.SbusSoftwareDecoder.Sbus
+namespace Core.Common.Filters
 {
 	public class KalmanFilter
 	{
-		private readonly Single _averageDeviation = 0.25f;
-		private readonly Single _reactionSpeed = 0.05f;
+		private readonly Single _averageDeviation;
+		private readonly Single _reactionSpeed;
 		private Single _p = 1.0f;
 		private Single _pc;
 		private Single _g;
@@ -14,11 +14,7 @@ namespace Core.Sandbox.Units.SbusSoftwareDecoder.Sbus
 		private Single _xe;
 
 
-		public KalmanFilter()
-		{
-
-		}
-		public KalmanFilter(Single averageDeviation, Single reactionSpeed)
+		public KalmanFilter(Single averageDeviation = 0.25f, Single reactionSpeed = 0.05f)
 		{
 			_averageDeviation = averageDeviation;
 			_reactionSpeed = reactionSpeed;

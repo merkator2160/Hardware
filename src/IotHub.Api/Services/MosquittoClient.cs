@@ -96,19 +96,17 @@ namespace IotHub.Api.Services
 		{
 			var handlerDictionary = new Dictionary<String, MqttClient.MqttMsgPublishEventHandler>();
 #if DEBUG
-			//AddButtonHandlers(handlerDictionary);
-			//AddWaterPumpHandlers(handlerDictionary);
-			AddZigbeeHandlers(handlerDictionary);
-			//AddMonitorLedHandlers(handlerDictionary);
+			AddDebugHandlers(handlerDictionary);
 #else
+			AddDebugHandlers(handlerDictionary);
 			AddDomoticzHandlers(handlerDictionary);
-			AddZigbeeHandlers(handlerDictionary);
+			AddSideRoomHandlers(handlerDictionary);
 			AddMiddleRoomDeviceHandlers(handlerDictionary);
-			AddWeatherDeviceHandlers(handlerDictionary);
+			AddLargeRoomHandlers(handlerDictionary);
+			AddWeatherHandlers(handlerDictionary);
 			AddMonitorLedHandlers(handlerDictionary);
 			AddIrHandlers(handlerDictionary);
-			AddButtonHandlers(handlerDictionary);
-			AddWaterPumpHandlers(handlerDictionary);
+			AddIrrigationStationHandlers(handlerDictionary);
 #endif
 			return handlerDictionary;
 		}

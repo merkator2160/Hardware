@@ -59,7 +59,7 @@
         <member name="M:IotHub.Api.Services.MosquittoClient.StartPump(System.Byte)">
             <summary>
             Pump 1 - kitchen fikus;
-            Pump 2 - kitchen flower;
+            Pump 2 - kitchen gloxinia;
             Pump 3 - kitchen kaktus tall;
             </summary>
         </member>
