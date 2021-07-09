@@ -40,9 +40,9 @@ namespace IotHub.Api.Services
 
 		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
 		/// <summary>
-		/// Pump 1 - kitchen fikus.
-		/// Pump 2 - N/C.
-		/// Pump 3 - N/C.
+		/// Pump 1 - kitchen fikus;
+		/// Pump 2 - kitchen flower;
+		/// Pump 3 - kitchen kaktus tall;
 		/// </summary>
 		private void StartPump(Byte pumpNumber)
 		{
