@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.Common.Const
+namespace Core.Sandbox.Const
 {
 	public class Command
 	{

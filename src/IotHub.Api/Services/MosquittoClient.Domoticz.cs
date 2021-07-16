@@ -73,5 +73,16 @@ namespace IotHub.Api.Services
 					break;
 			}
 		}
+
+
+		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
+		public void AddDomoticzLog(String message)
+		{
+			Publish("domoticz/in", new
+			{
+				command = "addlogmessage",
+				message
+			});
+		}
 	}
 }

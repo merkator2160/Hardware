@@ -4,6 +4,7 @@ using IotHub.Api.Middleware;
 using IotHub.Api.Middleware.Cors;
 using IotHub.Api.Middleware.Hangfire;
 using IotHub.Api.Services;
+using IotHub.ApiClients.DependencyInjection;
 using IotHub.Common.Config;
 using IotHub.Common.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
@@ -64,6 +65,7 @@ namespace IotHub.Api
 
 			builder.RegisterModule<NLogModule>();
 			builder.RegisterModule(new AutoMapperModule(assembliesToScan));
+			builder.RegisterModule(new ApiClientModule(_configuration));
 		}
 		public void Configure(IApplicationBuilder app, MosquittoClient mosquittoClient, IHostApplicationLifetime hostApplicationLifetime)
 		{

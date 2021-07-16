@@ -20,8 +20,4 @@
     <PackageReference Include="Unosquare.WiringPi" Version="0.5.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Core.Common\Core.Common.csproj" />
-  </ItemGroup>
-
 </Project>

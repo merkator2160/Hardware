@@ -2,12 +2,11 @@
 using IotHub.Common.Const;
 using IotHub.Common.Enums;
 using IotHub.Common.Extensions;
-using IotHub.Common.Helpers;
+using IotHub.Common.Filters;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Net.Http;
 using System.Text;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
@@ -44,7 +43,11 @@ namespace IotHub.Api.Services
 				StartPump(1);
 
 			if(message.Action.Equals(ModkamButtonPadActions.Button3SingleClick))
+			{
 				StartPump(2);
+				_easyEspClient.Unit2PlaySoundAsync("14:d=10,o=6,b=180,c,e,g").Wait();
+				AddDomoticzLog("Gloxinia pump has started manually.");
+			}
 
 			if(message.Action.Equals(ModkamButtonPadActions.Button4SingleClick))
 				StartPump(3);
@@ -63,10 +66,11 @@ namespace IotHub.Api.Services
 				StringValue = value.ToString(CultureInfo.InvariantCulture)
 			});
 
-			if(value < 80)
+			if(value < 90)
 			{
-				//	StartPump(2);
-				new HttpClient().GetAsync("http://192.168.1.30/control?cmd=rtttl,14:d=10,o=6,b=180,c,e,g").Wait();
+				StartPump(2);
+				_easyEspClient.Unit2PlaySoundAsync("14:d=10,o=6,b=180,c,e,g").Wait();
+				AddDomoticzLog("Gloxinia pump has started by the moisture sensor.");
 			}
 
 			Publish("unit2/moisture/mapped", value);

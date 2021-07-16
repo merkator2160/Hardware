@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IotHub.Common.Helpers
+namespace Core.Sandbox.Filters
 {
 	public class KalmanFilter
 	{

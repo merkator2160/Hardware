@@ -18,7 +18,7 @@ namespace IotHub.Api.Services
 		public void AddIrrigationStationHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
 			handlerDictionary.Add($"zigbee/{ZigbeeDevice.IrrigationStation}", OnWaterPumpMessageReceived);
-			handlerDictionary.Add($"zigbee/{ZigbeeDevice.KitchenFikusSensor}", OnKitchenFikusSensorMessageReceived);
+			handlerDictionary.Add($"zigbee/{ZigbeeDevice.KitchenKratonSensor}", OnKitchenKratonSensorMessageReceived);
 			handlerDictionary.Add($"zigbee/{ZigbeeDevice.KitchenKaktusSensor}", OnKitchenKaktusSensorMessage);
 		}
 
@@ -40,28 +40,28 @@ namespace IotHub.Api.Services
 			//	StringValue = $"{message.Temperature};{message.Humidity};{(Byte)DomosticzEnvironmentLevel.Normal};{message.Pressure};{(Byte)DomosticzBarometerPrediction.NoPrediction}"
 			//});
 		}
-		private void OnKitchenFikusSensorMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
+		private void OnKitchenKratonSensorMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
 			var jsonStr = Encoding.UTF8.GetString(eventArgs.Message);
 			var message = JsonConvert.DeserializeObject<ModkamSoilMoistureSensorMsg>(jsonStr);
 
 			Publish("domoticz/in", new DomosticzInMsg()
 			{
-				DeviceId = DomosticzDevice.KitchenFikusLight,
+				DeviceId = DomosticzDevice.KitchenKratonLight,
 				Rssi = message.LinkQuality,
 				Battery = message.BatteryPercentage,
 				StringValue = message.Illuminance.ToString(CultureInfo.InvariantCulture)
 			});
 			Publish("domoticz/in", new DomosticzInMsg()
 			{
-				DeviceId = DomosticzDevice.KitchenFikusSoilMoisture,
+				DeviceId = DomosticzDevice.KitchenKratonSoilMoisture,
 				Rssi = message.LinkQuality,
 				Battery = message.BatteryPercentage,
 				StringValue = message.SoilMoisture.ToString(CultureInfo.InvariantCulture)
 			});
 			Publish("domoticz/in", new DomosticzInMsg()
 			{
-				DeviceId = DomosticzDevice.KitchenFikusTemperature,
+				DeviceId = DomosticzDevice.KitchenKratonTemperature,
 				Rssi = message.LinkQuality,
 				Battery = message.BatteryPercentage,
 				StringValue = message.TemperatureDs.ToString(CultureInfo.InvariantCulture)
@@ -97,9 +97,9 @@ namespace IotHub.Api.Services
 
 		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
 		/// <summary>
-		/// Pump 1 - kitchen fikus;
-		/// Pump 2 - kitchen gloxinia;
-		/// Pump 3 - kitchen kaktus tall;
+		/// Pump 1 - kitchen Kraton;
+		/// Pump 2 - kitchen Gloxinia;
+		/// Pump 3 - kitchen Kaktus tall;
 		/// </summary>
 		private void StartPump(Byte pumpNumber)
 		{

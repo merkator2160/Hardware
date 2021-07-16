@@ -1,6 +1,7 @@
 ﻿using IotHub.Api.Services.Interfaces;
 using IotHub.Api.Services.Models.Config;
 using IotHub.Api.Services.Models.Exceptions;
+using IotHub.ApiClients.EasyEsp.Interfaces;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,10 @@ namespace IotHub.Api.Services
 	/// <summary>
 	/// MQTT documentation: https://mosquitto.org/man/mqtt-7.html
 	/// </summary>
-	internal partial class MosquittoClient : IMosquittoClient, IMqttPublisher, IDisposable
+	internal partial class MosquittoClient : IMosquittoClient, IMqttPublisher, IDomoticzLogger, IDisposable
 	{
 		private readonly ProcessorConfig _config;
+		private readonly IEasyEspClient _easyEspClient;
 		private readonly Dictionary<String, MqttClient.MqttMsgPublishEventHandler> _handlerDictionary;
 		private readonly MqttClient _mqttClient;
 		private readonly JsonSerializerSettings _serializerSettings;
@@ -24,9 +26,10 @@ namespace IotHub.Api.Services
 		private Boolean _disposed;
 
 
-		public MosquittoClient(ProcessorConfig config)
+		public MosquittoClient(ProcessorConfig config, IEasyEspClient easyEspClient)
 		{
 			_config = config;
+			_easyEspClient = easyEspClient;
 			_mqttClient = new MqttClient(config.HostName, config.Port, false, null, null, MqttSslProtocols.None);
 			_handlerDictionary = CreateHandlerDictionary();
 			_serializerSettings = new JsonSerializerSettings()

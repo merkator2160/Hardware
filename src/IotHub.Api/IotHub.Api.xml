@@ -35,6 +35,16 @@
             Returns external internet IP address
             </summary>
         </member>
+        <member name="M:IotHub.Api.Controllers.DebugController.PublishDomoticzLogMessage(System.String)">
+            <summary>
+            Publishes Domoticz log message
+            </summary>
+        </member>
+        <member name="M:IotHub.Api.Controllers.DebugController.PlaySoundOnUnit2(System.String)">
+            <summary>
+            Plays sound on EastESP Unit2
+            </summary>
+        </member>
         <member name="M:IotHub.Api.Middleware.ErrorHandlingMiddleware.UseGlobalExceptionHandler(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
             <summary>
             It don't allow information from unhandled exceptions leave application borders. 
@@ -58,9 +68,9 @@
         </member>
         <member name="M:IotHub.Api.Services.MosquittoClient.StartPump(System.Byte)">
             <summary>
-            Pump 1 - kitchen fikus;
-            Pump 2 - kitchen gloxinia;
-            Pump 3 - kitchen kaktus tall;
+            Pump 1 - kitchen Kraton;
+            Pump 2 - kitchen Gloxinia;
+            Pump 3 - kitchen Kaktus tall;
             </summary>
         </member>
     </members>

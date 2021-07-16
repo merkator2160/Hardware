@@ -37,6 +37,7 @@
 	</ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\IotHub.ApiClients\IotHub.ApiClients.csproj" />
     <ProjectReference Include="..\IotHub.Common\IotHub.Common.csproj" />
     <ProjectReference Include="..\IotHub.Contracts\IotHub.Contracts.csproj" />
   </ItemGroup>

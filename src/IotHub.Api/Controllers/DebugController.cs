@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using IotHub.Api.Services.Interfaces;
+using IotHub.ApiClients.EasyEsp.Interfaces;
 using IotHub.Common.Config;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -19,16 +21,22 @@ namespace IotHub.Api.Controllers
 		private readonly IWebHostEnvironment _env;
 		private readonly ILogger<DebugController> _logger;
 		private readonly IMapper _mapper;
+		private readonly IDomoticzLogger _domoticzLogger;
+		private readonly IEasyEspClient _easyEspClient;
 
 
 		public DebugController(
 			IWebHostEnvironment env,
 			ILogger<DebugController> logger,
-			IMapper mapper)
+			IMapper mapper,
+			IDomoticzLogger domoticzLogger,
+			IEasyEspClient easyEspClient)
 		{
 			_env = env;
 			_logger = logger;
 			_mapper = mapper;
+			_domoticzLogger = domoticzLogger;
+			_easyEspClient = easyEspClient;
 		}
 
 
@@ -94,6 +102,32 @@ namespace IotHub.Api.Controllers
 			{
 				return Ok(await client.GetStringAsync("http://checkip.amazonaws.com/"));
 			}
+		}
+
+		/// <summary>
+		/// Publishes Domoticz log message
+		/// </summary>
+		[HttpGet]
+		[ProducesResponseType(typeof(String), 200)]
+		[ProducesResponseType(typeof(String), 500)]
+		public async Task<IActionResult> PublishDomoticzLogMessage(String message = "My message to Domoticz log")
+		{
+			_domoticzLogger.AddDomoticzLog(message);
+
+			return Ok();
+		}
+
+		/// <summary>
+		/// Plays sound on EastESP Unit2
+		/// </summary>
+		[HttpGet]
+		[ProducesResponseType(typeof(String), 200)]
+		[ProducesResponseType(typeof(String), 500)]
+		public async Task<IActionResult> PlaySoundOnUnit2(String rtttl = "14:d=10,o=6,b=180,c,e,g")
+		{
+			await _easyEspClient.Unit2PlaySoundAsync(rtttl);
+
+			return Ok();
 		}
 	}
 }

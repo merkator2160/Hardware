@@ -3,7 +3,7 @@ using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace IotHub.Api.Services.Interfaces
 {
-	internal interface IMqttPublisher
+	public interface IMqttPublisher
 	{
 		Boolean IsConnected { get; }
 
