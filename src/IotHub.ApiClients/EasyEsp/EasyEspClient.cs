@@ -21,13 +21,11 @@ namespace IotHub.ApiClients.EasyEsp
 		// IEasyEspClient /////////////////////////////////////////////////////////////////////////
 		public async Task<String> Unit2PlaySoundAsync(String rtttl)
 		{
-			return await PlaySoundAsync(_easyEspConfig.Unit2Uri, rtttl);
+			return await PlaySoundAsync(_easyEspConfig.Unit2Uri, 14, rtttl);
 		}
-
-
-		public async Task<String> PlaySoundAsync(String url, String rtttl)
+		public async Task<String> PlaySoundAsync(String url, Byte pinNumber, String rtttl)
 		{
-			return await ExecuteCommandAsync(url, $"rtttl,{rtttl}");
+			return await ExecuteCommandAsync(url, $"rtttl,{pinNumber}:{rtttl}");
 		}
 		public async Task<String> ExecuteCommandAsync(String url, String cmd)
 		{

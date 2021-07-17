@@ -123,7 +123,7 @@ namespace IotHub.Api.Controllers
 		[HttpGet]
 		[ProducesResponseType(typeof(String), 200)]
 		[ProducesResponseType(typeof(String), 500)]
-		public async Task<IActionResult> PlaySoundOnUnit2(String rtttl = "14:d=10,o=6,b=180,c,e,g")
+		public async Task<IActionResult> PlaySoundOnUnit2(String rtttl = "d=10,o=6,b=180,c,e,g")
 		{
 			await _easyEspClient.Unit2PlaySoundAsync(rtttl);
 

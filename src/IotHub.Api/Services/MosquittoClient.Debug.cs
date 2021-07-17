@@ -45,7 +45,7 @@ namespace IotHub.Api.Services
 			if(message.Action.Equals(ModkamButtonPadActions.Button3SingleClick))
 			{
 				StartPump(2);
-				_easyEspClient.Unit2PlaySoundAsync("14:d=10,o=6,b=180,c,e,g").Wait();
+				_easyEspClient.Unit2PlaySoundAsync("d=10,o=6,b=180,c,e,g").Wait();
 				AddDomoticzLog("Gloxinia pump has started manually.");
 			}
 
@@ -69,7 +69,7 @@ namespace IotHub.Api.Services
 			if(value < 90)
 			{
 				StartPump(2);
-				_easyEspClient.Unit2PlaySoundAsync("14:d=10,o=6,b=180,c,e,g").Wait();
+				_easyEspClient.Unit2PlaySoundAsync("d=10,o=6,b=180,c,e,g").Wait();
 				AddDomoticzLog("Gloxinia pump has started by the moisture sensor.");
 			}
 
