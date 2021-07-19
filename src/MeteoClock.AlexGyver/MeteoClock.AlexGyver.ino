@@ -46,15 +46,16 @@
 #define DISPLAY_ADDR 0x27       // адрес платы дисплея: 0x27 или 0x3f. Если дисплей не работает - смени адрес! На самом дисплее адрес не указан
 
 // CO2
-#define MinCO2 1000             // green
-#define NormalCO2 1500          // orange/blue
-#define MaxCO2 2000             // red
+#define MinCO2 1000             // blue <
+#define NormalCO2 1500          // green <
+#define MaxCO2 2000             // orange <, > red
 
 // CO2 led color
+#define COLOR_OFF 0
+#define COLOR_RED 1
 #define COLOR_GREEN 2
 #define COLOR_ORANGE 3
-#define COLOR_RED 1
-#define COLOR_OFF 0
+#define COLOR_BLUE 4
 
 // пределы отображения для графиков
 #define TEMP_MIN 15
@@ -71,7 +72,7 @@
 // стоковый адрес был 0x77, у китайского модуля адрес 0x76.
 // Так что если юзаете НЕ библиотеку из архива - не забудьте поменять
 
-// если дисплей не заводится - поменяйте адрес (строка 54)
+// если дисплей не заводится - поменяйте адрес
 
 // пины
 #define BACKLIGHT 10
@@ -391,44 +392,44 @@ void setCo2LedColor(int ppm)
 {
     if (ppm < MinCO2)
     {
-    	setLed(COLOR_GREEN);        
+    	setLed(COLOR_BLUE);        
         return;
     }
 
     if (ppm < NormalCO2)
     {
+        setLed(COLOR_GREEN);
+        return;
+    }
+
+    if (ppm < MaxCO2)
+    {
         setLed(COLOR_ORANGE);
         return;
     }
 
-    if (ppm >= MaxCO2)
-    {
-        setLed(COLOR_RED);
-        return;
-    }
-
-    setLed(COLOR_OFF);
+    setLed(COLOR_RED);
 }
 void setLed(byte color)
 {
     setCo2LedOff();
 	
-    switch (color)      // 0 выкл, 1 красный, 2 зелёный, 3 синий (или жёлтый)
+    switch (color)
     {
-    case 0:
+    case 0:     // off
         break;
-    case 1:
+    case 1:     // red
         analogWrite(LED_R, ledCurrent);
         break;
-    case 2:
+    case 2:     // green
         analogWrite(LED_G, ledCurrent);
         break;
-    case 3:
-        //analogWrite(LED_B, LED_ON);          // blue       
-
+    case 3:     // yellow
         analogWrite(LED_R, map(ledCurrent, 0, 255, 128, 255));    // yellow, red is slightly brighter than green
-        analogWrite(LED_G, ledCurrent);
-    	
+        analogWrite(LED_G, ledCurrent);    	
+        break;
+    case 4:     // blue
+        analogWrite(LED_B, ledCurrent);
         break;
     }
 }
