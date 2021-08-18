@@ -66,7 +66,7 @@ namespace IotHub.Api.Services
 				StringValue = value.ToString(CultureInfo.InvariantCulture)
 			});
 
-			if(value < 90)
+			if(value < 50)
 			{
 				StartPump(2);
 				_easyEspClient.Unit2PlaySoundAsync("d=10,o=6,b=180,c,e,g").Wait();

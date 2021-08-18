@@ -72,7 +72,7 @@ namespace IotHub.Api.Services
 
 		public void Publish<T>(String topic, T obj, Byte qos = MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, Boolean retain = false)
 		{
-			Publish(topic, JsonConvert.SerializeObject(obj, _serializerSettings));
+			Publish(topic, JsonConvert.SerializeObject(obj, _serializerSettings), qos, retain);
 		}
 		public void Publish(String topic, String message, Byte qos = MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, Boolean retain = false)
 		{

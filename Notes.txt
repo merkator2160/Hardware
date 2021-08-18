@@ -1,0 +1,11 @@
+dotnet tool install -g nanoff
+dotnet tool update -g nanoff
+
+nanoff --help
+
+nanoff --update --target ESP32_WROOM_32 --serialport COM6
+
+nanoff --target ESP32_WROOM_32 --serialport COM12 --deploy --image "E:\GitHub\nf-Samples\samples\Blinky\Blinky\bin\Debug\Blinky.bin" --address 0x190000
+nanoff --update --target ESP32_WROOM_32 --serialport COM31 --deployment "c:\eps32-backups\my_awesome_app.bin"
+
+nanoff --target NETDUINO3_WIFI --update --dfu
