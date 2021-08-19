@@ -38,8 +38,15 @@ namespace Nano.Sandbox.Units
 				cleanSession: true,
 				keepAlivePeriod: 60);
 
+			var subscriptionTopics = new String[]
+			{
+				"test1", "test2"
+			};
+			_mqttClient.Subscribe(subscriptionTopics, new MqttQoSLevel[]
+			{
+				_qos, _qos
+			});
 			_mqttClient.Publish(_statusTopic, "Connected", retain: true);
-
 
 			var test = JsonConvert.SerializeObject(new TestMsg
 			{
@@ -57,16 +64,6 @@ namespace Nano.Sandbox.Units
 			//{
 			//	Message = "field 3"
 			//}, _qos, true);
-
-
-			var subscriptionTopics = new String[]
-			{
-				"test1", "test2"
-			};
-			_mqttClient.Subscribe(subscriptionTopics, new MqttQoSLevel[]
-			{
-				_qos, _qos
-			});
 
 			for(var i = 0; i < 10; i++)
 			{

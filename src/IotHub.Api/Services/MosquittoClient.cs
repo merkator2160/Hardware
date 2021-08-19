@@ -23,6 +23,8 @@ namespace IotHub.Api.Services
 		private readonly MqttClient _mqttClient;
 		private readonly JsonSerializerSettings _serializerSettings;
 
+		private const String _statusTopic = "iotHub/status";
+
 		private Boolean _disposed;
 
 
@@ -53,17 +55,21 @@ namespace IotHub.Api.Services
 				willRetain: true,
 				willQosLevel: MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE,
 				willFlag: true,
-				willTopic: "iotHub/status",
+				willTopic: _statusTopic,
 				willMessage: "Disconnected",
 				cleanSession: true,
 				keepAlivePeriod: 60);
 
 			SubscribeForTopics(_handlerDictionary.Keys.ToArray());
+			Publish(_statusTopic, "Connected", retain: true);
 		}
 		public void Stop()
 		{
-			if(_mqttClient.IsConnected)
-				_mqttClient.Disconnect();
+			if(!_mqttClient.IsConnected)
+				return;
+
+			Publish(_statusTopic, "Disconnected", retain: true);
+			_mqttClient.Disconnect();
 		}
 
 

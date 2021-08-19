@@ -19,9 +19,11 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="Models\TestMsg.cs" />
+    <Compile Include="Models\WorldTimeResponse.cs" />
     <Compile Include="Units\BlinkyUnit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Units\HttpUnit.cs" />
     <Compile Include="Units\MqttUnit.cs" />
     <Compile Include="Units\NetworkUnit.cs" />
     <Compile Include="Units\SerializerUnit.cs" />
@@ -76,6 +78,11 @@
     </Reference>
     <Reference Include="System.Net, Version=1.7.0.3, Culture=neutral, PublicKeyToken=c07d481e9758c731">
       <HintPath>..\packages\nanoFramework.System.Net.1.7.0\lib\System.Net.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=1.3.4.4, Culture=neutral, PublicKeyToken=c07d481e9758c731">
+      <HintPath>..\packages\nanoFramework.System.Net.Http.1.3.4\lib\System.Net.Http.dll</HintPath>
       <Private>True</Private>
       <SpecificVersion>True</SpecificVersion>
     </Reference>
