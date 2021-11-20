@@ -1,7 +1,6 @@
 ﻿using IotHub.Api.Services.Models.Messages;
 using IotHub.Common.Const;
 using IotHub.Common.Const.IrController;
-using IotHub.Common.Enums;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -33,11 +32,12 @@ namespace IotHub.Api.Services
 		{
 			_ledState = Byte.Parse(Encoding.UTF8.GetString(eventArgs.Message));
 
-			Publish("domoticz/in", new DomosticzInMsg()
-			{
-				DeviceId = DomosticzDevice.LedSwitch,
-				NumericValue = _ledState
-			});
+			// Sample
+			//Publish("domoticz/in", new DomosticzInMsg()
+			//{
+			//	DeviceId = DomosticzDevice.LedSwitch,
+			//	NumericValue = _ledState
+			//});
 		}
 		private void OnButton1MessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{

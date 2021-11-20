@@ -16,13 +16,29 @@ namespace IotHub.Api.Services
 		// TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
 		public void AddWeatherHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
-			handlerDictionary.Add("weatherStation/bmp280/temp", OnWeatherStationTemperatureMessageReceived);
-			handlerDictionary.Add("weatherStation/bmp280/hum", OnWeatherStationHumidityMessageReceived);
+			//handlerDictionary.Add("weatherStation/bmp280/temp", OnWeatherStationTemperatureMessageReceived);
+			//handlerDictionary.Add("weatherStation/bmp280/hum", OnWeatherStationHumidityMessageReceived);
 			handlerDictionary.Add("weatherStation/bmp280/press", OnWeatherStationPressureMessageReceived);
 		}
 
 
 		// HANDLERS ///////////////////////////////////////////////////////////////////////////////
+		private void OnWeatherStationPressureMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
+		{
+			var pressureStr = Encoding.UTF8.GetString(eventArgs.Message);
+
+			var formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
+			if(!Single.TryParse(pressureStr, NumberStyles.AllowDecimalPoint, formatter, out var pressureGpa))
+				throw new ParsingException($"Can't parse \"{nameof(pressureGpa)}\"!");
+
+			var pressureMpl = Math.Round(pressureGpa * Global.PressureCoefficient, 2);
+
+			Publish("iotHub/goncharova/weather/pressure/gpa", pressureStr);
+			Publish("iotHub/goncharova/weather/pressure/mpl", pressureMpl);
+		}
+
+
+		// DOMOTICZ OBSOLETE ///////////////////////////////////////////////////////////////////////////////
 		private void OnWeatherStationTemperatureMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
 			var temperatureStr = Encoding.UTF8.GetString(eventArgs.Message);
@@ -41,24 +57,6 @@ namespace IotHub.Api.Services
 			{
 				DeviceId = DomosticzDevice.WeatherStationHumidity,
 				StringValue = humidityValueStr
-			});
-		}
-		private void OnWeatherStationPressureMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
-		{
-			var pressureStr = Encoding.UTF8.GetString(eventArgs.Message);
-
-			var formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
-			if(!Single.TryParse(pressureStr, NumberStyles.AllowDecimalPoint, formatter, out var pressureGpa))
-				throw new ParsingException($"Can't parse \"{nameof(pressureGpa)}\"!");
-
-			var pressureMpl = Math.Round(pressureGpa * Global.PressureCoefficient, 2);
-
-			Publish("iotHub/goncharova/weather/pressure/gpa", pressureStr);
-			Publish("iotHub/goncharova/weather/pressure/mpl", pressureMpl);
-			Publish("domoticz/in", new DomosticzInMsg()
-			{
-				DeviceId = DomosticzDevice.WeatherStationPressure,
-				StringValue = pressureMpl.ToString(CultureInfo.InvariantCulture)
 			});
 		}
 	}

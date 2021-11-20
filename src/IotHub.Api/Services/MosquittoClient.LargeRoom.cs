@@ -1,5 +1,4 @@
 ﻿using IotHub.Api.Services.Models.Messages;
-using IotHub.Common.Const;
 using IotHub.Common.Enums;
 using Newtonsoft.Json;
 using System;
@@ -15,11 +14,14 @@ namespace IotHub.Api.Services
 		// TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
 		public void AddLargeRoomHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
-			handlerDictionary.Add($"zigbee/{ZigbeeDevice.LargeRoomThermometer}", OnLargeRoomThermometerMessageReceived);
+			//handlerDictionary.Add($"zigbee/{ZigbeeDevice.LargeRoomThermometer}", OnLargeRoomThermometerMessageReceived);
 		}
 
 
 		// HANDLERS ///////////////////////////////////////////////////////////////////////////////
+
+
+		// DOMOTICZ OBSOLETE ///////////////////////////////////////////////////////////////////////////////
 		private void OnLargeRoomThermometerMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
 			var jsonStr = Encoding.UTF8.GetString(eventArgs.Message);

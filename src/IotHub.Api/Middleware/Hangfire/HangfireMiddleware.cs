@@ -46,10 +46,7 @@ namespace IotHub.Api.Middleware.Hangfire
 		{
 #if DEVELOPMENT
 			BackgroundJob.Enqueue<UpTimeJob>(p => p.Execute());
-			RecurringJob.AddOrUpdate<UpTimeJob>(
-				p => p.Execute(),
-				"0 * * ? * *",
-				timeZone: TimeZoneInfo.Utc);
+			BackgroundJob.Enqueue<SideRoomKaktusLightJob>(p => p.Execute());
 #else
 			ConfigureOneTimeJobs();
 			ConfigureRecurringJobs();
@@ -65,13 +62,19 @@ namespace IotHub.Api.Middleware.Hangfire
 		private static void ConfigureOneTimeJobs()
 		{
 			BackgroundJob.Enqueue<UpTimeJob>(p => p.Execute());
+			BackgroundJob.Enqueue<SideRoomKaktusLightJob>(p => p.Execute());
 		}
 		private static void ConfigureRecurringJobs()
 		{
 			RecurringJob.AddOrUpdate<UpTimeJob>(
-			 p => p.Execute(),
-			 "0 * * ? * *",
-			 timeZone: TimeZoneInfo.Utc);
+				p => p.Execute(),
+				"0 * * ? * *",
+				timeZone: TimeZoneInfo.Local);
+
+			RecurringJob.AddOrUpdate<SideRoomKaktusLightJob>(
+				p => p.Execute(),
+				"0 */10 * ? * *",
+				timeZone: TimeZoneInfo.Local);
 		}
 	}
 }

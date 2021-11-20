@@ -1,11 +1,9 @@
 ﻿using IotHub.Api.Services.Models.Exceptions;
 using IotHub.Api.Services.Models.Messages;
 using IotHub.Common.Const;
-using IotHub.Common.Enums;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Text;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
@@ -45,28 +43,6 @@ namespace IotHub.Api.Services
 			var jsonStr = Encoding.UTF8.GetString(eventArgs.Message);
 			var message = JsonConvert.DeserializeObject<ModkamSoilMoistureSensorMsg>(jsonStr);
 
-			Publish("domoticz/in", new DomosticzInMsg()
-			{
-				DeviceId = DomosticzDevice.KitchenKratonLight,
-				Rssi = message.LinkQuality,
-				Battery = message.BatteryPercentage,
-				StringValue = message.Illuminance.ToString(CultureInfo.InvariantCulture)
-			});
-			Publish("domoticz/in", new DomosticzInMsg()
-			{
-				DeviceId = DomosticzDevice.KitchenKratonSoilMoisture,
-				Rssi = message.LinkQuality,
-				Battery = message.BatteryPercentage,
-				StringValue = message.SoilMoisture.ToString(CultureInfo.InvariantCulture)
-			});
-			Publish("domoticz/in", new DomosticzInMsg()
-			{
-				DeviceId = DomosticzDevice.KitchenKratonTemperature,
-				Rssi = message.LinkQuality,
-				Battery = message.BatteryPercentage,
-				StringValue = message.TemperatureDs.ToString(CultureInfo.InvariantCulture)
-			});
-
 			if(message.SoilMoisture < 90)
 				StartPump(1);
 		}
@@ -74,21 +50,6 @@ namespace IotHub.Api.Services
 		{
 			var jsonStr = Encoding.UTF8.GetString(eventArgs.Message);
 			var message = JsonConvert.DeserializeObject<ModkamSoilMoistureSensorMsg>(jsonStr);
-
-			Publish("domoticz/in", new DomosticzInMsg()
-			{
-				DeviceId = DomosticzDevice.KitchenKaktusLight,
-				Rssi = message.LinkQuality,
-				Battery = message.BatteryPercentage,
-				StringValue = message.Illuminance.ToString(CultureInfo.InvariantCulture)
-			});
-			Publish("domoticz/in", new DomosticzInMsg()
-			{
-				DeviceId = DomosticzDevice.KitchenKaktusSoilMoisture,
-				Rssi = message.LinkQuality,
-				Battery = message.BatteryPercentage,
-				StringValue = message.SoilMoisture.ToString(CultureInfo.InvariantCulture)
-			});
 
 			if(message.SoilMoisture < 70)
 				StartPump(3);

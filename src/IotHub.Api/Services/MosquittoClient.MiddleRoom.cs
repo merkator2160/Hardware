@@ -13,14 +13,17 @@ namespace IotHub.Api.Services
 		// TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
 		public void AddMiddleRoomDeviceHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
-			handlerDictionary.Add("midRoomClimateSensor/bmp280/temp", OnMiddleRoomClimateSensorTemperatureMessageReceived);
-			handlerDictionary.Add("midRoomClimateSensor/bmp280/hum", OnMiddleRoomClimateSensorHumidityMessageReceived);
-			handlerDictionary.Add("midRoomClimateSensor/mhz19b/ppm", OnMiddleRoomClimateSensorCo2MessageReceived);
-			handlerDictionary.Add("midRoomClimateSensor/pms7003/pm2.5", OnMiddleRoomClimateSensorDustMessageReceived);
+			//handlerDictionary.Add("midRoomClimateSensor/bmp280/temp", OnMiddleRoomClimateSensorTemperatureMessageReceived);
+			//handlerDictionary.Add("midRoomClimateSensor/bmp280/hum", OnMiddleRoomClimateSensorHumidityMessageReceived);
+			//handlerDictionary.Add("midRoomClimateSensor/mhz19b/ppm", OnMiddleRoomClimateSensorCo2MessageReceived);
+			//handlerDictionary.Add("midRoomClimateSensor/pms7003/pm2.5", OnMiddleRoomClimateSensorDustMessageReceived);
 		}
 
 
 		// HANDLERS ///////////////////////////////////////////////////////////////////////////////
+
+
+		// DOMOTICZ OBSOLETE ///////////////////////////////////////////////////////////////////////////////
 		private void OnMiddleRoomClimateSensorTemperatureMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
 			var temperatureStr = Encoding.UTF8.GetString(eventArgs.Message);
