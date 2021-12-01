@@ -108,6 +108,7 @@ namespace IotHub.Api.Services
 			AddDebugHandlers(handlerDictionary);
 #else
 			AddDebugHandlers(handlerDictionary);
+			AddButtonPad4Handlers(handlerDictionary);
 			AddButtonPad12Handlers(handlerDictionary);
 			AddSideRoomHandlers(handlerDictionary);
 			AddMiddleRoomDeviceHandlers(handlerDictionary);
@@ -115,7 +116,7 @@ namespace IotHub.Api.Services
 			AddWeatherHandlers(handlerDictionary);
 			AddMonitorLedHandlers(handlerDictionary);
 			AddIrHandlers(handlerDictionary);
-			AddIrrigationStationHandlers(handlerDictionary);
+			AddKitchenHandlers(handlerDictionary);
 #endif
 			return handlerDictionary;
 		}

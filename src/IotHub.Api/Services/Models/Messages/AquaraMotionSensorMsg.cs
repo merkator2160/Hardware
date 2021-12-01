@@ -4,7 +4,7 @@ using System;
 
 namespace IotHub.Api.Services.Models.Messages
 {
-	internal class SonoffThermometerMsg
+	internal class AquaraMotionSensorMsg
 	{
 		[JsonProperty("friendly_name")]
 		public String FriendlyName { get; set; }
@@ -22,8 +22,11 @@ namespace IotHub.Api.Services.Models.Messages
 		[JsonProperty("voltage")]
 		public Single BatteryVoltage { get; set; }
 
-		public Single Humidity { get; set; }
 		public Byte LinkQuality { get; set; }
-		public Single Temperature { get; set; }
+		public Boolean Occupancy { get; set; }
+
+		[JsonProperty("occupancy_timeout")]
+		public Int32 OccupancyTimeoutSec { get; set; }
+		public Int32 Illuminance { get; set; }
 	}
 }

@@ -4,7 +4,7 @@ using System;
 
 namespace IotHub.Api.Services.Models.Messages
 {
-	internal class SonoffThermometerMsg
+	internal class BlitzCircuitSwitchMsg
 	{
 		[JsonProperty("friendly_name")]
 		public String FriendlyName { get; set; }
@@ -16,14 +16,11 @@ namespace IotHub.Api.Services.Models.Messages
 		[JsonConverter(typeof(PosixDateTimeConverter))]
 		public DateTime LastSeen { get; set; }
 
-		[JsonProperty("battery")]
-		public Byte BatteryPercentage { get; set; }
-
-		[JsonProperty("voltage")]
-		public Single BatteryVoltage { get; set; }
-
-		public Single Humidity { get; set; }
+		public Single Current { get; set; }
+		public Single Energy { get; set; }
 		public Byte LinkQuality { get; set; }
-		public Single Temperature { get; set; }
+		public Int32 Power { get; set; }
+		public String State { get; set; }
+		public Single Voltage { get; set; }
 	}
 }

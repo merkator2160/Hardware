@@ -20,8 +20,8 @@ namespace IotHub.Api.Services
 		// TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
 		public void AddDomoticzHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
-			//handlerDictionary.Add("domoticz/in", OnDomosticzInReceived);		// sample
-			handlerDictionary.Add("domoticz/out", OnDomosticzOutReceived);
+			//handlerDictionary.Add("domoticz/in", OnDomosticzInReceived);
+			//handlerDictionary.Add("domoticz/out", OnDomosticzOutReceived);
 		}
 
 
@@ -60,7 +60,6 @@ namespace IotHub.Api.Services
 			Publish("iotHub/goncharova/weather/humidity", humidity);
 			Publish("iotHub/goncharova/weather/pressure/gpa", pressureStr);
 		}                               // sample
-
 		private void OnDomosticzOutReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
 			var jsonMessage = Encoding.UTF8.GetString(eventArgs.Message);
@@ -72,7 +71,7 @@ namespace IotHub.Api.Services
 					OnDomoticzLedMessageReceived(message);
 					break;
 			}
-		}
+		}          // sample
 
 
 		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////

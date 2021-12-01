@@ -2,7 +2,7 @@
 
 namespace IotHub.Common.Const
 {
-	public static class AquaraButtonActions
+	public static class AquaraButtonEvents
 	{
 		public const String SingleClick = "single";
 		public const String DoubleClick = "double";

@@ -1,7 +1,5 @@
 ﻿using IotHub.Api.Services.Models.Messages;
 using IotHub.Common.Const;
-using IotHub.Common.Extensions;
-using IotHub.Common.Filters;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,15 +11,10 @@ namespace IotHub.Api.Services
 {
 	internal partial class MosquittoClient
 	{
-		private KalmanFilter _kalmanFilter;
-
-
-
 		// TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
 		public void AddButtonPad12Handlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
-			handlerDictionary.Add($"zigbee/{ZigbeeDevice.ButtonPad12}", OnButtonPad12MessageReceived);
-			handlerDictionary.Add("unit2/moisture/value", OnUnit2MoistureSensorMessageReceived);
+			handlerDictionary.Add($"zigbee/{ZigbeeDevice.ModkamButtonPad12}", OnButtonPad12MessageReceived);
 		}
 
 
@@ -34,42 +27,21 @@ namespace IotHub.Api.Services
 			if(message.Action == null)      // System message
 				return;
 
-			if(message.Action.Equals(ModkamButtonPadActions.Button1SingleClick))
+			if(message.Action.Equals(ModkamButtonPadEvents.Button1SingleClick))
 				ToggleLed();
 
-			if(message.Action.Equals(ModkamButtonPadActions.Button2SingleClick))
+			if(message.Action.Equals(ModkamButtonPadEvents.Button2SingleClick))
 				StartPump(1);
 
-			if(message.Action.Equals(ModkamButtonPadActions.Button3SingleClick))
+			if(message.Action.Equals(ModkamButtonPadEvents.Button3SingleClick))
 			{
 				StartPump(2);
 				_easyEspClient.Unit2PlaySoundAsync("d=10,o=6,b=180,c,e,g").Wait();
 				AddDomoticzLog("Gloxinia pump has started manually.");
 			}
 
-			if(message.Action.Equals(ModkamButtonPadActions.Button4SingleClick))
+			if(message.Action.Equals(ModkamButtonPadEvents.Button4SingleClick))
 				StartPump(3);
-		}
-		private void OnUnit2MoistureSensorMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
-		{
-			var valueStr = Encoding.UTF8.GetString(eventArgs.Message);
-			var value = Byte.Parse(valueStr);
-
-			value = value.Map((Byte)12, (Byte)160, (Byte)0, (Byte)100);       // Moisture sensor min: 12, max: 160
-			value = value.Constrain(0, 100);
-
-			if(value < 50)
-			{
-				StartPump(2);
-				_easyEspClient.Unit2PlaySoundAsync("d=10,o=6,b=180,c,e,g").Wait();
-				AddDomoticzLog("Gloxinia pump has started by the moisture sensor.");
-			}
-
-			Publish("unit2/moisture/mapped", value);
-
-			_kalmanFilter ??= new KalmanFilter(1f, 0.01f);
-			value = (Byte)_kalmanFilter.Calculate((Single)value);
-			Publish("unit2/moisture/filtered", value);
 		}
 	}
 }

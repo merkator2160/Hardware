@@ -47,7 +47,7 @@ namespace IotHub.Api.Services
 			if(message.Action == null)      // System message
 				return;
 
-			if(message.Action.Equals(AquaraButtonActions.SingleClick))
+			if(message.Action.Equals(AquaraButtonEvents.SingleClick))
 				ToggleLed();
 		}
 

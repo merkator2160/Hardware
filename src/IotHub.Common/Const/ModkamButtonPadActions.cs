@@ -2,7 +2,7 @@
 
 namespace IotHub.Common.Const
 {
-	public class ModkamButtonPadActions
+	public class ModkamButtonPadEvents
 	{
 		// Button 1 //
 		public const String Button1SingleClick = "button_1_single";
