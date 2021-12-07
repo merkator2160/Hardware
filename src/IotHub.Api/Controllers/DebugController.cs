@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using IotHub.Api.Services.Interfaces;
 using IotHub.ApiClients.EasyEsp.Interfaces;
 using IotHub.Common.Config;
 using Microsoft.AspNetCore.Hosting;
@@ -21,7 +20,6 @@ namespace IotHub.Api.Controllers
 		private readonly IWebHostEnvironment _env;
 		private readonly ILogger<DebugController> _logger;
 		private readonly IMapper _mapper;
-		private readonly IDomoticzLogger _domoticzLogger;
 		private readonly IEasyEspClient _easyEspClient;
 
 
@@ -29,13 +27,11 @@ namespace IotHub.Api.Controllers
 			IWebHostEnvironment env,
 			ILogger<DebugController> logger,
 			IMapper mapper,
-			IDomoticzLogger domoticzLogger,
 			IEasyEspClient easyEspClient)
 		{
 			_env = env;
 			_logger = logger;
 			_mapper = mapper;
-			_domoticzLogger = domoticzLogger;
 			_easyEspClient = easyEspClient;
 		}
 
@@ -102,19 +98,6 @@ namespace IotHub.Api.Controllers
 			{
 				return Ok(await client.GetStringAsync("http://checkip.amazonaws.com/"));
 			}
-		}
-
-		/// <summary>
-		/// Publishes Domoticz log message
-		/// </summary>
-		[HttpGet]
-		[ProducesResponseType(typeof(String), 200)]
-		[ProducesResponseType(typeof(String), 500)]
-		public async Task<IActionResult> PublishDomoticzLogMessage(String message = "My message to Domoticz log")
-		{
-			_domoticzLogger.AddDomoticzLog(message);
-
-			return Ok();
 		}
 
 		/// <summary>

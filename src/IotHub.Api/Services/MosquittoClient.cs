@@ -15,7 +15,7 @@ namespace IotHub.Api.Services
 	/// <summary>
 	/// MQTT documentation: https://mosquitto.org/man/mqtt-7.html
 	/// </summary>
-	internal partial class MosquittoClient : IMosquittoClient, IMqttPublisher, IDomoticzLogger, IDisposable
+	internal partial class MosquittoClient : IMosquittoClient, IMqttPublisher, IDisposable
 	{
 		private readonly ProcessorConfig _config;
 		private readonly IEasyEspClient _easyEspClient;
@@ -106,12 +106,12 @@ namespace IotHub.Api.Services
 			var handlerDictionary = new Dictionary<String, MqttClient.MqttMsgPublishEventHandler>();
 #if DEBUG
 			AddDebugHandlers(handlerDictionary);
+			AddMonitorLedHandlers(handlerDictionary);
+			AddButtonHandlers(handlerDictionary);
 #else
 			AddDebugHandlers(handlerDictionary);
 			AddButtonHandlers(handlerDictionary);
 			AddSideRoomHandlers(handlerDictionary);
-			AddMiddleRoomDeviceHandlers(handlerDictionary);
-			AddLargeRoomHandlers(handlerDictionary);
 			AddWeatherHandlers(handlerDictionary);
 			AddMonitorLedHandlers(handlerDictionary);
 			AddIrHandlers(handlerDictionary);

@@ -1,6 +1,4 @@
-﻿using IotHub.Api.Services.Models.Messages;
-using IotHub.Common.Const;
-using IotHub.Common.Enums;
+﻿using IotHub.Common.Const;
 using IotHub.Common.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -16,8 +14,6 @@ namespace IotHub.Api.Services
 		// TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
 		public void AddWeatherHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
-			//handlerDictionary.Add("weatherStation/bmp280/temp", OnWeatherStationTemperatureMessageReceived);
-			//handlerDictionary.Add("weatherStation/bmp280/hum", OnWeatherStationHumidityMessageReceived);
 			handlerDictionary.Add("weatherStation/bmp280/press", OnWeatherStationPressureMessageReceived);
 		}
 
@@ -35,29 +31,6 @@ namespace IotHub.Api.Services
 
 			Publish("iotHub/goncharova/weather/pressure/gpa", pressureStr);
 			Publish("iotHub/goncharova/weather/pressure/mpl", pressureMpl);
-		}
-
-
-		// DOMOTICZ OBSOLETE ///////////////////////////////////////////////////////////////////////////////
-		private void OnWeatherStationTemperatureMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
-		{
-			var temperatureStr = Encoding.UTF8.GetString(eventArgs.Message);
-
-			Publish("domoticz/in", new DomosticzInMsg()
-			{
-				DeviceId = DomosticzDevice.WeatherStationTemperature,
-				StringValue = $"{temperatureStr};{0};{(Byte)DomosticzEnvironmentLevel.Normal};{0};{(Byte)DomosticzBarometerPrediction.NoPrediction}"
-			});
-		}
-		private void OnWeatherStationHumidityMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
-		{
-			var humidityValueStr = Encoding.UTF8.GetString(eventArgs.Message);
-
-			Publish("domoticz/in", new DomosticzInMsg()
-			{
-				DeviceId = DomosticzDevice.WeatherStationHumidity,
-				StringValue = humidityValueStr
-			});
 		}
 	}
 }

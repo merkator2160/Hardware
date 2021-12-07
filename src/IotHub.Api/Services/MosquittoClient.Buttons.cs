@@ -16,6 +16,8 @@ namespace IotHub.Api.Services
 		{
 			handlerDictionary.Add($"zigbee/{ZigbeeDevice.TuyaButtonPad4}", OnTuyaButtonPad4MessageReceived);
 			handlerDictionary.Add($"zigbee/{ZigbeeDevice.ModkamButtonPad12}", OnButtonPad12MessageReceived);
+			handlerDictionary.Add($"zigbee/{ZigbeeDevice.SideRoomKaktusLightButton}", OnSideRoomKaktusLightButtonMessageReceived);
+			handlerDictionary.Add($"zigbee/{ZigbeeDevice.Button1}", OnButton1MessageReceived);
 		}
 
 
@@ -26,7 +28,23 @@ namespace IotHub.Api.Services
 			var message = JsonConvert.DeserializeObject<TuyaButtonPadMsg>(jsonStr);
 
 			if(message.Action.Equals(TuyaButtonPadEvents.Button1SingleClick))
+			{
+				ToggleMonitorLed();
+
+				return;
+			}
+
+			if(message.Action.Equals(TuyaButtonPadEvents.Button2SingleClick))
+			{
 				ToggleCockroachRepeller();
+				return;
+			}
+
+			if(message.Action.Equals(TuyaButtonPadEvents.Button3SingleClick))
+			{
+				ToggleSideRoomKaktusLight();
+				return;
+			}
 		}
 		private void OnButtonPad12MessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
@@ -37,7 +55,7 @@ namespace IotHub.Api.Services
 				return;
 
 			if(message.Action.Equals(ModkamButtonPadEvents.Button1SingleClick))
-				ToggleLed();
+				ToggleMonitorLed();
 
 			if(message.Action.Equals(ModkamButtonPadEvents.Button2SingleClick))
 				StartPump(1);
@@ -46,11 +64,32 @@ namespace IotHub.Api.Services
 			{
 				StartPump(2);
 				_easyEspClient.Unit2PlaySoundAsync("d=10,o=6,b=180,c,e,g").Wait();
-				AddDomoticzLog("Gloxinia pump has started manually.");
 			}
 
 			if(message.Action.Equals(ModkamButtonPadEvents.Button4SingleClick))
 				StartPump(3);
+		}
+		private void OnSideRoomKaktusLightButtonMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
+		{
+			var jsonMessage = Encoding.UTF8.GetString(eventArgs.Message);
+			var message = JsonConvert.DeserializeObject<AquaraButtonMsg>(jsonMessage);
+
+			if(message.Action == null)      // System message
+				return;
+
+			if(message.Action.Equals(AquaraButtonEvents.SingleClick))
+				ToggleSideRoomKaktusLight();
+		}
+		private void OnButton1MessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
+		{
+			var jsonMessage = Encoding.UTF8.GetString(eventArgs.Message);
+			var message = JsonConvert.DeserializeObject<AquaraButtonMsg>(jsonMessage);
+
+			if(message.Action == null)      // System message
+				return;
+
+			if(message.Action.Equals(AquaraButtonEvents.SingleClick))
+				ToggleMonitorLed();
 		}
 	}
 }

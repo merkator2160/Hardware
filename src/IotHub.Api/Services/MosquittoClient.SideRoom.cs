@@ -17,7 +17,6 @@ namespace IotHub.Api.Services
 		// TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
 		public void AddSideRoomHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
-			handlerDictionary.Add($"zigbee/{ZigbeeDevice.SideRoomKaktusLightButton}", OnSideRoomKaktusLightButtonMessageReceived);
 			handlerDictionary.Add($"zigbee/{ZigbeeDevice.SideRoomKaktusLightCircuitRelay}", OnSideRoomKaktusLightCircuitRelayMessageReceived);
 		}
 
@@ -30,21 +29,11 @@ namespace IotHub.Api.Services
 
 			_isKaktusLightEnabled = message.State.Equals("ON");
 		}
-		private void OnSideRoomKaktusLightButtonMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
-		{
-			var jsonMessage = Encoding.UTF8.GetString(eventArgs.Message);
-			var message = JsonConvert.DeserializeObject<AquaraButtonMsg>(jsonMessage);
 
-			if(message.Action == null)      // System message
-				return;
-
-			if(message.Action.Equals(AquaraButtonEvents.SingleClick))
-				ToggleKaktusLight();
-		}
 
 
 		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
-		private void ToggleKaktusLight()
+		private void ToggleSideRoomKaktusLight()
 		{
 			Publish($"zigbee/{ZigbeeDevice.SideRoomKaktusLightCircuitRelay}/set/state", _isKaktusLightEnabled ? "OFF" : "ON");
 		}

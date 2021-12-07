@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IotHub.Common.Const.IrController;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using uPLibrary.Networking.M2Mqtt;
@@ -20,7 +21,8 @@ namespace IotHub.Api.Services
 		{
 			var value = Int64.Parse(Encoding.UTF8.GetString(eventArgs.Message));
 
-			HandleIrValueForLed(value);
+			if(value.Equals(AverTv.Record))
+				ToggleMonitorLed();
 		}
 	}
 }

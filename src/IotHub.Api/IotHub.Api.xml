@@ -35,11 +35,6 @@
             Returns external internet IP address
             </summary>
         </member>
-        <member name="M:IotHub.Api.Controllers.DebugController.PublishDomoticzLogMessage(System.String)">
-            <summary>
-            Publishes Domoticz log message
-            </summary>
-        </member>
         <member name="M:IotHub.Api.Controllers.DebugController.PlaySoundOnUnit2(System.String)">
             <summary>
             Plays sound on EastESP Unit2
@@ -61,9 +56,6 @@
         <member name="T:IotHub.Api.Services.MosquittoClient">
             <summary>
             MQTT documentation: https://mosquitto.org/man/mqtt-7.html
-            </summary>
-            <summary>
-            Domoticz message structure: https://piandmore.wordpress.com/2019/02/04/mqtt-out-for-domoticz/
             </summary>
         </member>
         <member name="M:IotHub.Api.Services.MosquittoClient.StartPump(System.Byte)">
