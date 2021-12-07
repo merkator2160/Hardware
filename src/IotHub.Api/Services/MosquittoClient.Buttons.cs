@@ -12,13 +12,22 @@ namespace IotHub.Api.Services
 	internal partial class MosquittoClient
 	{
 		// TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
-		public void AddButtonPad12Handlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
+		public void AddButtonHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
+			handlerDictionary.Add($"zigbee/{ZigbeeDevice.TuyaButtonPad4}", OnTuyaButtonPad4MessageReceived);
 			handlerDictionary.Add($"zigbee/{ZigbeeDevice.ModkamButtonPad12}", OnButtonPad12MessageReceived);
 		}
 
 
 		// HANDLERS ///////////////////////////////////////////////////////////////////////////////
+		private void OnTuyaButtonPad4MessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
+		{
+			var jsonStr = Encoding.UTF8.GetString(eventArgs.Message);
+			var message = JsonConvert.DeserializeObject<TuyaButtonPadMsg>(jsonStr);
+
+			if(message.Action.Equals(TuyaButtonPadEvents.Button1SingleClick))
+				ToggleCockroachRepeller();
+		}
 		private void OnButtonPad12MessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
 			var jsonStr = Encoding.UTF8.GetString(eventArgs.Message);
