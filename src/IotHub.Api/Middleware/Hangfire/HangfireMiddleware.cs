@@ -76,15 +76,15 @@ namespace IotHub.Api.Middleware.Hangfire
 			//	"0 */10 * ? * *",
 			//	timeZone: TimeZoneInfo.Local);
 
-			//RecurringJob.AddOrUpdate<SideRoomKaktusLightTurnOnJob>(
-			//	p => p.Execute(),
-			//	"0 0 9 ? * * *",
-			//	timeZone: TimeZoneInfo.Local);
+			RecurringJob.AddOrUpdate<SideRoomKaktusLightTurnOnJob>(
+				p => p.Execute(),
+				"0 0 9 ? * *",
+				timeZone: TimeZoneInfo.Local);
 
-			//RecurringJob.AddOrUpdate<SideRoomKaktusLightTurnOffJob>(
-			//	p => p.Execute(),
-			//	"0 0 23 ? * * *",
-			//	timeZone: TimeZoneInfo.Local);
+			RecurringJob.AddOrUpdate<SideRoomKaktusLightTurnOffJob>(
+				p => p.Execute(),
+				"0 0 23 ? * *",
+				timeZone: TimeZoneInfo.Local);
 		}
 	}
 }
