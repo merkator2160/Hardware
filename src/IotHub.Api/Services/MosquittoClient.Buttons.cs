@@ -30,7 +30,6 @@ namespace IotHub.Api.Services
 			if(message.Action.Equals(TuyaButtonPadEvents.Button1SingleClick))
 			{
 				ToggleMonitorLed();
-
 				return;
 			}
 
@@ -42,7 +41,7 @@ namespace IotHub.Api.Services
 
 			if(message.Action.Equals(TuyaButtonPadEvents.Button3SingleClick))
 			{
-				ToggleSideRoomKaktusLight();
+				ToggleSideRoomGreenhouseLight();
 				return;
 			}
 		}
@@ -78,7 +77,7 @@ namespace IotHub.Api.Services
 				return;
 
 			if(message.Action.Equals(AquaraButtonEvents.SingleClick))
-				ToggleSideRoomKaktusLight();
+				ToggleSideRoomGreenhouseLight();
 		}
 		private void OnButton1MessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{

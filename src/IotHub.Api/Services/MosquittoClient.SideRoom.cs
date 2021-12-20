@@ -1,4 +1,5 @@
-﻿using IotHub.Api.Services.Models.Messages;
+﻿using IotHub.Api.Services.Interfaces;
+using IotHub.Api.Services.Models.Messages;
 using IotHub.Common.Const;
 using Newtonsoft.Json;
 using System;
@@ -9,7 +10,7 @@ using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace IotHub.Api.Services
 {
-	internal partial class MosquittoClient
+	internal partial class MosquittoClient : ISideRoomMqttLightControl
 	{
 		private Boolean _isKaktusLightEnabled;
 
@@ -17,7 +18,7 @@ namespace IotHub.Api.Services
 		// TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
 		public void AddSideRoomHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
 		{
-			handlerDictionary.Add($"zigbee/{ZigbeeDevice.SideRoomKaktusLightCircuitRelay}", OnSideRoomKaktusLightCircuitRelayMessageReceived);
+			handlerDictionary.Add($"zigbee/{ZigbeeDevice.SideRoomGreenhouseCircuitRelay}", OnSideRoomKaktusLightCircuitRelayMessageReceived);
 		}
 
 
@@ -33,9 +34,17 @@ namespace IotHub.Api.Services
 
 
 		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
-		private void ToggleSideRoomKaktusLight()
+		public void ToggleSideRoomGreenhouseLight()
 		{
-			Publish($"zigbee/{ZigbeeDevice.SideRoomKaktusLightCircuitRelay}/set/state", _isKaktusLightEnabled ? "OFF" : "ON");
+			Publish($"zigbee/{ZigbeeDevice.SideRoomGreenhouseCircuitRelay}/set/state", _isKaktusLightEnabled ? "OFF" : "ON");
+		}
+		public void TurnOnSideRoomGreenhouseLight()
+		{
+			Publish($"zigbee/{ZigbeeDevice.SideRoomGreenhouseCircuitRelay}/set/state", "ON");
+		}
+		public void TurnOffSideRoomGreenhouseLight()
+		{
+			Publish($"zigbee/{ZigbeeDevice.SideRoomGreenhouseCircuitRelay}/set/state", "OFF");
 		}
 	}
 }

@@ -1,22 +1,21 @@
 ﻿using Hangfire;
 using IotHub.Api.Services.Interfaces;
-using IotHub.Common.Const;
 using IotHub.Common.Hangfire.Interfaces;
 using NLog;
 using System;
 
 namespace IotHub.Api.Middleware.Hangfire.Jobs
 {
-	internal class SideRoomKaktusLightJob : IJob
+	internal class SideRoomKaktusLightRecurringJob : IJob
 	{
-		private readonly IMqttPublisher _mqttPublisher;
 		private readonly ILogger _logger;
+		private readonly ISideRoomMqttLightControl _sideRoomMqttLightControl;
 
 
-		public SideRoomKaktusLightJob(IMqttPublisher mqttPublisher, ILogger logger)
+		public SideRoomKaktusLightRecurringJob(ILogger logger, ISideRoomMqttLightControl sideRoomMqttLightControl)
 		{
-			_mqttPublisher = mqttPublisher;
 			_logger = logger;
+			_sideRoomMqttLightControl = sideRoomMqttLightControl;
 		}
 
 
@@ -26,18 +25,18 @@ namespace IotHub.Api.Middleware.Hangfire.Jobs
 		{
 			try
 			{
-				if(!_mqttPublisher.IsConnected)
+				if(!_sideRoomMqttLightControl.IsConnected)
 					return;
 
 				var now = DateTime.Now;
 				if(now.Hour >= 9 && now.Hour < 23)
 				{
-					_mqttPublisher.Publish($"zigbee/{ZigbeeDevice.SideRoomKaktusLightCircuitRelay}/set/state", "ON");
+					_sideRoomMqttLightControl.TurnOnSideRoomGreenhouseLight();
 					return;
 				}
 				if(now.Hour >= 23 || now.Hour < 9)
 				{
-					_mqttPublisher.Publish($"zigbee/{ZigbeeDevice.SideRoomKaktusLightCircuitRelay}/set/state", "OFF");
+					_sideRoomMqttLightControl.TurnOffSideRoomGreenhouseLight();
 				}
 			}
 			catch(Exception ex)
@@ -46,6 +45,5 @@ namespace IotHub.Api.Middleware.Hangfire.Jobs
 				throw;
 			}
 		}
-
 	}
 }

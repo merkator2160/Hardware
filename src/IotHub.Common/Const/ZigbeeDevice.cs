@@ -9,7 +9,7 @@ namespace IotHub.Common.Const
 		public const String Button1 = "0x00158D00067271F0";
 		public const String SideRoomKaktusLightButton = "0x00158D000672710E";
 		public const String SonoffThermometer = "0x00124B0022CF75B3";
-		public const String SideRoomKaktusLightCircuitRelay = "0x60A423FFFED2EFAF";
+		public const String SideRoomGreenhouseCircuitRelay = "0x60A423FFFED2EFAF";
 		public const String LargeRoomCircuitRelayRight = "0x60A423FFFEFF8B47";
 		public const String LargeRoomCircuitRelayLeft = "0x60A423FFFEF8E07B";
 		public const String KitchenKaktusSensor = "0x00124B0022609BE6";
