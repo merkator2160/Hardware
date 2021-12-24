@@ -62,19 +62,13 @@ namespace IotHub.Api.Middleware.Hangfire
 		private static void ConfigureOneTimeJobs()
 		{
 			BackgroundJob.Enqueue<UpTimeJob>(p => p.Execute());
-			//BackgroundJob.Enqueue<SideRoomKaktusLightRecurringJob>(p => p.Execute());
 		}
 		private static void ConfigureRecurringJobs()
 		{
-			//RecurringJob.AddOrUpdate<UpTimeJob>(
-			//	p => p.Execute(),
-			//	"0 * * ? * *",
-			//	timeZone: TimeZoneInfo.Local);
-
-			//RecurringJob.AddOrUpdate<SideRoomKaktusLightRecurringJob>(
-			//	p => p.Execute(),
-			//	"0 */10 * ? * *",
-			//	timeZone: TimeZoneInfo.Local);
+			RecurringJob.AddOrUpdate<UpTimeJob>(
+				p => p.Execute(),
+				"0 * * ? * *",
+				timeZone: TimeZoneInfo.Local);
 
 			RecurringJob.AddOrUpdate<SideRoomKaktusLightTurnOnJob>(
 				p => p.Execute(),
