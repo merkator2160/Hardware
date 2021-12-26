@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Nano.Sandbox.Units
 {
-	public static class HttpUnit
+	internal static class HttpUnit
 	{
 		public static void Run()
 		{

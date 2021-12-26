@@ -3,16 +3,16 @@ using System.Threading;
 
 namespace Nano.Sandbox.Units
 {
-	public static class BlinkyUnit
+	internal static class BlinkyUnit
 	{
-		private static GpioController gpioController;
+		private static GpioController _gpioController;
 
 
 		public static void Run()
 		{
-			gpioController = new GpioController();
+			_gpioController = new GpioController();
 
-			var led = gpioController.OpenPin(14, PinMode.Output);
+			var led = _gpioController.OpenPin(14, PinMode.Output);
 			led.Write(PinValue.Low);
 
 			while(true)

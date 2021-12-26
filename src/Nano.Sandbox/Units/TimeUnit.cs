@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace Nano.Sandbox.Units
 {
-	public static class TimeUnit
+	internal static class TimeUnit
 	{
 		public static void Run()
 		{

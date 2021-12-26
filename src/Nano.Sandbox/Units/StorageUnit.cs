@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Nano.Sandbox.Units
 {
-	public static class StorageUnit
+	internal static class StorageUnit
 	{
 		public static void Run()
 		{

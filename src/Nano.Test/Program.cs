@@ -1,4 +1,4 @@
-﻿using nanoFramework.Networking;
+using nanoFramework.Networking;
 using System;
 using System.Diagnostics;
 using System.Net;
@@ -6,14 +6,26 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-namespace Nano.Sandbox.Units
+namespace Nano.Test
 {
-	internal static class NetworkUnit
+	public class Program
 	{
 		private static String _ssid = "2160";
 		private static String _apPassword = "zxcvbnm,";
 
 
+		public static void Main()
+		{
+			Debug.WriteLine("Hello from nanoFramework!");
+
+			Run();
+
+
+
+			Thread.Sleep(Timeout.Infinite);
+
+
+		}
 		public static void Run()
 		{
 			Debug.WriteLine("Waiting for network up and IP address...");
@@ -78,5 +90,8 @@ namespace Nano.Sandbox.Units
 				}
 			}
 		}
+
+
+
 	}
 }

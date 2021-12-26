@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Nano.Sandbox.Units
 {
-	public static class SerializerUnit
+	internal static class SerializerUnit
 	{
 		public static void Run()
 		{
