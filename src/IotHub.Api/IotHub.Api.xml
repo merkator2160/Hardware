@@ -58,7 +58,7 @@
             MQTT documentation: https://mosquitto.org/man/mqtt-7.html
             </summary>
         </member>
-        <member name="M:IotHub.Api.Services.MosquittoClient.StartPump(System.Byte)">
+        <member name="M:IotHub.Api.Services.MosquittoClient.IrrigationStation1StartPump(System.Byte)">
             <summary>
             Pump 1 - kitchen Kraton;
             Pump 2 - kitchen Gloxinia;

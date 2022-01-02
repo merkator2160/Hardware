@@ -53,7 +53,7 @@ namespace IotHub.Api.Services
 			var message = JsonConvert.DeserializeObject<ModkamSoilMoistureSensorMsg>(jsonStr);
 
 			if(message.SoilMoisture < 90)
-				StartPump(1);
+				IrrigationStation1StartPump(1);
 		}
 		private void OnKitchenKaktusSensorMessage(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
@@ -61,7 +61,7 @@ namespace IotHub.Api.Services
 			var message = JsonConvert.DeserializeObject<ModkamSoilMoistureSensorMsg>(jsonStr);
 
 			if(message.SoilMoisture < 70)
-				StartPump(3);
+				IrrigationStation1StartPump(3);
 		}
 		private void OnUnit2MoistureSensorMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
@@ -73,7 +73,7 @@ namespace IotHub.Api.Services
 
 			if(value < 50)
 			{
-				StartPump(2);
+				IrrigationStation1StartPump(2);
 				_easyEspClient.Unit2PlaySoundAsync("d=10,o=6,b=180,c,e,g").Wait();
 			}
 
@@ -105,18 +105,26 @@ namespace IotHub.Api.Services
 		}
 
 
+
 		// FUNCTIONS //////////////////////////////////////////////////////////////////////////////
 		/// <summary>
 		/// Pump 1 - kitchen Kraton;
 		/// Pump 2 - kitchen Gloxinia;
 		/// Pump 3 - kitchen Kaktus tall;
 		/// </summary>
-		private void StartPump(Byte pumpNumber)
+		private void IrrigationStation1StartPump(Byte pumpNumber)
 		{
 			if(pumpNumber < 1 || pumpNumber > 3)
-				throw new MqttMessageProcessorException($"Irrigation station has no pump with number {pumpNumber}! Irrigation station has pumps with numbers: 1, 2, 3.");
+				throw new MqttMessageProcessorException($"Irrigation station 1 has no pump with number {pumpNumber}! Irrigation station has pumps with numbers: 1, 2, 3.");
 
 			Publish($"zigbee/{ZigbeeDevice.IrrigationStation}/set/pump_{pumpNumber}", "ON");
+		}
+		private void IrrigationStation2StartPump(Byte pumpNumber, Int32 durationSec)
+		{
+			if(pumpNumber < 1 || pumpNumber > 2)
+				throw new MqttMessageProcessorException($"Irrigation station 2 has no pump with number {pumpNumber}! Irrigation station has pumps with numbers: 1, 2.");
+
+			Publish($"kitchenIrrigationStation2/pump{pumpNumber}/set", durationSec.ToString());
 		}
 
 		private void ToggleCockroachRepeller()

@@ -33,15 +33,44 @@ namespace IotHub.Api.Services
 				return;
 			}
 
+			if(message.Action.Equals(TuyaButtonPadEvents.Button1DoubleClick))
+			{
+				return;
+			}
+
 			if(message.Action.Equals(TuyaButtonPadEvents.Button2SingleClick))
 			{
 				ToggleCockroachRepeller();
+				//ToggleSideRoomGreenhouseLight();
+				return;
+			}
+
+			if(message.Action.Equals(TuyaButtonPadEvents.Button2DoubleClick))
+			{
 				return;
 			}
 
 			if(message.Action.Equals(TuyaButtonPadEvents.Button3SingleClick))
 			{
-				ToggleSideRoomGreenhouseLight();
+				IrrigationStation2StartPump(1, 1);
+				return;
+			}
+
+			if(message.Action.Equals(TuyaButtonPadEvents.Button3DoubleClick))
+			{
+				IrrigationStation2StartPump(1, 10);
+				return;
+			}
+
+			if(message.Action.Equals(TuyaButtonPadEvents.Button4SingleClick))
+			{
+				IrrigationStation2StartPump(2, 1);
+				return;
+			}
+
+			if(message.Action.Equals(TuyaButtonPadEvents.Button4DoubleClick))
+			{
+				IrrigationStation2StartPump(2, 10);
 				return;
 			}
 		}
@@ -57,16 +86,16 @@ namespace IotHub.Api.Services
 				ToggleMonitorLed();
 
 			if(message.Action.Equals(ModkamButtonPadEvents.Button2SingleClick))
-				StartPump(1);
+				IrrigationStation1StartPump(1);
 
 			if(message.Action.Equals(ModkamButtonPadEvents.Button3SingleClick))
 			{
-				StartPump(2);
+				IrrigationStation1StartPump(2);
 				_easyEspClient.Unit2PlaySoundAsync("d=10,o=6,b=180,c,e,g").Wait();
 			}
 
 			if(message.Action.Equals(ModkamButtonPadEvents.Button4SingleClick))
-				StartPump(3);
+				IrrigationStation1StartPump(3);
 		}
 		private void OnSideRoomKaktusLightButtonMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
