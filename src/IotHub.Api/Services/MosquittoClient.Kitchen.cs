@@ -53,7 +53,10 @@ namespace IotHub.Api.Services
 			var message = JsonConvert.DeserializeObject<ModkamSoilMoistureSensorMsg>(jsonStr);
 
 			if(message.SoilMoisture < 90)
-				IrrigationStation1StartPump(1);
+			{
+				IrrigationStation2StartPump(1, 10);
+				//IrrigationStation1StartPump(1);
+			}
 		}
 		private void OnKitchenKaktusSensorMessage(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
@@ -61,7 +64,10 @@ namespace IotHub.Api.Services
 			var message = JsonConvert.DeserializeObject<ModkamSoilMoistureSensorMsg>(jsonStr);
 
 			if(message.SoilMoisture < 70)
-				IrrigationStation1StartPump(3);
+			{
+				IrrigationStation2StartPump(2, 10);
+				//IrrigationStation1StartPump(3);
+			}
 		}
 		private void OnUnit2MoistureSensorMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
 		{
