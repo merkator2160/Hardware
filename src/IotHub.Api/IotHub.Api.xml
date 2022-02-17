@@ -4,6 +4,16 @@
         <name>IotHub.Api</name>
     </assembly>
     <members>
+        <member name="M:IotHub.Api.Controllers.CelestialController.GetCelestialInfoForConfigLocations">
+            <summary>
+            Returns celestial information for locations predefined in the configuration
+            </summary>
+        </member>
+        <member name="M:IotHub.Api.Controllers.CelestialController.GetCelestialInfoForLocation(System.Single,System.Single)">
+            <summary>
+            Returns celestial information for provided location
+            </summary>
+        </member>
         <member name="T:IotHub.Api.Controllers.DebugController">
             <summary>
             This controller only for debugging, playing, testing purposes (it does not appear in production)

@@ -1,13 +1,13 @@
-﻿using Core.Sandbox.Units.MassTransit;
+﻿using Core.Sandbox.Units;
 using System;
 
 namespace Core.Sandbox
 {
-	class Program
-	{
-		static void Main(String[] args)
-		{
-			MassTransitUnit.Run();
-		}
-	}
+    class Program
+    {
+        static void Main(String[] args)
+        {
+            CoordinateSharpUnit.Run();
+        }
+    }
 }

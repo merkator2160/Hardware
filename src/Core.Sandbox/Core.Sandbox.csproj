@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <PackageReference Include="CoordinateSharp" Version="2.12.1.1" />
 	  <PackageReference Include="MassTransit" Version="7.1.3" />
 	  <PackageReference Include="MassTransit.Autofac" Version="7.1.3" />
 	  <PackageReference Include="MassTransit.Automatonymous.Autofac" Version="5.5.6" />

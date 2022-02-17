@@ -6,13 +6,13 @@ using System;
 
 namespace IotHub.Api.Middleware.Hangfire.Jobs
 {
-	internal class SideRoomKaktusLightTurnOnJob : IJob
+	internal class SideRoomGreenhouseLightTurnOffJob : IJob
 	{
 		private readonly ILogger _logger;
 		private readonly ISideRoomMqttLightControl _sideRoomMqttLightControl;
 
 
-		public SideRoomKaktusLightTurnOnJob(ILogger logger, ISideRoomMqttLightControl sideRoomMqttLightControl)
+		public SideRoomGreenhouseLightTurnOffJob(ILogger logger, ISideRoomMqttLightControl sideRoomMqttLightControl)
 		{
 			_logger = logger;
 			_sideRoomMqttLightControl = sideRoomMqttLightControl;
@@ -25,7 +25,7 @@ namespace IotHub.Api.Middleware.Hangfire.Jobs
 		{
 			try
 			{
-				_sideRoomMqttLightControl.TurnOnSideRoomGreenhouseLight();
+				_sideRoomMqttLightControl.TurnOffSideRoomGreenhouseLight();
 			}
 			catch(Exception ex)
 			{
