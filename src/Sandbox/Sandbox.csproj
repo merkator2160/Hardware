@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <Configurations>Debug;Release;Development</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Api\DeviceMonitor\" />
+    <ProjectReference Include="..\IotHub.Api\IotHub.Api.csproj" />
   </ItemGroup>
 
 </Project>

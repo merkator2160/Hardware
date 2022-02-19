@@ -1,7 +1,6 @@
-﻿using IotHub.UnitTests;
-using System;
+﻿using System;
 
-namespace IotHub.Contracts.Models
+namespace IotHub.Contracts.Models.Api.Celestial
 {
     public class LocationCelestialInfoAm
     {

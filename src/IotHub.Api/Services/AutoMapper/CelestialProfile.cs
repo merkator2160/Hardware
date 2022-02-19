@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using IotHub.Api.Services.Models.Config;
-using IotHub.UnitTests;
+using IotHub.Contracts.Models.Api.Celestial;
 
 namespace IotHub.Api.Services.AutoMapper
 {

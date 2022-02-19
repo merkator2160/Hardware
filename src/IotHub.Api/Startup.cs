@@ -62,6 +62,7 @@ namespace IotHub.Api
             builder.RegisterLocalConfiguration(_configuration);
 
             builder.RegisterType<MosquittoClient>().AsSelf().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<DeviceMonitor>().AsSelf().AsImplementedInterfaces().SingleInstance();
 
             builder.RegisterModule<NLogModule>();
             builder.RegisterModule(new AutoMapperModule(assembliesToScan));

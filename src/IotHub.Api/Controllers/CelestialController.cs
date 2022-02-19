@@ -2,8 +2,7 @@
 using CoordinateSharp;
 using IotHub.Api.Services.Models.Config;
 using IotHub.Common.Exceptions;
-using IotHub.Contracts.Models;
-using IotHub.UnitTests;
+using IotHub.Contracts.Models.Api.Celestial;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;

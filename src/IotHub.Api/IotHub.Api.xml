@@ -50,6 +50,16 @@
             Plays sound on EastESP Unit2
             </summary>
         </member>
+        <member name="M:IotHub.Api.Controllers.DeviceMonitorController.GetAllDeviceInfo">
+            <summary>
+            Returns information about MQTT devices under tracking
+            </summary>
+        </member>
+        <member name="M:IotHub.Api.Controllers.DeviceMonitorController.GetAllUnavailableDeviceInfo">
+            <summary>
+            Returns information about unavailable MQTT devices
+            </summary>
+        </member>
         <member name="M:IotHub.Api.Middleware.ErrorHandlingMiddleware.UseGlobalExceptionHandler(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
             <summary>
             It don't allow information from unhandled exceptions leave application borders. 

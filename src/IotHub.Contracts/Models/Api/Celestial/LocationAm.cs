@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IotHub.UnitTests
+namespace IotHub.Contracts.Models.Api.Celestial
 {
     public class LocationAm
     {
