@@ -5,7 +5,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace IotHub.UI.Client
+namespace IotHub.UI
 {
     internal class Program
     {

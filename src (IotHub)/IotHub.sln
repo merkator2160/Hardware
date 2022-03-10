@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IotHub.UI.Server", "IotHub.UI\Server\IotHub.UI.Server.csproj", "{5435D20B-52E1-4893-A727-2F2E2DE7A5B5}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IotHub.UI.Client", "IotHub.UI\Client\IotHub.UI.Client.csproj", "{12429548-6EAE-4B3D-A7B9-225C342ECAD7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{9F648C51-E5B9-4082-98D8-6BA999920752}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishProfiles", "PublishProfiles", "{45122DB8-F785-4A75-BF22-BE0AE01FE64F}"
 	ProjectSection(SolutionItems) = preProject
 		..\Publish profiles\IotHub.Api.PublishSettings = ..\Publish profiles\IotHub.Api.PublishSettings
@@ -39,6 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IotHub.UI", "IotHub.UI\IotHub.UI.csproj", "{BA94D7ED-EEB3-4E18-AC02-17C96E2B27D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,24 +42,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5435D20B-52E1-4893-A727-2F2E2DE7A5B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5435D20B-52E1-4893-A727-2F2E2DE7A5B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5435D20B-52E1-4893-A727-2F2E2DE7A5B5}.Development|Any CPU.ActiveCfg = Debug|Any CPU
-		{5435D20B-52E1-4893-A727-2F2E2DE7A5B5}.Development|Any CPU.Build.0 = Debug|Any CPU
-		{5435D20B-52E1-4893-A727-2F2E2DE7A5B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5435D20B-52E1-4893-A727-2F2E2DE7A5B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{12429548-6EAE-4B3D-A7B9-225C342ECAD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12429548-6EAE-4B3D-A7B9-225C342ECAD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12429548-6EAE-4B3D-A7B9-225C342ECAD7}.Development|Any CPU.ActiveCfg = Debug|Any CPU
-		{12429548-6EAE-4B3D-A7B9-225C342ECAD7}.Development|Any CPU.Build.0 = Debug|Any CPU
-		{12429548-6EAE-4B3D-A7B9-225C342ECAD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12429548-6EAE-4B3D-A7B9-225C342ECAD7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9F648C51-E5B9-4082-98D8-6BA999920752}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F648C51-E5B9-4082-98D8-6BA999920752}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9F648C51-E5B9-4082-98D8-6BA999920752}.Development|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F648C51-E5B9-4082-98D8-6BA999920752}.Development|Any CPU.Build.0 = Debug|Any CPU
-		{9F648C51-E5B9-4082-98D8-6BA999920752}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9F648C51-E5B9-4082-98D8-6BA999920752}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BADAA568-2F2C-454B-87D0-C7FC428C2B38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BADAA568-2F2C-454B-87D0-C7FC428C2B38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BADAA568-2F2C-454B-87D0-C7FC428C2B38}.Development|Any CPU.ActiveCfg = Debug|Any CPU
@@ -100,13 +78,17 @@ Global
 		{3C338B85-AF7A-4409-ACF6-3DB7B271AB36}.Development|Any CPU.Build.0 = Development|Any CPU
 		{3C338B85-AF7A-4409-ACF6-3DB7B271AB36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C338B85-AF7A-4409-ACF6-3DB7B271AB36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA94D7ED-EEB3-4E18-AC02-17C96E2B27D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA94D7ED-EEB3-4E18-AC02-17C96E2B27D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA94D7ED-EEB3-4E18-AC02-17C96E2B27D0}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA94D7ED-EEB3-4E18-AC02-17C96E2B27D0}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{BA94D7ED-EEB3-4E18-AC02-17C96E2B27D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA94D7ED-EEB3-4E18-AC02-17C96E2B27D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{5435D20B-52E1-4893-A727-2F2E2DE7A5B5} = {F9890223-2104-415D-9493-F91BEDC92196}
-		{9F648C51-E5B9-4082-98D8-6BA999920752} = {F9890223-2104-415D-9493-F91BEDC92196}
 		{45122DB8-F785-4A75-BF22-BE0AE01FE64F} = {CE5DDC7A-B866-4747-BBBD-5D271FCD86E9}
 		{BADAA568-2F2C-454B-87D0-C7FC428C2B38} = {F9890223-2104-415D-9493-F91BEDC92196}
 		{FCDE4059-2EFD-4396-99A2-5A6A2F261628} = {F9890223-2104-415D-9493-F91BEDC92196}
