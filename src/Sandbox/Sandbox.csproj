@@ -5,8 +5,4 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\IotHub.Api\IotHub.Api.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -243,3 +243,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/src (IotHub)/IotHub.Api/appsettings.Development.json
+/src (IotHub)/IotHub.Api/appsettings.Production.json

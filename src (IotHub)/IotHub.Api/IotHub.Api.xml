@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IotHub.Api</name>
+    </assembly>
+    <members>
+        <member name="M:IotHub.Api.Controllers.CelestialController.GetCelestialInfoForConfigLocations">
+            <summary>
+            Returns celestial information for locations predefined in the configuration
+            </summary>
+        </member>
+        <member name="M:IotHub.Api.Controllers.CelestialController.GetCelestialInfoForLocation(System.Single,System.Single)">
+            <summary>
+            Returns celestial information for provided location
+            </summary>
+        </member>
+        <member name="T:IotHub.Api.Controllers.DebugController">
+            <summary>
+            This controller only for debugging, playing, testing purposes (it does not appear in production)
+            </summary>
+        </member>
+        <member name="M:IotHub.Api.Controllers.DebugController.WriteLog(System.String)">
+            <summary>
+            Creates a log entry
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:IotHub.Api.Controllers.DebugController.GetAspNetEnvironment">
+            <summary>
+            Returns current environment name retrieved from IWebHostEnvironment
+            </summary>
+        </member>
+        <member name="M:IotHub.Api.Controllers.DebugController.GetRawEnvironmentVariable">
+            <summary>
+            Returns a raw current server environment variable value introduced in current server global environment variables pool
+            </summary>
+        </member>
+        <member name="M:IotHub.Api.Controllers.DebugController.GetRawEnvironmentVariableName">
+            <summary>
+            Returns name of the variable which uses to determine current server environment
+            </summary>
+        </member>
+        <member name="M:IotHub.Api.Controllers.DebugController.GetExternalIpAddress">
+            <summary>
+            Returns external internet IP address
+            </summary>
+        </member>
+        <member name="M:IotHub.Api.Controllers.DebugController.PlaySoundOnUnit2(System.String)">
+            <summary>
+            Plays sound on EastESP Unit2
+            </summary>
+        </member>
+        <member name="M:IotHub.Api.Controllers.DebugController.GetWeatherForecast">
+            <summary>
+            Returns artificially generated weather forecast sample
+            </summary>
+        </member>
+        <member name="M:IotHub.Api.Controllers.DeviceMonitorController.GetAllDeviceInfo">
+            <summary>
+            Returns information about MQTT devices under tracking
+            </summary>
+        </member>
+        <member name="M:IotHub.Api.Controllers.DeviceMonitorController.GetUnavailableDeviceInfo">
+            <summary>
+            Returns information about unavailable MQTT devices
+            </summary>
+        </member>
+        <member name="M:IotHub.Api.Middleware.ErrorHandlingMiddleware.UseGlobalExceptionHandler(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            It don't allow information from unhandled exceptions leave application borders. 
+            Also provides these exceptions logging.
+            </summary>
+        </member>
+        <member name="T:IotHub.Api.Middleware.Hangfire.HangfireMiddleware">
+            <summary>
+            https://stackoverflow.com/questions/44383174/hangfire-with-horizontal-scaling
+            https://stackoverflow.com/questions/42201809/hangfire-recurring-job-on-every-server/42202844
+            http://docs.hangfire.io/en/latest/background-processing/configuring-queues.html
+            </summary>
+        </member>
+        <member name="T:IotHub.Api.Services.MosquittoClient">
+            <summary>
+            MQTT documentation: https://mosquitto.org/man/mqtt-7.html
+            </summary>
+        </member>
+        <member name="M:IotHub.Api.Services.MosquittoClient.IrrigationStation1StartPump(System.Byte)">
+            <summary>
+            Pump 1 - kitchen Kraton;
+            Pump 2 - kitchen Gloxinia;
+            Pump 3 - kitchen Kaktus tall;
+            </summary>
+        </member>
+    </members>
+</doc>

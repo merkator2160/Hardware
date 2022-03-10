@@ -1,0 +1,45 @@
+﻿@using IotHub.Contracts.Models.Api.DeviceMonitor
+
+@page "/deviceStatus"
+@inject HttpClient _http
+
+<PageTitle>Device status</PageTitle>
+<h1>Device status:</h1>
+
+@if (unavailableDevices == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Topic</th>
+            <th>Last available</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var x in unavailableDevices)
+        {
+            <tr>
+                <td>@x.Name</td>
+                <td>@x.AvailabilityTopic</td>
+                <td>@x.LastAvailable.ToString("s")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+
+@code 
+{
+    private TrackingDeviceAm[]? unavailableDevices;
+
+    protected override async Task OnInitializedAsync()
+    {
+        unavailableDevices = await _http.GetFromJsonAsync<TrackingDeviceAm[]>("api/DeviceMonitor/GetUnavailableDeviceInfo");
+    }
+}
