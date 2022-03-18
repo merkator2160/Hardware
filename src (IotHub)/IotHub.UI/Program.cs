@@ -1,3 +1,4 @@
+using IotHub.Ui;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,8 @@ namespace IotHub.UI
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
+
+            var value = builder.Configuration["ServerConfig:BaseAddress"];
 
             builder.Services.AddScoped(sp => new HttpClient
             {

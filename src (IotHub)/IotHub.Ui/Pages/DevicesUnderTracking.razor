@@ -1,0 +1,29 @@
+﻿<PageTitle>Devices under tracking</PageTitle>
+<h1>Devices under tracking:</h1>
+
+@if (_devices == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Topic</th>
+            <th>Last available</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var x in _devices)
+        {
+            <tr>
+                <td>@x.Name</td>
+                <td>@x.AvailabilityTopic</td>
+                <td>@x.LastAvailable.ToString("s")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

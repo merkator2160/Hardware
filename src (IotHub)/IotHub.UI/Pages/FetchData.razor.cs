@@ -4,12 +4,12 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace IotHub.UI.Pages
+namespace IotHub.Ui.Pages
 {
     [Route("fetchdata")]
     public partial class FetchData
     {
-        private WeatherForecastAm[]? _forecasts;
+        private WeatherForecastAm[] _forecasts;
 
 
         // PROPERTIES /////////////////////////////////////////////////////////////////////////////

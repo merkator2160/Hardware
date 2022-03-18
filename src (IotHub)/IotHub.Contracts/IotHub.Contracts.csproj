@@ -5,8 +5,4 @@
     <Configurations>Debug;Release;Development</Configurations>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Api\DeviceMonitor\" />
-  </ItemGroup>
-
 </Project>

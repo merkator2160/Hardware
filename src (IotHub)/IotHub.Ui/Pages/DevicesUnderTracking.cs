@@ -8,10 +8,10 @@ using System.Timers;
 
 namespace IotHub.Ui.Pages
 {
-    [Route("deviceStatus")]
-    public partial class DeviceStatus
+    [Route("devicesUnderTracking")]
+    public partial class DevicesUnderTracking
     {
-        private DeviceUnderTrackingAm[] _unavailableDevices;
+        private DeviceUnderTrackingAm[] _devices;
         private Timer _refreshTimer;
 
 
@@ -24,7 +24,7 @@ namespace IotHub.Ui.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            _unavailableDevices = await Client.GetFromJsonAsync<DeviceUnderTrackingAm[]>("api/DeviceMonitor/GetUnavailableDeviceInfo");
+            _devices = await Client.GetFromJsonAsync<DeviceUnderTrackingAm[]>("api/DeviceMonitor/GetAllDeviceInfo");
 
             _refreshTimer = new Timer(60 * 1000);
             _refreshTimer.Elapsed += Tick;
@@ -32,7 +32,7 @@ namespace IotHub.Ui.Pages
         }
         private void Tick(Object sender, ElapsedEventArgs e)
         {
-            _unavailableDevices = Client.GetFromJsonAsync<DeviceUnderTrackingAm[]>("api/DeviceMonitor/GetUnavailableDeviceInfo").Result;
+            _devices = Client.GetFromJsonAsync<DeviceUnderTrackingAm[]>("api/DeviceMonitor/GetAllDeviceInfo").Result;
 
             StateHasChanged();
         }

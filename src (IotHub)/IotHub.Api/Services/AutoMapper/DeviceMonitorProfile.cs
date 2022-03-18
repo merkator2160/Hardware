@@ -8,7 +8,7 @@ namespace IotHub.Api.Services.AutoMapper
     {
         public DeviceMonitorProfile()
         {
-            CreateMap<TrackingDeviceDto, TrackingDeviceAm>();
+            CreateMap<TrackingDeviceDto, DeviceUnderTrackingAm>();
         }
     }
 }
