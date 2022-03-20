@@ -1,14 +1,14 @@
-﻿using IotHub.Contracts.Models.Api.Other;
+﻿using IotHub.Contracts.Models.Api.DeviceMonitor;
 using IotHub.Ui.Clients.IotHubClient.Interfaces;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 
 namespace IotHub.Ui.Pages
 {
-    [Route("fetchdata")]
-    public partial class FetchData
+    [Route("devicesUnderTracking")]
+    public partial class DevicesUnderTracking
     {
-        private WeatherForecastAm[] _forecasts;
+        private DeviceUnderTrackingAm[] _devices;
 
 
         // PROPERTIES /////////////////////////////////////////////////////////////////////////////
@@ -17,9 +17,10 @@ namespace IotHub.Ui.Pages
 
 
         // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
+
         protected override async Task OnInitializedAsync()
         {
-            _forecasts = await Client.GetWeatherForecastAsync();
+            _devices = await Client.GetDevicesUnderTrackingAsync();
         }
     }
 }

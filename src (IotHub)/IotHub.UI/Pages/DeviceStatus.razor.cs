@@ -1,8 +1,7 @@
 ﻿using IotHub.Contracts.Models.Api.DeviceMonitor;
+using IotHub.Ui.Clients.IotHubClient.Interfaces;
 using Microsoft.AspNetCore.Components;
 using System;
-using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -17,22 +16,22 @@ namespace IotHub.Ui.Pages
 
         // PROPERTIES /////////////////////////////////////////////////////////////////////////////
         [Inject]
-        public HttpClient Client { get; set; }
+        public IIotHubClient Client { get; set; }
 
 
         // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
 
         protected override async Task OnInitializedAsync()
         {
-            _unavailableDevices = await Client.GetFromJsonAsync<DeviceUnderTrackingAm[]>("api/DeviceMonitor/GetUnavailableDeviceInfo");
+            _unavailableDevices = await Client.GetUnavailableDevicesAsync();
 
             _refreshTimer = new Timer(60 * 1000);
-            _refreshTimer.Elapsed += Tick;
+            _refreshTimer.Elapsed += TickAsync;
             _refreshTimer.Start();
         }
-        private void Tick(Object sender, ElapsedEventArgs e)
+        private async void TickAsync(Object sender, ElapsedEventArgs e)
         {
-            _unavailableDevices = Client.GetFromJsonAsync<DeviceUnderTrackingAm[]>("api/DeviceMonitor/GetUnavailableDeviceInfo").Result;
+            _unavailableDevices = await Client.GetUnavailableDevicesAsync();
 
             StateHasChanged();
         }
