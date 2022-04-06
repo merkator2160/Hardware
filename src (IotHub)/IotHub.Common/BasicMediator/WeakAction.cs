@@ -1,5 +1,4 @@
 ﻿using IotHub.Common.BasicMediator.Interfaces;
-using System;
 using System.Reflection;
 
 namespace IotHub.Common.BasicMediator

@@ -1,9 +1,8 @@
 ﻿using IotHub.Contracts.Models.Api.DeviceMonitor;
 using IotHub.Ui.Clients.IotHubClient.Interfaces;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Threading.Tasks;
 using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace IotHub.Ui.Pages
 {

@@ -4,10 +4,6 @@ using Hangfire.MemoryStorage;
 using IotHub.Api.Middleware.Hangfire.Jobs;
 using IotHub.Api.Services.Models.Config;
 using IotHub.Common.Hangfire.Auth;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Globalization;
 
 namespace IotHub.Api.Middleware.Hangfire
@@ -28,13 +24,13 @@ namespace IotHub.Api.Middleware.Hangfire
                     new FreeAuthorizationFilter()
                 }
             });
-            app.UseHangfireServer(new BackgroundJobServerOptions()
-            {
-                Queues = new[] { "default" }
-            });
         }
         public static void AddHangfire(this IServiceCollection services)
         {
+            services.AddHangfireServer(options =>
+            {
+                options.Queues = new[] { "default" };
+            });
             services.AddHangfire(config =>
             {
                 config.UseMemoryStorage();

@@ -1,7 +1,6 @@
 ﻿using IotHub.Contracts.Models.Api.Other;
 using IotHub.Ui.Clients.IotHubClient.Interfaces;
 using Microsoft.AspNetCore.Components;
-using System.Threading.Tasks;
 
 namespace IotHub.Ui.Pages
 {

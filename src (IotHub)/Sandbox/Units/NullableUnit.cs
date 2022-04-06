@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sandbox.Units
+﻿namespace Sandbox.Units
 {
     internal class NullableUNit
     {

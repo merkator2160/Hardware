@@ -1,8 +1,7 @@
 ﻿using Hangfire;
 using IotHub.Api.Services.Interfaces;
 using IotHub.Common.Hangfire.Interfaces;
-using NLog;
-using System;
+using ILogger = NLog.ILogger;
 
 namespace IotHub.Api.Middleware.Hangfire.Jobs
 {

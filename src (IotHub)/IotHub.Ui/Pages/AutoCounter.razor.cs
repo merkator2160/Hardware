@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System;
 using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace IotHub.Ui.Pages
 {

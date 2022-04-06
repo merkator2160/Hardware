@@ -3,9 +3,7 @@ using Hangfire;
 using IotHub.Api.Services.Models.Config;
 using IotHub.Common.Exceptions;
 using IotHub.Common.Hangfire.Interfaces;
-using Microsoft.Extensions.Configuration;
-using NLog;
-using System;
+using ILogger = NLog.ILogger;
 
 namespace IotHub.Api.Middleware.Hangfire.Jobs
 {
