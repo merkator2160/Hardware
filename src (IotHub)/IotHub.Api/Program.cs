@@ -114,7 +114,7 @@ namespace IotHub.Api
                 containerBuilder.RegisterType<DeviceMonitor>().AsSelf().AsImplementedInterfaces().SingleInstance();
 
                 containerBuilder.RegisterModule<NLogModule>();
-                containerBuilder.RegisterModule(new AutoMapperModule(assembliesToScan));
+                //containerBuilder.RegisterModule(new AutoMapperModule(assembliesToScan));
                 containerBuilder.RegisterModule(new ApiClientModule(configuration));
             });
         }
@@ -167,13 +167,13 @@ namespace IotHub.Api
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseResponseCompression();
+            app.UseGlobalExceptionHandler();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHealthChecks("/healthz", new HealthCheckOptions());
                 endpoints.MapControllers();
             });
-            app.UseResponseCompression();
-            app.UseGlobalExceptionHandler();
         }
     }
 }
