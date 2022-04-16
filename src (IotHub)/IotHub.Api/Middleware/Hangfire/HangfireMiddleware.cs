@@ -44,8 +44,8 @@ namespace IotHub.Api.Middleware.Hangfire
         {
 #if DEVELOPMENT
             //BackgroundJob.Enqueue<UpTimeJob>(p => p.Execute());
-            //BackgroundJob.Enqueue<SideRoomGreenhouseLightTurnOnJob>(p => p.Execute());
-            //BackgroundJob.Enqueue<SideRoomGreenhouseLightTurnOffJob>(p => p.Execute());
+            //BackgroundJob.Enqueue<GreenhouseLightTurnOnJob>(p => p.Execute());
+            //BackgroundJob.Enqueue<GreenhouseLightTurnOffJob>(p => p.Execute());
 
             ConfigureRecurringJobs(configuration);
 #else
@@ -63,7 +63,7 @@ namespace IotHub.Api.Middleware.Hangfire
         private static void ConfigureOneTimeJobs()
         {
             BackgroundJob.Enqueue<UpTimeJob>(p => p.Execute());
-            //BackgroundJob.Enqueue<SideRoomGreenhouseLightCelestialSchedulerJob>(p => p.Execute());
+            //BackgroundJob.Enqueue<GreenhouseLightCelestialSchedulerJob>(p => p.Execute());
         }
         private static void ConfigureRecurringJobs(IConfiguration configuration)
         {
@@ -72,19 +72,19 @@ namespace IotHub.Api.Middleware.Hangfire
                 "0 * * ? * *",
                 timeZone: TimeZoneInfo.Local);
 
-            //RecurringJob.AddOrUpdate<SideRoomGreenhouseLightCelestialSchedulerJob>(
+            //RecurringJob.AddOrUpdate<GreenhouseLightCelestialSchedulerJob>(
             //     p => p.Execute(),
             //     "0 0 0 ? * *",
             //     timeZone: TimeZoneInfo.Local);
 
             var dayDurationConfig = configuration.GetSection("DayDurationConfig").Get<DayDurationConfig>();
 
-            RecurringJob.AddOrUpdate<SideRoomGreenhouseLightTurnOnJob>(
+            RecurringJob.AddOrUpdate<GreenhouseLightTurnOnJob>(
                 p => p.Execute(),
                 $"0 0 {dayDurationConfig.DayBeginHour} ? * *",
                 timeZone: TimeZoneInfo.Local);
 
-            RecurringJob.AddOrUpdate<SideRoomGreenhouseLightTurnOffJob>(
+            RecurringJob.AddOrUpdate<GreenhouseLightTurnOffJob>(
                 p => p.Execute(),
                 $"0 0 {dayDurationConfig.DayEndHour} ? * *",
                 timeZone: TimeZoneInfo.Local);

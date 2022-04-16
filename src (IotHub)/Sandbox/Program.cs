@@ -1,5 +1,4 @@
-﻿using Sandbox.Units;
-using System;
+﻿using Sandbox.Units.Mediator;
 
 namespace Sandbox
 {
@@ -7,7 +6,7 @@ namespace Sandbox
     {
         static void Main(String[] args)
         {
-            NullableUNit.Run();
+            MediatorUnit.Run();
         }
     }
 }

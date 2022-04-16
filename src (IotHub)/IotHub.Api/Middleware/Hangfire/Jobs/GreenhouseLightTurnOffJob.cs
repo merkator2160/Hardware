@@ -5,16 +5,16 @@ using ILogger = NLog.ILogger;
 
 namespace IotHub.Api.Middleware.Hangfire.Jobs
 {
-    internal class SideRoomGreenhouseLightTurnOnJob : IJob
+    internal class GreenhouseLightTurnOffJob : IJob
     {
         private readonly ILogger _logger;
-        private readonly ISideRoomMqttLightControl _sideRoomMqttLightControl;
+        private readonly IGreenhouseMqttLightControl _greenhouseMqttLightControl;
 
 
-        public SideRoomGreenhouseLightTurnOnJob(ILogger logger, ISideRoomMqttLightControl sideRoomMqttLightControl)
+        public GreenhouseLightTurnOffJob(ILogger logger, IGreenhouseMqttLightControl greenhouseMqttLightControl)
         {
             _logger = logger;
-            _sideRoomMqttLightControl = sideRoomMqttLightControl;
+            _greenhouseMqttLightControl = greenhouseMqttLightControl;
         }
 
 
@@ -24,7 +24,8 @@ namespace IotHub.Api.Middleware.Hangfire.Jobs
         {
             try
             {
-                _sideRoomMqttLightControl.TurnOnSideRoomGreenhouseLight();
+                _greenhouseMqttLightControl.TurnOffSideRoomGreenhouseLight();
+                _greenhouseMqttLightControl.TurnOffMiddleRoomGreenhouseLight();
             }
             catch (Exception ex)
             {

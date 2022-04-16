@@ -1,13 +1,11 @@
 ﻿using IotHub.Api.Services.Models.Messages;
 using IotHub.Common.Const;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Text;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
-namespace IotHub.Api.Services
+namespace IotHub.Api.Services.Mqtt
 {
     internal partial class MosquittoClient
     {
@@ -129,7 +127,10 @@ namespace IotHub.Api.Services
                 return;
 
             if (message.Action.Equals(AquaraButtonEvents.SingleClick))
-                ToggleMonitorLed();
+            {
+                //ToggleMonitorLed();
+                ToggleMiddleRoomGreenhouseLight();
+            }
         }
     }
 }

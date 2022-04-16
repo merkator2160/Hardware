@@ -7,13 +7,13 @@ using ILogger = NLog.ILogger;
 
 namespace IotHub.Api.Middleware.Hangfire.Jobs
 {
-    internal class SideRoomGreenhouseLightCelestialSchedulerJob : IJob
+    internal class GreenhouseLightCelestialSchedulerJob : IJob
     {
         private readonly ILogger _logger;
         private readonly IConfiguration _configuration;
 
 
-        public SideRoomGreenhouseLightCelestialSchedulerJob(ILogger logger, IConfiguration configuration)
+        public GreenhouseLightCelestialSchedulerJob(ILogger logger, IConfiguration configuration)
         {
             _logger = logger;
             _configuration = configuration;
@@ -33,12 +33,12 @@ namespace IotHub.Api.Middleware.Hangfire.Jobs
                 if (!cel.SunRise.HasValue)
                     throw new ValueNotFoundException($"{nameof(cel.SunRise)} has no value!");
 
-                BackgroundJob.Schedule<SideRoomGreenhouseLightTurnOnJob>(p => p.Execute(), cel.SunRise.Value.ToLocalTime());
+                BackgroundJob.Schedule<GreenhouseLightTurnOnJob>(p => p.Execute(), cel.SunRise.Value.ToLocalTime());
 
                 if (!cel.SunSet.HasValue)
                     throw new ValueNotFoundException($"{nameof(cel.SunSet)} has no value!");
 
-                BackgroundJob.Schedule<SideRoomGreenhouseLightTurnOffJob>(p => p.Execute(), cel.SunSet.Value.ToLocalTime());
+                BackgroundJob.Schedule<GreenhouseLightTurnOffJob>(p => p.Execute(), cel.SunSet.Value.ToLocalTime());
             }
             catch (Exception ex)
             {

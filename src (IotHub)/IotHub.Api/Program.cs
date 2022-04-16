@@ -4,7 +4,7 @@ using Autofac.Extras.NLog;
 using IotHub.Api.Middleware;
 using IotHub.Api.Middleware.Cors;
 using IotHub.Api.Middleware.Hangfire;
-using IotHub.Api.Services;
+using IotHub.Api.Services.Mqtt;
 using IotHub.ApiClients.DependencyInjection;
 using IotHub.Common.DependencyInjection;
 using IotHub.Common.Exceptions;
@@ -110,11 +110,9 @@ namespace IotHub.Api
                 containerBuilder.RegisterLocalHangfireJobs();
                 containerBuilder.RegisterLocalConfiguration(configuration);
 
-                containerBuilder.RegisterType<MosquittoClient>().AsSelf().AsImplementedInterfaces().SingleInstance();
-                containerBuilder.RegisterType<DeviceMonitor>().AsSelf().AsImplementedInterfaces().SingleInstance();
-
                 containerBuilder.RegisterModule<NLogModule>();
-                //containerBuilder.RegisterModule(new AutoMapperModule(assembliesToScan));
+                containerBuilder.RegisterModule(new MosquittoClientModule(assembliesToScan));
+                containerBuilder.RegisterModule(new AutoMapperModule(assembliesToScan));
                 containerBuilder.RegisterModule(new ApiClientModule(configuration));
             });
         }

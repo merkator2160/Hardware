@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace IotHub.Common.Const
+﻿namespace IotHub.Common.Const
 {
     public static class ZigbeeDevice
     {
@@ -9,7 +7,8 @@ namespace IotHub.Common.Const
         public const String Button1 = "0x00158D00067271F0";
         public const String SideRoomGreenhouseLightButton = "0x00158D000672710E";
         public const String KitchenThermometer = "0x00124B0022CF75B3";
-        public const String SideRoomGreenhouseCircuitRelay = "0x60A423FFFED2EFAF";
+        public const String SideRoomGreenhouseLightCircuitRelay = "0x60A423FFFED2EFAF";
+        public const String MiddleRoomGreenhouseLightRelay = "0x842E14FFFE15AFF5";
         public const String LargeRoomCircuitRelayRight = "0x60A423FFFEFF8B47";
         public const String LargeRoomCircuitRelayLeft = "0x60A423FFFEF8E07B";
         public const String KitchenKaktusSensor = "0x00124B0022609BE6";

@@ -1,16 +1,14 @@
-﻿using IotHub.Api.Services.Interfaces;
+﻿using Autofac;
+using IotHub.Api.Services.Interfaces;
 using IotHub.Api.Services.Models.Config;
 using IotHub.Api.Services.Models.Exceptions;
 using IotHub.ApiClients.EasyEsp.Interfaces;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
-namespace IotHub.Api.Services
+namespace IotHub.Api.Services.Mqtt
 {
     /// <summary>
     /// MQTT documentation: https://mosquitto.org/man/mqtt-7.html
@@ -20,6 +18,7 @@ namespace IotHub.Api.Services
         private readonly ProcessorConfig _config;
         private readonly IEasyEspClient _easyEspClient;
         private readonly IDeviceMonitor _deviceMonitor;
+        private readonly ILifetimeScope _lifetimeScope;
         private readonly Dictionary<String, MqttClient.MqttMsgPublishEventHandler> _handlerDictionary;
         private readonly MqttClient _mqttClient;
         private readonly JsonSerializerSettings _serializerSettings;
@@ -29,13 +28,14 @@ namespace IotHub.Api.Services
         private Boolean _disposed;
 
 
-        public MosquittoClient(ProcessorConfig config, IEasyEspClient easyEspClient, IDeviceMonitor deviceMonitor)
+        public MosquittoClient(ProcessorConfig config, IEasyEspClient easyEspClient, IDeviceMonitor deviceMonitor, ILifetimeScope lifetimeScope)
         {
             _config = config;
             _easyEspClient = easyEspClient;
             _deviceMonitor = deviceMonitor;
-            _mqttClient = new MqttClient(config.HostName, config.Port, false, null, null, MqttSslProtocols.None);
+            _lifetimeScope = lifetimeScope;
             _handlerDictionary = CreateHandlerDictionary();
+            _mqttClient = new MqttClient(config.HostName, config.Port, false, null, null, MqttSslProtocols.None);
             _serializerSettings = new JsonSerializerSettings()
             {
                 NullValueHandling = NullValueHandling.Ignore
@@ -115,7 +115,9 @@ namespace IotHub.Api.Services
             AddDebugHandlers(handlerDictionary);
             AddMonitorLedHandlers(handlerDictionary);
             AddButtonHandlers(handlerDictionary);
+            AddMiddleRoomHandlers(handlerDictionary);
 #else
+            AddMiddleRoomHandlers(handlerDictionary);
 			AddDebugHandlers(handlerDictionary);
 			AddButtonHandlers(handlerDictionary);
 			AddSideRoomHandlers(handlerDictionary);

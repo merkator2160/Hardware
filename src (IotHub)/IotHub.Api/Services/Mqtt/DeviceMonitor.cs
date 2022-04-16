@@ -1,12 +1,9 @@
 ﻿using IotHub.Api.Services.Interfaces;
 using IotHub.Api.Services.Models;
 using IotHub.Api.Services.Models.Config;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using uPLibrary.Networking.M2Mqtt.Messages;
 
-namespace IotHub.Api.Services
+namespace IotHub.Api.Services.Mqtt
 {
     internal class DeviceMonitor : IDeviceMonitor
     {
