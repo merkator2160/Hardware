@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using IotHub.Common.BasicMediator;
 using System.Reflection;
 using uPLibrary.Networking.M2Mqtt;
 using Module = Autofac.Module;
@@ -25,7 +26,7 @@ namespace IotHub.Api.Services.Mqtt
             builder.RegisterType<DeviceMonitor>().AsSelf().AsImplementedInterfaces().SingleInstance();
 
 
-
+            builder.RegisterType<Messenger>().AsSelf().AsImplementedInterfaces().SingleInstance();
 
 
             RegisterHandlers(builder);
