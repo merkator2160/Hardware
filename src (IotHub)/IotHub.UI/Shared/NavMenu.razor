@@ -48,16 +48,3 @@
 
     </nav>
 </div>
-
-@code 
-{
-    private Boolean collapseNavMenu = true;
-    private String? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-
-    // FUNCTIONS //////////////////////////////////////////////////////////////////////////////////
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}

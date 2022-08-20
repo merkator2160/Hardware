@@ -25,47 +25,44 @@ namespace IotHub.Api.Services.Mqtt
             var jsonStr = Encoding.UTF8.GetString(eventArgs.Message);
             var message = JsonConvert.DeserializeObject<TuyaButtonPadMsg>(jsonStr);
 
+            // Single click
             if (message.Action.Equals(TuyaButtonPadEvents.Button1SingleClick))
             {
                 ToggleMonitorLed();
                 return;
             }
-
-            if (message.Action.Equals(TuyaButtonPadEvents.Button1DoubleClick))
-            {
-                return;
-            }
-
             if (message.Action.Equals(TuyaButtonPadEvents.Button2SingleClick))
             {
+                ToggleKitchenSinkLight();
                 ToggleCockroachRepeller();
                 //ToggleSideRoomGreenhouseLight();
                 return;
             }
-
-            if (message.Action.Equals(TuyaButtonPadEvents.Button2DoubleClick))
-            {
-                return;
-            }
-
             if (message.Action.Equals(TuyaButtonPadEvents.Button3SingleClick))
             {
                 IrrigationStation2StartPump(1, 1);
                 return;
             }
-
-            if (message.Action.Equals(TuyaButtonPadEvents.Button3DoubleClick))
-            {
-                IrrigationStation2StartPump(1, 10);
-                return;
-            }
-
             if (message.Action.Equals(TuyaButtonPadEvents.Button4SingleClick))
             {
                 IrrigationStation2StartPump(2, 1);
                 return;
             }
 
+            // Double click
+            if (message.Action.Equals(TuyaButtonPadEvents.Button1DoubleClick))
+            {
+                return;
+            }
+            if (message.Action.Equals(TuyaButtonPadEvents.Button2DoubleClick))
+            {
+                return;
+            }
+            if (message.Action.Equals(TuyaButtonPadEvents.Button3DoubleClick))
+            {
+                IrrigationStation2StartPump(1, 10);
+                return;
+            }
             if (message.Action.Equals(TuyaButtonPadEvents.Button4DoubleClick))
             {
                 IrrigationStation2StartPump(2, 10);

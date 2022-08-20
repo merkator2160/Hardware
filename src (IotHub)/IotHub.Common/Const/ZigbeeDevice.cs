@@ -19,5 +19,6 @@
         public const String SonoffSwitch1 = "0x00124B00226D1518";
         public const String KitchenTornadoUltrasonicCockroachRepellerSwitch = "0x00124B0022630C8A";
         public const String KitchenMotionSensor = "0x00158D00075FC1A3";
+        public const String KitchenSinkLight = "0xCC86ECFFFE9A119C";
     }
 }

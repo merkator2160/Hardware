@@ -14,6 +14,7 @@ namespace IotHub.Api.Services.Mqtt
     {
         private KalmanFilter _kalmanFilter;
         private Boolean _isCockroachRepellerEnabled;
+        private Boolean _isKitchenSinkLightEnabled;
 
 
         // TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
@@ -25,6 +26,7 @@ namespace IotHub.Api.Services.Mqtt
             handlerDictionary.Add("unit2/moisture/value", OnUnit2MoistureSensorMessageReceived);
             handlerDictionary.Add($"zigbee/{ZigbeeDevice.KitchenMotionSensor}", OnKitchenMotionSensorMessageReceived);
             handlerDictionary.Add($"zigbee/{ZigbeeDevice.KitchenTornadoUltrasonicCockroachRepellerSwitch}", OnCockroachRepellerMessageReceived);
+            handlerDictionary.Add($"zigbee/{ZigbeeDevice.KitchenSinkLight}", OnKitchenSinkLightMessageReceived);
         }
 
 
@@ -33,8 +35,6 @@ namespace IotHub.Api.Services.Mqtt
         {
             var jsonStr = Encoding.UTF8.GetString(eventArgs.Message);
             var message = JsonConvert.DeserializeObject<ModkamWaterPumpMsg>(jsonStr);
-
-
 
             // TODO: Implement water leak detection
             //Publish("domoticz/in", new DomosticzInMsg()
@@ -94,10 +94,12 @@ namespace IotHub.Api.Services.Mqtt
 
             if (message.Occupancy)
             {
+                EnableKitchenSinkLight();
                 DisableCockroachRepeller();
                 return;
             }
 
+            DisableKitchenSinkLight();
             EnableCockroachRepeller();
         }
         private void OnCockroachRepellerMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
@@ -106,6 +108,13 @@ namespace IotHub.Api.Services.Mqtt
             var message = JsonConvert.DeserializeObject<SonoffSwitchMsg>(jsonMessage);
 
             _isCockroachRepellerEnabled = message.State.Equals("ON");
+        }
+        private void OnKitchenSinkLightMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
+        {
+            var jsonMessage = Encoding.UTF8.GetString(eventArgs.Message);
+            var message = JsonConvert.DeserializeObject<TuyaRelayMsg>(jsonMessage);
+
+            _isKitchenSinkLightEnabled = message.State.Equals("ON");
         }
 
 
@@ -142,6 +151,19 @@ namespace IotHub.Api.Services.Mqtt
         private void DisableCockroachRepeller()
         {
             Publish($"zigbee/{ZigbeeDevice.KitchenTornadoUltrasonicCockroachRepellerSwitch}/set/state", "OFF");
+        }
+
+        private void ToggleKitchenSinkLight()
+        {
+            Publish($"zigbee/{ZigbeeDevice.KitchenSinkLight}/set/state", _isKitchenSinkLightEnabled ? "OFF" : "ON");
+        }
+        private void EnableKitchenSinkLight()
+        {
+            Publish($"zigbee/{ZigbeeDevice.KitchenSinkLight}/set/state", "ON");
+        }
+        private void DisableKitchenSinkLight()
+        {
+            Publish($"zigbee/{ZigbeeDevice.KitchenSinkLight}/set/state", "OFF");
         }
     }
 }
