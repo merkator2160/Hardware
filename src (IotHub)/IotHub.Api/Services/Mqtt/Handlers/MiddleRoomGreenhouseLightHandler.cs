@@ -22,7 +22,7 @@ namespace IotHub.Api.Services.Mqtt.Handlers
         // TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
         public override void RegisterHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
         {
-            handlerDictionary.Add($"zigbee/{ZigbeeDevice.MiddleRoomGreenhouseLightRelay}", OnMiddleRoomGreenhouseLightRelayMessageReceived);
+            handlerDictionary.Add($"zigbee/{ZigbeeDevice.MiddleRoom.GreenhouseLightRelay}", OnMiddleRoomGreenhouseLightRelayMessageReceived);
         }
 
 
@@ -41,15 +41,15 @@ namespace IotHub.Api.Services.Mqtt.Handlers
         // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
         public void ToggleSideRoomGreenhouseLight()
         {
-            _publisher.Publish($"zigbee/{ZigbeeDevice.MiddleRoomGreenhouseLightRelay}/set/state", _isLightEnabled ? "OFF" : "ON");
+            _publisher.Publish($"zigbee/{ZigbeeDevice.MiddleRoom.GreenhouseLightRelay}/set/state", _isLightEnabled ? "OFF" : "ON");
         }
         public void TurnOnSideRoomGreenhouseLight()
         {
-            _publisher.Publish($"zigbee/{ZigbeeDevice.MiddleRoomGreenhouseLightRelay}/set/state", "ON");
+            _publisher.Publish($"zigbee/{ZigbeeDevice.MiddleRoom.GreenhouseLightRelay}/set/state", "ON");
         }
         public void TurnOffSideRoomGreenhouseLight()
         {
-            _publisher.Publish($"zigbee/{ZigbeeDevice.MiddleRoomGreenhouseLightRelay}/set/state", "OFF");
+            _publisher.Publish($"zigbee/{ZigbeeDevice.MiddleRoom.GreenhouseLightRelay}/set/state", "OFF");
         }
     }
 }

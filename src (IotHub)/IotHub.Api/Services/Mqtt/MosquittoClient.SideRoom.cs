@@ -16,7 +16,7 @@ namespace IotHub.Api.Services.Mqtt
         // TOPIC REGISTRATION /////////////////////////////////////////////////////////////////////
         public void AddSideRoomHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
         {
-            handlerDictionary.Add($"zigbee/{ZigbeeDevice.SideRoomGreenhouseLightCircuitRelay}", OnSideRoomKaktusLightCircuitRelayMessageReceived);
+            handlerDictionary.Add($"zigbee/{ZigbeeDevice.SideRoom.GreenhouseLightCircuitRelay}", OnSideRoomKaktusLightCircuitRelayMessageReceived);
         }
 
 
@@ -34,15 +34,15 @@ namespace IotHub.Api.Services.Mqtt
         // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
         public void ToggleSideRoomGreenhouseLight()
         {
-            Publish($"zigbee/{ZigbeeDevice.SideRoomGreenhouseLightCircuitRelay}/set/state", _isKaktusLightEnabled ? "OFF" : "ON");
+            Publish($"zigbee/{ZigbeeDevice.SideRoom.GreenhouseLightCircuitRelay}/set/state", _isKaktusLightEnabled ? "OFF" : "ON");
         }
         public void TurnOnSideRoomGreenhouseLight()
         {
-            Publish($"zigbee/{ZigbeeDevice.SideRoomGreenhouseLightCircuitRelay}/set/state", "ON");
+            Publish($"zigbee/{ZigbeeDevice.SideRoom.GreenhouseLightCircuitRelay}/set/state", "ON");
         }
         public void TurnOffSideRoomGreenhouseLight()
         {
-            Publish($"zigbee/{ZigbeeDevice.SideRoomGreenhouseLightCircuitRelay}/set/state", "OFF");
+            Publish($"zigbee/{ZigbeeDevice.SideRoom.GreenhouseLightCircuitRelay}/set/state", "OFF");
         }
     }
 }

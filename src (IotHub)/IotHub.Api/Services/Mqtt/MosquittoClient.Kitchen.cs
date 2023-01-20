@@ -21,12 +21,12 @@ namespace IotHub.Api.Services.Mqtt
         public void AddKitchenHandlers(Dictionary<String, MqttClient.MqttMsgPublishEventHandler> handlerDictionary)
         {
             handlerDictionary.Add($"zigbee/{ZigbeeDevice.IrrigationStation}", OnWaterPumpMessageReceived);
-            handlerDictionary.Add($"zigbee/{ZigbeeDevice.KitchenKratonSensor}", OnKitchenKratonSensorMessageReceived);
-            handlerDictionary.Add($"zigbee/{ZigbeeDevice.KitchenKaktusSensor}", OnKitchenKaktusSensorMessage);
+            handlerDictionary.Add($"zigbee/{ZigbeeDevice.Kitchen.KratonSensor}", OnKitchenKratonSensorMessageReceived);
+            handlerDictionary.Add($"zigbee/{ZigbeeDevice.Kitchen.KaktusSensor}", OnKitchenKaktusSensorMessage);
             handlerDictionary.Add("unit2/moisture/value", OnUnit2MoistureSensorMessageReceived);
-            handlerDictionary.Add($"zigbee/{ZigbeeDevice.KitchenMotionSensor}", OnKitchenMotionSensorMessageReceived);
-            handlerDictionary.Add($"zigbee/{ZigbeeDevice.KitchenTornadoUltrasonicCockroachRepellerSwitch}", OnCockroachRepellerMessageReceived);
-            handlerDictionary.Add($"zigbee/{ZigbeeDevice.KitchenSinkLight}", OnKitchenSinkLightMessageReceived);
+            handlerDictionary.Add($"zigbee/{ZigbeeDevice.Kitchen.MotionSensor}", OnKitchenMotionSensorMessageReceived);
+            handlerDictionary.Add($"zigbee/{ZigbeeDevice.Kitchen.TornadoUltrasonicCockroachRepellerSwitch}", OnCockroachRepellerMessageReceived);
+            handlerDictionary.Add($"zigbee/{ZigbeeDevice.Kitchen.SinkLight}", OnKitchenSinkLightMessageReceived);
         }
 
 
@@ -39,7 +39,7 @@ namespace IotHub.Api.Services.Mqtt
             // TODO: Implement water leak detection
             //Publish("domoticz/in", new DomosticzInMsg()
             //{
-            //	DeviceId = DomosticzDevice.LargeRoomThermometer,
+            //	DeviceId = DomosticzDevice.Thermometer,
             //	Rssi = message.LinkQuality,
             //	Battery = message.BatteryPercentage,
             //	StringValue = $"{message.Temperature};{message.Humidity};{(Byte)DomosticzEnvironmentLevel.Normal};{message.Pressure};{(Byte)DomosticzBarometerPrediction.NoPrediction}"
@@ -142,28 +142,28 @@ namespace IotHub.Api.Services.Mqtt
 
         private void ToggleCockroachRepeller()
         {
-            Publish($"zigbee/{ZigbeeDevice.KitchenTornadoUltrasonicCockroachRepellerSwitch}/set/state", _isCockroachRepellerEnabled ? "OFF" : "ON");
+            Publish($"zigbee/{ZigbeeDevice.Kitchen.TornadoUltrasonicCockroachRepellerSwitch}/set/state", _isCockroachRepellerEnabled ? "OFF" : "ON");
         }
         private void EnableCockroachRepeller()
         {
-            Publish($"zigbee/{ZigbeeDevice.KitchenTornadoUltrasonicCockroachRepellerSwitch}/set/state", "ON");
+            Publish($"zigbee/{ZigbeeDevice.Kitchen.TornadoUltrasonicCockroachRepellerSwitch}/set/state", "ON");
         }
         private void DisableCockroachRepeller()
         {
-            Publish($"zigbee/{ZigbeeDevice.KitchenTornadoUltrasonicCockroachRepellerSwitch}/set/state", "OFF");
+            Publish($"zigbee/{ZigbeeDevice.Kitchen.TornadoUltrasonicCockroachRepellerSwitch}/set/state", "OFF");
         }
 
         private void ToggleKitchenSinkLight()
         {
-            Publish($"zigbee/{ZigbeeDevice.KitchenSinkLight}/set/state", _isKitchenSinkLightEnabled ? "OFF" : "ON");
+            Publish($"zigbee/{ZigbeeDevice.Kitchen.SinkLight}/set/state", _isKitchenSinkLightEnabled ? "OFF" : "ON");
         }
         private void EnableKitchenSinkLight()
         {
-            Publish($"zigbee/{ZigbeeDevice.KitchenSinkLight}/set/state", "ON");
+            Publish($"zigbee/{ZigbeeDevice.Kitchen.SinkLight}/set/state", "ON");
         }
         private void DisableKitchenSinkLight()
         {
-            Publish($"zigbee/{ZigbeeDevice.KitchenSinkLight}/set/state", "OFF");
+            Publish($"zigbee/{ZigbeeDevice.Kitchen.SinkLight}/set/state", "OFF");
         }
     }
 }

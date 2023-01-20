@@ -14,7 +14,7 @@ namespace IotHub.Api.Services.Mqtt
         {
             handlerDictionary.Add($"zigbee/{ZigbeeDevice.TuyaButtonPad4}", OnTuyaButtonPad4MessageReceived);
             handlerDictionary.Add($"zigbee/{ZigbeeDevice.ModkamButtonPad12}", OnButtonPad12MessageReceived);
-            handlerDictionary.Add($"zigbee/{ZigbeeDevice.SideRoomGreenhouseLightButton}", OnSideRoomKaktusLightButtonMessageReceived);
+            handlerDictionary.Add($"zigbee/{ZigbeeDevice.SideRoom.GreenhouseLightButton}", OnSideRoomGreenhouseLightButtonMessageReceived);
             handlerDictionary.Add($"zigbee/{ZigbeeDevice.Button1}", OnButton1MessageReceived);
         }
 
@@ -104,7 +104,7 @@ namespace IotHub.Api.Services.Mqtt
                 return;
             }
         }
-        private void OnSideRoomKaktusLightButtonMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
+        private void OnSideRoomGreenhouseLightButtonMessageReceived(Object sender, MqttMsgPublishEventArgs eventArgs)
         {
             var jsonMessage = Encoding.UTF8.GetString(eventArgs.Message);
             var message = JsonConvert.DeserializeObject<AquaraButtonMsg>(jsonMessage);

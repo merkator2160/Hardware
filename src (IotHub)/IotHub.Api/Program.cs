@@ -6,6 +6,7 @@ using IotHub.Api.Middleware.Cors;
 using IotHub.Api.Middleware.Hangfire;
 using IotHub.Api.Services.Mqtt;
 using IotHub.ApiClients.DependencyInjection;
+using IotHub.Common.Config;
 using IotHub.Common.DependencyInjection;
 using IotHub.Common.Exceptions;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -31,7 +32,7 @@ namespace IotHub.Api
 #if DEBUG
                 //WaitForDebugger();
 #endif
-                RunEnvironmentPrecheck();
+                CheckEnvironment();
                 RunApplication(args);
             }
             catch (Exception ex)
@@ -48,22 +49,7 @@ namespace IotHub.Api
                 LogManager.Shutdown();
             }
         }
-        static void WaitForDebugger()
-        {
-            Console.WriteLine("Waiting for debugger to attach");
-            while (!Debugger.IsAttached)
-            {
-                Thread.Sleep(100);
-            }
-            Console.WriteLine("Debugger attached");
-        }
-        private static void RunEnvironmentPrecheck()
-        {
-            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            if (String.IsNullOrWhiteSpace(environment))
-                throw new EnvironmentVariableNotFoundException($"Unable to start! Environment variable with name \"ASPNETCORE_ENVIRONMENT\" was not found. " +
-                                                               $"Possible values: \"{Environments.Development}\", \"{Environments.Production}\"");
-        }
+        
         private static void RunApplication(String[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -172,6 +158,22 @@ namespace IotHub.Api
                 endpoints.MapHealthChecks("/healthz", new HealthCheckOptions());
                 endpoints.MapControllers();
             });
+        }
+        protected static void CheckEnvironment()
+        {
+            var environment = Environment.GetEnvironmentVariable(CustomConfigurationProvider.DefaultEnvironmentVariableName);
+            if (String.IsNullOrWhiteSpace(environment))
+                throw new EnvironmentVariableNotFoundException($"Unable to start! Environment variable with name \"{CustomConfigurationProvider.DefaultEnvironmentVariableName}\" was not found. " +
+                                                               $"Possible values: \"{Environments.Development}\", \"{Environments.Staging}\", \"{Environments.Production}\"");
+        }
+        static void WaitForDebugger()
+        {
+            Console.WriteLine("Waiting for debugger to attach");
+            while (!Debugger.IsAttached)
+            {
+                Thread.Sleep(100);
+            }
+            Console.WriteLine("Debugger attached");
         }
     }
 }
