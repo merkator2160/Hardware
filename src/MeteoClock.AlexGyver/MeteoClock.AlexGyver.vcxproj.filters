@@ -15,7 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="MeteoClock.AlexGyver.ino" />
     <None Include="src\arduino folders read me.txt">
       <Filter>Misc Files</Filter>
     </None>
@@ -26,8 +25,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="symbols.ino">
+    <ClCompile Include="symbols.ino">
       <Filter>Source Files</Filter>
-    </Library>
+    </ClCompile>
+    <ClCompile Include="MeteoClock.AlexGyver.ino" />
   </ItemGroup>
 </Project>

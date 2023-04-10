@@ -15,15 +15,17 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="MeteoClock.Norovl.ino" />
     <None Include="src\arduino folders read me.txt">
       <Filter>Misc Files</Filter>
     </None>
-    <None Include="..\..\..\..\Arduino\Projects\MeteoClock (Norovl)\firmware\meteoClock_v1.5c24\functions.ino" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.MeteoClock.Norovl.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\Arduino\Projects\MeteoClock (Norovl)\firmware\meteoClock_v1.5c24\functions.ino" />
+    <ClCompile Include="MeteoClock.Norovl.ino" />
   </ItemGroup>
 </Project>

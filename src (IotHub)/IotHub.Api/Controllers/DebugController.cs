@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using IotHub.ApiClients.EasyEsp.Interfaces;
-using IotHub.Common.Config;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -10,6 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using IotHub.Contracts.Models.Api.Other;
+using IotHub.Common.DependencyInjection;
 
 namespace IotHub.Api.Controllers
 {

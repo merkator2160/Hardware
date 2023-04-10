@@ -6,7 +6,6 @@ using IotHub.Api.Middleware.Cors;
 using IotHub.Api.Middleware.Hangfire;
 using IotHub.Api.Services.Mqtt;
 using IotHub.ApiClients.DependencyInjection;
-using IotHub.Common.Config;
 using IotHub.Common.DependencyInjection;
 using IotHub.Common.Exceptions;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -166,7 +165,7 @@ namespace IotHub.Api
                 throw new EnvironmentVariableNotFoundException($"Unable to start! Environment variable with name \"{CustomConfigurationProvider.DefaultEnvironmentVariableName}\" was not found. " +
                                                                $"Possible values: \"{Environments.Development}\", \"{Environments.Staging}\", \"{Environments.Production}\"");
         }
-        static void WaitForDebugger()
+        private static void WaitForDebugger()
         {
             Console.WriteLine("Waiting for debugger to attach");
             while (!Debugger.IsAttached)

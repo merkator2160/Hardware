@@ -246,5 +246,7 @@ ModelManifest.xml
 .fake/
 
 
+Logs/
+**/appsettings.json
 **/appsettings.Development.json
 **/appsettings.Production.json
