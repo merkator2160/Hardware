@@ -1,8 +1,8 @@
-﻿using IotHub.Api.Services.Models.Exceptions;
+﻿using Common.Contracts.Const;
+using Common.Extensions;
+using Common.Filters;
+using IotHub.Api.Services.Models.Exceptions;
 using IotHub.Api.Services.Models.Messages;
-using IotHub.Common.Const;
-using IotHub.Common.Extensions;
-using IotHub.Common.Filters;
 using Newtonsoft.Json;
 using System.Text;
 using uPLibrary.Networking.M2Mqtt;

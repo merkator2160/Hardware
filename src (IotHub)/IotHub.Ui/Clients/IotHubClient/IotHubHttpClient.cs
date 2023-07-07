@@ -1,9 +1,9 @@
-﻿using IotHub.Contracts.Models.Api.DeviceMonitor;
-using IotHub.Contracts.Models.Api.Other;
+﻿using Common.Contracts.Api.DeviceMonitor;
+using Common.Contracts.Api.Other;
 using IotHub.Ui.Clients.IotHubClient.Interfaces;
 using System.Net.Http.Json;
 
-namespace IotHub.UI.Clients.IotHubClient
+namespace IotHub.Ui.Clients.IotHubClient
 {
     public class IotHubHttpClient : HttpClient, IIotHubClient
     {

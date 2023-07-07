@@ -1,8 +1,7 @@
-﻿using Autofac;
+﻿using ApiClients.Http.EasyEsp;
 using IotHub.Api.Services.Interfaces;
 using IotHub.Api.Services.Models.Config;
 using IotHub.Api.Services.Models.Exceptions;
-using IotHub.ApiClients.EasyEsp.Interfaces;
 using Newtonsoft.Json;
 using System.Text;
 using uPLibrary.Networking.M2Mqtt;
@@ -16,9 +15,8 @@ namespace IotHub.Api.Services.Mqtt
     internal partial class MosquittoClient : IMosquittoClient, IMqttPublisher, IDisposable
     {
         private readonly ProcessorConfig _config;
-        private readonly IEasyEspClient _easyEspClient;
+        private readonly EasyEspClient _easyEspClient;
         private readonly IDeviceMonitor _deviceMonitor;
-        private readonly ILifetimeScope _lifetimeScope;
         private readonly Dictionary<String, MqttClient.MqttMsgPublishEventHandler> _handlerDictionary;
         private readonly MqttClient _mqttClient;
         private readonly JsonSerializerSettings _serializerSettings;
@@ -28,12 +26,11 @@ namespace IotHub.Api.Services.Mqtt
         private Boolean _disposed;
 
 
-        public MosquittoClient(ProcessorConfig config, IEasyEspClient easyEspClient, IDeviceMonitor deviceMonitor, ILifetimeScope lifetimeScope)
+        public MosquittoClient(ProcessorConfig config, EasyEspClient easyEspClient, IDeviceMonitor deviceMonitor)
         {
             _config = config;
             _easyEspClient = easyEspClient;
             _deviceMonitor = deviceMonitor;
-            _lifetimeScope = lifetimeScope;
             _handlerDictionary = CreateHandlerDictionary();
             _mqttClient = new MqttClient(config.HostName, config.Port, false, null, null, MqttSslProtocols.None);
             _serializerSettings = new JsonSerializerSettings()

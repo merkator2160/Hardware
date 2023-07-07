@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Common.Contracts.Api.Celestial;
 using IotHub.Api.Services.Models.Config;
-using IotHub.Contracts.Models.Api.Celestial;
 
 namespace IotHub.Api.Services.AutoMapper
 {

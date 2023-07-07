@@ -1,4 +1,4 @@
-﻿using IotHub.Common.Const.IrController;
+﻿using Common.Contracts.Const.IrController;
 using System.Text;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;

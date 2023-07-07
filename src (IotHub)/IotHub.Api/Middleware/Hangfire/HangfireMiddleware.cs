@@ -1,9 +1,9 @@
 ﻿using Autofac;
 using Hangfire;
+using Hangfire.Auth;
 using Hangfire.MemoryStorage;
 using IotHub.Api.Middleware.Hangfire.Jobs;
 using IotHub.Api.Services.Models.Config;
-using IotHub.Common.Hangfire.Auth;
 using System.Globalization;
 
 namespace IotHub.Api.Middleware.Hangfire

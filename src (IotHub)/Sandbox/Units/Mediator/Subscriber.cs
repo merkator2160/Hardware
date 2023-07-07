@@ -1,4 +1,4 @@
-﻿using IotHub.Common.BasicMediator.Interfaces;
+﻿using Mediator.Interfaces;
 
 namespace Sandbox.Units.Mediator
 {

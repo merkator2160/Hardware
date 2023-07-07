@@ -1,4 +1,4 @@
-﻿using IotHub.Contracts.Models.Api.Other;
+﻿using Common.Contracts.Api.Other;
 using IotHub.Ui.Clients.IotHubClient.Interfaces;
 using Microsoft.AspNetCore.Components;
 

@@ -1,6 +1,6 @@
 ﻿using Autofac;
-using IotHub.Common.BasicMediator;
-using IotHub.Common.BasicMediator.Interfaces;
+using Mediator;
+using Mediator.Interfaces;
 
 namespace Sandbox.Units.Mediator
 {

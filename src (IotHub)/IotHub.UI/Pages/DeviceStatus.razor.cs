@@ -1,4 +1,4 @@
-﻿using IotHub.Contracts.Models.Api.DeviceMonitor;
+﻿using Common.Contracts.Api.DeviceMonitor;
 using IotHub.Ui.Clients.IotHubClient.Interfaces;
 using Microsoft.AspNetCore.Components;
 using System.Timers;

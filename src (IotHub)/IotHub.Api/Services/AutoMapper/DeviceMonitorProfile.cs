@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Common.Contracts.Api.DeviceMonitor;
 using IotHub.Api.Services.Models;
-using IotHub.Contracts.Models.Api.DeviceMonitor;
 
 namespace IotHub.Api.Services.AutoMapper
 {

@@ -1,4 +1,4 @@
-﻿using IotHub.Common.Const;
+﻿using Common.Contracts.Const;
 using Microsoft.AspNetCore.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;

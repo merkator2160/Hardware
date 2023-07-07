@@ -1,15 +1,8 @@
-﻿using AutoMapper;
-using IotHub.ApiClients.EasyEsp.Interfaces;
-using Microsoft.AspNetCore.Hosting;
+﻿using ApiClients.Http.EasyEsp;
+using AutoMapper;
+using Common.Contracts.Api.Other;
+using Common.DependencyInjection;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using IotHub.Contracts.Models.Api.Other;
-using IotHub.Common.DependencyInjection;
 
 namespace IotHub.Api.Controllers
 {
@@ -23,14 +16,14 @@ namespace IotHub.Api.Controllers
         private readonly IWebHostEnvironment _env;
         private readonly ILogger<DebugController> _logger;
         private readonly IMapper _mapper;
-        private readonly IEasyEspClient _easyEspClient;
+        private readonly EasyEspClient _easyEspClient;
 
 
         public DebugController(
             IWebHostEnvironment env,
             ILogger<DebugController> logger,
             IMapper mapper,
-            IEasyEspClient easyEspClient)
+            EasyEspClient easyEspClient)
         {
             _env = env;
             _logger = logger;

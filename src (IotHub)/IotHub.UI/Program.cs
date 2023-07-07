@@ -1,10 +1,9 @@
-using IotHub.Ui;
+using IotHub.Ui.Clients.IotHubClient;
 using IotHub.Ui.Clients.IotHubClient.Interfaces;
-using IotHub.UI.Clients.IotHubClient;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
-namespace IotHub.UI
+namespace IotHub.Ui
 {
     internal class Program
     {

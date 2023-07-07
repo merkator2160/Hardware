@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using Common.Contracts.Api.Celestial;
+using Common.Contracts.Exceptions.Application;
 using CoordinateSharp;
 using IotHub.Api.Services.Models.Config;
-using IotHub.Common.Exceptions;
-using IotHub.Contracts.Models.Api.Celestial;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IotHub.Api.Controllers

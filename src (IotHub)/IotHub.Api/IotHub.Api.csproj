@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-	  <Version>1.0.0.79</Version>
+	  <Version>1.0.0.89</Version>
 	  <UserSecretsId>8c64e4d2-bad9-4d44-a6c2-c37ebca8e6c5</UserSecretsId>
 	  <Configurations>Debug;Release;Development</Configurations>
     <Nullable>disable</Nullable>
@@ -26,11 +26,13 @@
 
 	<ItemGroup>
 		<PackageReference Include="M2MqttDotnetCore" Version="1.1.0" />
-		<PackageReference Include="CoordinateSharp" Version="2.13.1.1" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-		<PackageReference Include="HangFire.Autofac" Version="2.3.1" />
-		<PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.8" />
+		<PackageReference Include="CoordinateSharp" Version="2.18.1.1" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.5.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.19" />
+		<PackageReference Include="Grpc.AspNetCore.Web" Version="2.55.0" />
+		<PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.1.1" />
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
 		<PackageReference Include="MSBump" Version="2.3.2">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -38,9 +40,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\IotHub.ApiClients\IotHub.ApiClients.csproj" />
-		<ProjectReference Include="..\IotHub.Common\IotHub.Common.csproj" />
-		<ProjectReference Include="..\IotHub.Contracts\IotHub.Contracts.csproj" />
+		<ProjectReference Include="..\ApiClients.Http\ApiClients.Http.csproj" />
+		<ProjectReference Include="..\Common\Common.csproj" />
+		<ProjectReference Include="..\Hangfire\Hangfire.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

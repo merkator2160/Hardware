@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Hangfire.Mongo" Version="1.9.6" />
+		<PackageReference Include="Hangfire.AspNetCore" Version="1.8.3" />
+		<PackageReference Include="HangFire.Autofac" Version="2.4.1" />
+		<PackageReference Include="Hangfire.MemoryStorage" Version="1.8.0" />
+		<PackageReference Include="NETStandard.Library" Version="2.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Models\" />
+	</ItemGroup>
+
+
+</Project>

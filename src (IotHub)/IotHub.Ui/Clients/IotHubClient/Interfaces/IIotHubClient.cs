@@ -1,6 +1,5 @@
-﻿using IotHub.Contracts.Models.Api.DeviceMonitor;
-using IotHub.Contracts.Models.Api.Other;
-using System.Threading.Tasks;
+﻿using Common.Contracts.Api.DeviceMonitor;
+using Common.Contracts.Api.Other;
 
 namespace IotHub.Ui.Clients.IotHubClient.Interfaces
 {

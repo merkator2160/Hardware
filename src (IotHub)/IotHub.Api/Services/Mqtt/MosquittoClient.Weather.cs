@@ -1,5 +1,5 @@
-﻿using IotHub.Common.Const;
-using IotHub.Common.Exceptions;
+﻿using Common.Contracts.Const;
+using Common.Contracts.Exceptions.Application;
 using System.Globalization;
 using System.Text;
 using uPLibrary.Networking.M2Mqtt;

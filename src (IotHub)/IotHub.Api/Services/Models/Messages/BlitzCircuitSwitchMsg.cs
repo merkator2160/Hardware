@@ -1,10 +1,9 @@
-﻿using IotHub.Common.Converters;
+﻿using Common.Converters;
 using Newtonsoft.Json;
-using System;
 
 namespace IotHub.Api.Services.Models.Messages
 {
-	internal class BlitzCircuitSwitchMsg
+    internal class BlitzCircuitSwitchMsg
 	{
 		[JsonProperty("friendly_name")]
 		public String FriendlyName { get; set; }

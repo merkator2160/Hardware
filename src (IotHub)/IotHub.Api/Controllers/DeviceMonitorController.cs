@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
+using Common.Contracts.Api.DeviceMonitor;
 using IotHub.Api.Services.Interfaces;
-using IotHub.Contracts.Models.Api.DeviceMonitor;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace IotHub.Api.Controllers
 {

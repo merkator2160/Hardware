@@ -1,10 +1,9 @@
-﻿using IotHub.Common.Converters;
+﻿using Common.Converters;
 using Newtonsoft.Json;
-using System;
 
 namespace IotHub.Api.Services.Models.Messages
 {
-	internal class SonoffThermometerMsg
+    internal class SonoffThermometerMsg
 	{
 		[JsonProperty("friendly_name")]
 		public String FriendlyName { get; set; }

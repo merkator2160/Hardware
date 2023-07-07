@@ -1,4 +1,4 @@
-﻿using IotHub.Common.Converters;
+﻿using Common.Converters;
 using Newtonsoft.Json;
 
 namespace IotHub.Api.Services.Models.Messages

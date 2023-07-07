@@ -1,23 +1,20 @@
+using ApiClients.Http.DependencyInjection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Autofac.Extras.NLog;
+using Common.Contracts.Exceptions.Application;
+using Common.DependencyInjection;
+using Common.DependencyInjection.Modules;
 using IotHub.Api.Middleware;
 using IotHub.Api.Middleware.Cors;
 using IotHub.Api.Middleware.Hangfire;
 using IotHub.Api.Services.Mqtt;
-using IotHub.ApiClients.DependencyInjection;
-using IotHub.Common.DependencyInjection;
-using IotHub.Common.Exceptions;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Newtonsoft.Json.Serialization;
-using NLog;
-using NLog.Web;
 using System.Diagnostics;
 using System.Reflection;
 using uPLibrary.Networking.M2Mqtt.Messages;
-using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace IotHub.Api
 {
@@ -25,39 +22,20 @@ namespace IotHub.Api
     {
         private static void Main(String[] args)
         {
-            var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
-            try
-            {
 #if DEBUG
                 //WaitForDebugger();
 #endif
-                CheckEnvironment();
-                RunApplication(args);
-            }
-            catch (Exception ex)
-            {
-                var message = $"{ex.Message}\r\n{ex.StackTrace}";
-
-                logger.Error(ex, message);
-                Console.Error.WriteLine(message);
-
-                throw;
-            }
-            finally
-            {
-                LogManager.Shutdown();
-            }
+            CheckEnvironment();
+            RunApplication(args);
         }
         
         private static void RunApplication(String[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            ConfigureLogging(builder.Logging, builder.Configuration);
             ConfigureServices(builder.Services, builder.Configuration);
             builder.Host.UseServiceProviderFactory(ConfigureContainer(builder.Configuration));
-            builder.Host.UseNLog();
-
+            
             using (var app = builder.Build())
             {
                 ConfigureWebApplication(app, builder.Configuration);
@@ -95,22 +73,10 @@ namespace IotHub.Api
                 containerBuilder.RegisterLocalHangfireJobs();
                 containerBuilder.RegisterLocalConfiguration(configuration);
 
-                containerBuilder.RegisterModule<NLogModule>();
                 containerBuilder.RegisterModule(new MosquittoClientModule(assembliesToScan));
                 containerBuilder.RegisterModule(new AutoMapperModule(assembliesToScan));
-                containerBuilder.RegisterModule(new ApiClientModule(configuration));
+                containerBuilder.RegisterModule(new HttpClientModule(configuration));
             });
-        }
-        private static void ConfigureLogging(ILoggingBuilder logging, IConfiguration configuration)
-        {
-            // https://stackoverflow.com/questions/8850160/nlog-doent-work-on-iis
-            // Edit website permissions in IIS and under security tab give IIS_IUSRS group full privileges.
-            // In Application, Pools find the pool your application is using and set some specific user.
-
-            logging.ClearProviders();
-            logging.SetMinimumLevel(LogLevel.Trace);
-            logging.AddConfiguration(configuration.GetSection("Logging"));
-            logging.AddDebug();
         }
         private static void ConfigureWebApplication(WebApplication app, IConfiguration configuration)
         {

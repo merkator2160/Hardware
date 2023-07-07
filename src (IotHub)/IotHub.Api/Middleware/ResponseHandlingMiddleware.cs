@@ -1,4 +1,4 @@
-﻿using IotHub.Common.Const;
+﻿using Common.Contracts.Const;
 using Microsoft.AspNetCore.ResponseCompression;
 
 namespace IotHub.Api.Middleware

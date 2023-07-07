@@ -1,6 +1,6 @@
-﻿using IotHub.Api.Services.Interfaces;
+﻿using Common.Contracts.Const;
+using IotHub.Api.Services.Interfaces;
 using IotHub.Api.Services.Models.Messages;
-using IotHub.Common.Const;
 using Newtonsoft.Json;
 using System.Text;
 using uPLibrary.Networking.M2Mqtt;

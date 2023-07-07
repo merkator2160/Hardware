@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IotHub.Api\IotHub.Api.csproj" />
+    <ProjectReference Include="..\Mediator\Mediator.csproj" />
   </ItemGroup>
 
 </Project>
