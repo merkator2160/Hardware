@@ -16,14 +16,14 @@ namespace IotHub.Api.Controllers
         private readonly IWebHostEnvironment _env;
         private readonly ILogger<DebugController> _logger;
         private readonly IMapper _mapper;
-        private readonly EasyEspClient _easyEspClient;
+        private readonly EasyEspHttpClient _easyEspClient;
 
 
         public DebugController(
             IWebHostEnvironment env,
             ILogger<DebugController> logger,
             IMapper mapper,
-            EasyEspClient easyEspClient)
+            EasyEspHttpClient easyEspClient)
         {
             _env = env;
             _logger = logger;

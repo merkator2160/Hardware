@@ -4,18 +4,18 @@ using Common.Http;
 
 namespace ApiClients.Http.EasyEsp
 {
-    public class EasyEspClient : TypedHttpClient
+    public class EasyEspHttpClient : TypedHttpClient
 	{
 		private readonly EasyEspConfig _easyEspConfig;
 
 
-		public EasyEspClient(EasyEspConfig easyEspConfig)
+		public EasyEspHttpClient(EasyEspConfig easyEspConfig)
 		{
 			_easyEspConfig = easyEspConfig;
 		}
 
 
-		// IEasyEspClient /////////////////////////////////////////////////////////////////////////
+		// IEasyEspHttpClient /////////////////////////////////////////////////////////////////////////
 		public async Task<String> Unit2PlaySoundAsync(String rtttl)
 		{
 			return await PlaySoundAsync(_easyEspConfig.Unit2Uri, 14, rtttl);

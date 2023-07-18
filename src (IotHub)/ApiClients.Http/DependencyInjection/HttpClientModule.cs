@@ -1,4 +1,5 @@
 ﻿using ApiClients.Http.EasyEsp;
+using ApiClients.Http.YandexCloud;
 using Autofac;
 using Common.DependencyInjection;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +23,9 @@ namespace ApiClients.Http.DependencyInjection
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterConfiguration(_configuration, Assembly.GetExecutingAssembly());
-            builder.RegisterType<EasyEspClient>().AsSelf().AsImplementedInterfaces();
+
+            builder.RegisterType<EasyEspHttpClient>().AsSelf().AsImplementedInterfaces();
+            builder.RegisterType<YandexCloudHttpClient>().AsSelf().AsImplementedInterfaces();
         }
     }
 }

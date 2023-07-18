@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{D719DFD5-7D5F-49EF-90C7-5C9BA3F20A36}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpeechSynthesizer", "SpeechSynthesizer\SpeechSynthesizer.csproj", "{B8C732E7-457D-40E7-91BF-F2C04EB2809E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,12 @@ Global
 		{D719DFD5-7D5F-49EF-90C7-5C9BA3F20A36}.Development|Any CPU.Build.0 = Debug|Any CPU
 		{D719DFD5-7D5F-49EF-90C7-5C9BA3F20A36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D719DFD5-7D5F-49EF-90C7-5C9BA3F20A36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8C732E7-457D-40E7-91BF-F2C04EB2809E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8C732E7-457D-40E7-91BF-F2C04EB2809E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8C732E7-457D-40E7-91BF-F2C04EB2809E}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8C732E7-457D-40E7-91BF-F2C04EB2809E}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{B8C732E7-457D-40E7-91BF-F2C04EB2809E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8C732E7-457D-40E7-91BF-F2C04EB2809E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +125,7 @@ Global
 		{9AF73B91-F54D-42B6-B80B-4A332832754E} = {FC41AAF8-7653-410A-B434-FFDC926A83D1}
 		{CDD421C3-A834-4645-8AE8-2315C8E80578} = {FC41AAF8-7653-410A-B434-FFDC926A83D1}
 		{D719DFD5-7D5F-49EF-90C7-5C9BA3F20A36} = {F9890223-2104-415D-9493-F91BEDC92196}
+		{B8C732E7-457D-40E7-91BF-F2C04EB2809E} = {2DB13D6D-275B-41D5-AF2E-F33E0FFC3FA8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64BE1944-C72E-4AD9-B20C-E8CF8842ED32}

@@ -15,7 +15,7 @@ namespace IotHub.Api.Services.Mqtt
     internal partial class MosquittoClient : IMosquittoClient, IMqttPublisher, IDisposable
     {
         private readonly ProcessorConfig _config;
-        private readonly EasyEspClient _easyEspClient;
+        private readonly EasyEspHttpClient _easyEspClient;
         private readonly IDeviceMonitor _deviceMonitor;
         private readonly Dictionary<String, MqttClient.MqttMsgPublishEventHandler> _handlerDictionary;
         private readonly MqttClient _mqttClient;
@@ -26,7 +26,7 @@ namespace IotHub.Api.Services.Mqtt
         private Boolean _disposed;
 
 
-        public MosquittoClient(ProcessorConfig config, EasyEspClient easyEspClient, IDeviceMonitor deviceMonitor)
+        public MosquittoClient(ProcessorConfig config, EasyEspHttpClient easyEspClient, IDeviceMonitor deviceMonitor)
         {
             _config = config;
             _easyEspClient = easyEspClient;
