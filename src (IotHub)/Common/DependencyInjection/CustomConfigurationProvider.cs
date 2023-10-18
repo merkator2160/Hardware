@@ -8,6 +8,15 @@ namespace Common.DependencyInjection
 
 
         // FUNCTIONS //////////////////////////////////////////////////////////////////////////////
+        public static IConfigurationRoot CollectConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+                .AddEnvironmentVariables()
+                .SetBasePath(Environment.CurrentDirectory)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false);
+
+            return builder.Build();
+        }
         public static IConfigurationRoot CollectEnvironmentRelatedConfiguration()
         {
             return CollectEnvironmentRelatedConfiguration(DefaultEnvironmentVariableName);

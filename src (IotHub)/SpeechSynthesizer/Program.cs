@@ -2,36 +2,43 @@
 using ApiClients.Http.YandexCloud;
 using ApiClients.Http.YandexCloud.Models.Config;
 using ApiClients.Http.YandexCloud.Models.Const;
+using ApiClients.Http.YandexCloud.Models.Exceptions;
 using ApiClients.Http.YandexCloud.Models.Request;
 using Autofac;
 using Common.DependencyInjection;
 using Common.DependencyInjection.Modules;
 using Common.Helpers;
+using System.Diagnostics;
 
 namespace SpeechSynthesizer
 {
     internal class Program
     {
         private const String _iamConfigFileName = "IamConfig.json";
+        private const String _textFileName = "Text.txt";
+        private const String _resultFileName = "Result.mp3";
 
 
         static void Main(String[] args)
         {
             using (var container = CreateContainer())
             {
-                var iamToken = GetIamToken(container);
-                var client = container.Resolve<YandexCloudHttpClient>();
+                if (!TryGetText(out var text))
+                    return;
 
-                //var cloudDirectories = client.GetFoldersAsync(iamToken).Result;
+                if(!TryCreateSpeech(container, text, out var fileBytes))
+                    return;
 
-                var text = File.ReadAllText(Path.Combine(FileHelper.DesktopDirectory, "Text.txt"));
-                var fileBytes = client.SynthesizeSpeechAsync(iamToken, new SynthesizeSpeechRequest()
+                var resultFilePath = Path.Combine(FileHelper.DesktopDirectory, _resultFileName);
+
+                fileBytes.SaveOnDisk(resultFilePath);
+                new Process
                 {
-                    Text = text,
-                    Format = OutputFileFormat.Mp3,
-                    Voice = Voice.Ru.Zahar
-                }).Result;
-                fileBytes.SaveOnDisk(Path.Combine(FileHelper.DesktopDirectory, "Result.mp3"));
+                    StartInfo = new ProcessStartInfo(resultFilePath)
+                    {
+                        UseShellExecute = true
+                    }
+                }.Start();
             }
         }
 
@@ -41,7 +48,7 @@ namespace SpeechSynthesizer
         {
             var assemblies = Collector.LoadAssemblies("SpeechSynthesizer");
             var builder = new ContainerBuilder();
-            var configuration = CustomConfigurationProvider.CollectEnvironmentRelatedConfiguration();
+            var configuration = CustomConfigurationProvider.CollectConfiguration();
 
             builder.RegisterInstance(configuration).AsSelf().AsImplementedInterfaces();
             builder.RegisterServices(assemblies);
@@ -86,6 +93,55 @@ namespace SpeechSynthesizer
             iamTokenConfig.SaveOnDiskAsJson(iamConfigFilePath);
 
             return iamTokenConfig.IamToken;
+        }
+        private static Boolean TryGetText(out String text)
+        {
+            var filePath = Path.Combine(FileHelper.DesktopDirectory, _textFileName);
+            if (!File.Exists(filePath))
+            {
+                text = null;
+                Console.WriteLine($"File not found: {filePath}!");
+                Console.ReadKey();
+
+                return false;
+            }
+
+            text = File.ReadAllText(filePath);
+
+            if (String.IsNullOrWhiteSpace(text))
+            {
+                Console.WriteLine("File have no text for synthesis!");
+                Console.ReadKey();
+
+                return false;
+            }
+
+            return true;
+        }
+        private static Boolean TryCreateSpeech(IContainer container,  String text, out Byte[] fileBytes)
+        {
+            var iamToken = GetIamToken(container);
+            var client = container.Resolve<YandexCloudHttpClient>();
+
+            try
+            {
+                fileBytes = client.SynthesizeSpeechAsync(iamToken, new SynthesizeSpeechRequest()
+                {
+                    Text = text,
+                    Format = OutputFileFormat.Mp3,
+                    Voice = Voice.Ru.Ermil,
+                    Speed = 0.9F
+                }).Result;
+                return true;
+            }
+            catch(Exception ex) when (ex is AggregateException or YandexCloudHttpClientException)
+            {
+                Console.WriteLine(ex.Message);
+                Console.ReadKey();
+            }
+
+            fileBytes = new Byte[] { };
+            return false;
         }
     }
 }

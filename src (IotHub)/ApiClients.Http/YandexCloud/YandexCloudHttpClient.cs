@@ -3,12 +3,16 @@ using ApiClients.Http.YandexCloud.Models.Exceptions;
 using ApiClients.Http.YandexCloud.Models.Request;
 using ApiClients.Http.YandexCloud.Models.Response;
 using Common.Http;
+using System.Globalization;
 using System.Net.Http.Headers;
 
 namespace ApiClients.Http.YandexCloud
 {
     /// <summary>
     /// https://upread.ru/art.php?id=1085
+    /// https://cloud.yandex.com/en/docs/speechkit/tts/request#body_params
+    /// https://cloud.yandex.com/en-ru/docs/speechkit/tts/?from=int-console-empty-state
+    /// https://cloud.yandex.com/en-ru/docs/speechkit/tts/markup/tts-markup
     /// </summary>
     public class YandexCloudHttpClient : TypedHttpClient
     {
@@ -56,22 +60,11 @@ namespace ApiClients.Http.YandexCloud
             var dict = new Dictionary<String, String>
             {
                 { "text", request.Text },
-                //{ "ssml", "" },
                 { "voice", request.Voice },
-                //{"speed", "1" },  // 0.1-3
+                {"speed", request.Speed.ToString("g2", CultureInfo.InvariantCulture) },  // 0.1-3
                 { "format", request.Format },
-                //{ "sampleRateHertz", "48000"},
                 { "folderId", _config.FolderId }
             };
-
-            var nvc = new List<KeyValuePair<String, String>>
-            {
-                new KeyValuePair<String, String>("text", request.Text),
-                new KeyValuePair<String, String>("voice", request.Voice),
-                new KeyValuePair<String, String>("format", request.Format),
-                new KeyValuePair<String, String>("folderId", _config.FolderId)
-            };
-
 
             using (var requestMessage = new HttpRequestMessage(verb, "https://tts.api.cloud.yandex.net/speech/v1/tts:synthesize"))
             {
@@ -82,7 +75,7 @@ namespace ApiClients.Http.YandexCloud
                 {
                     if (!response.IsSuccessStatusCode)
                     {
-                        var message = await response.Content.ReadAsStringAsync();
+                        //var message = await response.Content.ReadAsStringAsync();
                         throw new YandexCloudHttpClientException(verb, response.StatusCode, response.RequestMessage.RequestUri.AbsoluteUri, await DeserializeAsync<YandexErrorResponseApi>(response));
                     }
 

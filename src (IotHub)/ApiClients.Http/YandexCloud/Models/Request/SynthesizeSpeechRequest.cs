@@ -5,5 +5,6 @@
         public String Text { get; set; }
         public String Voice { get; set; }
         public String Format { get; set; }
+        public Single Speed { get; set; }
     }
 }
